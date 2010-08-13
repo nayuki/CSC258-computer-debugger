@@ -58,8 +58,8 @@ public final class ProbedMachineState implements MachineState {
 	
 	
 	@Override
-	public void setAccumulator(int value) {
-		state.setAccumulator(value);
+	public void setAccumulator(int val) {
+		state.setAccumulator(val);
 		for (MachineStateListener listener : listeners)
 			listener.accumulatorChanged(this);
 	}
@@ -72,8 +72,8 @@ public final class ProbedMachineState implements MachineState {
 	
 	
 	@Override
-	public void setConditionCode(boolean value) {
-		state.setConditionCode(value);
+	public void setConditionCode(boolean val) {
+		state.setConditionCode(val);
 		for (MachineStateListener listener : listeners)
 			listener.conditionCodeChanged(this);
 	}
@@ -86,8 +86,8 @@ public final class ProbedMachineState implements MachineState {
 	
 	
 	@Override
-	public void setMemoryAt(int addr, int value) {
-		state.setMemoryAt(addr, value);
+	public void setMemoryAt(int addr, int val) {
+		state.setMemoryAt(addr, val);
 		for (MachineStateListener listener : listeners)
 			listener.memoryChanged(this, addr);
 	}

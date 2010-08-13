@@ -47,6 +47,8 @@ public final class SimpleMachineState implements MachineState {
 	
 	@Override
 	public void setProgramCounter(int addr) {
+		if (addr < 0 || addr >= (1 << 24))
+			throw new IllegalArgumentException("Address out of bounds");
 		programCounter = addr;
 	}
 	
@@ -58,8 +60,8 @@ public final class SimpleMachineState implements MachineState {
 	
 	
 	@Override
-	public void setAccumulator(int value) {
-		accumulator = value;
+	public void setAccumulator(int val) {
+		accumulator = val;
 	}
 	
 	
@@ -70,8 +72,8 @@ public final class SimpleMachineState implements MachineState {
 	
 	
 	@Override
-	public void setConditionCode(boolean value) {
-		conditionCode = value;
+	public void setConditionCode(boolean val) {
+		conditionCode = val;
 	}
 	
 	
@@ -86,12 +88,12 @@ public final class SimpleMachineState implements MachineState {
 	
 	
 	@Override
-	public void setMemoryAt(int addr, int value) {
+	public void setMemoryAt(int addr, int val) {
 		if (addr < 0 || addr >= (1 << 24))
 			throw new IllegalArgumentException("Address out of bounds");
 		if (addr >= memory.length)
 			throw new RuntimeException("Full memory space currently not supported");
-		memory[addr] = value;
+		memory[addr] = val;
 	}
 	
 }
