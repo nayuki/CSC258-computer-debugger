@@ -11,12 +11,15 @@ import csc258comp.machine.model.MachineState;
 @SuppressWarnings("serial")
 class MachineStateTableModel extends AbstractTableModel {
 	
+	private static Class<?>[] columnClasses = {Boolean.class, String.class, String.class, String.class};
+	
 	private static String[] columnNames = {"Breakpoint", "Address", "Contents", "Source code"};
+	
 	
 	
 	private MachineState machineState;
 	
-	private int rows;
+	private int rowCount;
 	
 	public Program program;
 	
@@ -26,7 +29,7 @@ class MachineStateTableModel extends AbstractTableModel {
 	
 	public MachineStateTableModel(MachineState m, Set<Integer> breakpoints) {
 		machineState = m;
-		rows = 0;
+		rowCount = 0;
 		this.breakpoints = breakpoints;
 	}
 	
@@ -46,28 +49,13 @@ class MachineStateTableModel extends AbstractTableModel {
 	
 	@Override
 	public Class<?> getColumnClass(int col) {
-		switch (col) {
-			case 0:
-				return Boolean.class;
-			
-			case 1:
-				return String.class;
-			
-			case 2:
-				return String.class;
-			
-			case 3:
-				return String.class;
-			
-			default:
-				throw new AssertionError();
-		}
+		return columnClasses[col];
 	}
 	
 	
 	@Override
 	public int getRowCount() {
-		return rows;
+		return rowCount;
 	}
 	
 	
@@ -78,7 +66,7 @@ class MachineStateTableModel extends AbstractTableModel {
 				return breakpoints.contains(row);
 			
 			case 1:
-				return String.format("%08X%s", row, row == machineState.getProgramCounter() ? " *" : "");
+				return String.format("%08X%s", row, row == machineState.getProgramCounter() ? " <=" : "");
 			
 			case 2:
 				return String.format("%08X", machineState.getMemoryAt(row));
@@ -120,7 +108,7 @@ class MachineStateTableModel extends AbstractTableModel {
 	void setRowCount(int rows) {
 		if (rows < 0)
 			throw new IllegalArgumentException();
-		this.rows = rows;
+		this.rowCount = rows;
 	}
 	
 }
