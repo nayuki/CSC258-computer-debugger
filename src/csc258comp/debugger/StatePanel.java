@@ -233,15 +233,14 @@ final class StatePanel extends JPanel implements MachineStateListener {
 		
 		public void actionPerformed(ActionEvent e) {
 			try {
+				machineState.removeListener(StatePanel.this);
 				do {
-					if (machineState.isHalted())
-						return;
 					Executor.step(machine);
-				} while (!breakpoints.contains(machineState.getProgramCounter()));
-				programCounter.setBackground(unchangedColor);
-				accumulator.setBackground(unchangedColor);
-				conditionCode.setBackground(unchangedColor);
-				nextInstruction.setBackground(unchangedColor);
+				} while (!machineState.isHalted() && !breakpoints.contains(machineState.getProgramCounter()));
+				programCounterChanged(machineState);
+				accumulatorChanged(machineState);
+				conditionCodeChanged(machineState);
+				machineState.addListener(StatePanel.this);
 			} catch (IOException ex) {
 				throw new RuntimeException(ex);
 			}

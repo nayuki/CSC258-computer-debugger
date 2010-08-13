@@ -110,4 +110,9 @@ public final class ProbedMachineState implements MachineState {
 		listeners.add(listener);
 	}
 	
+	
+	public void removeListener(MachineStateListener listener) {
+		listeners.remove(listener);
+	}
+	
 }
