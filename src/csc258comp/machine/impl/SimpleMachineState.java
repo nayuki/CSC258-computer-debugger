@@ -1,4 +1,6 @@
-package csc258comp;
+package csc258comp.machine.impl;
+
+import csc258comp.machine.model.MachineState;
 
 
 public final class SimpleMachineState implements MachineState {

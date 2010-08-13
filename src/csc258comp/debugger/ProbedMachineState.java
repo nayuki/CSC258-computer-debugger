@@ -1,14 +1,14 @@
-package debugger;
+package csc258comp.debugger;
 
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-import csc258comp.Executor;
-import csc258comp.MachineState;
-import csc258comp.MachineStateListener;
-import csc258comp.Program;
-import csc258comp.SimpleMachineState;
+import csc258comp.compiler.Program;
+import csc258comp.machine.impl.Executor;
+import csc258comp.machine.impl.SimpleMachineState;
+import csc258comp.machine.model.MachineState;
+import csc258comp.machine.model.MachineStateListener;
 
 
 public final class ProbedMachineState implements MachineState {

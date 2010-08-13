@@ -1,8 +1,11 @@
-package csc258comp;
+package csc258comp.machine.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
+import csc258comp.compiler.Program;
+import csc258comp.machine.model.MachineState;
 
 
 public class Executor {

@@ -1,4 +1,4 @@
-package debugger;
+package csc258comp.debugger;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -21,10 +21,10 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import csc258comp.Executor;
-import csc258comp.MachineState;
-import csc258comp.MachineStateListener;
-import csc258comp.Program;
+import csc258comp.compiler.Program;
+import csc258comp.machine.impl.Executor;
+import csc258comp.machine.model.MachineState;
+import csc258comp.machine.model.MachineStateListener;
 
 
 @SuppressWarnings("serial")

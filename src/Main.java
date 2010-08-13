@@ -2,7 +2,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.SortedMap;
 
-import csc258comp.*;
+import csc258comp.compiler.*;
+import csc258comp.machine.impl.Executor;
+import csc258comp.machine.impl.SimpleMachineState;
+import csc258comp.machine.model.MachineState;
 
 
 public class Main {

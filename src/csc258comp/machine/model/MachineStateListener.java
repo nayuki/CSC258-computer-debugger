@@ -1,4 +1,6 @@
-package csc258comp;
+package csc258comp.machine.model;
+
+import csc258comp.compiler.Program;
 
 
 public interface MachineStateListener {

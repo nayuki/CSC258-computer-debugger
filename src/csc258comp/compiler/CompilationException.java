@@ -1,4 +1,4 @@
-package csc258comp;
+package csc258comp.compiler;
 
 import java.util.SortedMap;
 

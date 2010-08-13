@@ -1,4 +1,4 @@
-package debugger;
+package csc258comp.debugger;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,7 +6,7 @@ import java.util.SortedMap;
 
 import javax.swing.*;
 
-import csc258comp.*;
+import csc258comp.compiler.*;
 
 
 public class Main {

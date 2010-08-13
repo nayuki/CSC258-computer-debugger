@@ -1,4 +1,4 @@
-package csc258comp;
+package csc258comp.machine.model;
 
 
 public interface MachineState {

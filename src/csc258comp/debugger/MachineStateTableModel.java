@@ -1,11 +1,11 @@
-package debugger;
+package csc258comp.debugger;
 
 import java.util.Set;
 
 import javax.swing.table.AbstractTableModel;
 
-import csc258comp.MachineState;
-import csc258comp.Program;
+import csc258comp.compiler.Program;
+import csc258comp.machine.model.MachineState;
 
 
 @SuppressWarnings("serial")
