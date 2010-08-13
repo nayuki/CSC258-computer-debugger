@@ -28,7 +28,7 @@ public class Main {
 			return;
 		}
 		
-		ProbedState m = new ProbedState();
+		ProbedMachineState m = new ProbedMachineState();
 		StatePanel panel = new StatePanel(m);
 		m.loadProgram(p);
 		

@@ -3,7 +3,7 @@ package csc258comp;
 
 public interface MachineState {
 	
-	public boolean getHalted();
+	public boolean isHalted();
 	
 	public void setHalted(boolean halted);
 	

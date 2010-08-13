@@ -34,7 +34,7 @@ class StatePanel extends JPanel implements MachineStateListener {
 	private static final Color changedColor = new Color(1.0f, 1.0f, 0.5f);
 	
 	
-	private ProbedState machineState;
+	private ProbedMachineState machineState;
 	
 	private Set<Integer> breakpoints;
 	
@@ -54,7 +54,7 @@ class StatePanel extends JPanel implements MachineStateListener {
 	
 	
 	
-	public StatePanel(final ProbedState machineState) {
+	public StatePanel(final ProbedMachineState machineState) {
 		this.machineState = machineState;
 		breakpoints = new HashSet<Integer>();
 		
@@ -207,7 +207,7 @@ class StatePanel extends JPanel implements MachineStateListener {
 	private class StepAction implements ActionListener {
 		
 		public void actionPerformed(ActionEvent e) {
-			if (machineState.getHalted())
+			if (machineState.isHalted())
 				return;
 			try {
 				programCounter.setBackground(unchangedColor);
@@ -231,7 +231,7 @@ class StatePanel extends JPanel implements MachineStateListener {
 		public void actionPerformed(ActionEvent e) {
 			try {
 				do {
-					if (machineState.getHalted())
+					if (machineState.isHalted())
 						return;
 					machineState.step(executor);
 				} while (!breakpoints.contains(machineState.getProgramCounter()));

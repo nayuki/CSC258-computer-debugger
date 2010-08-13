@@ -26,7 +26,7 @@ public class Executor {
 	
 	
 	public void step(MachineState m) throws IOException {
-		if (m.getHalted())
+		if (m.isHalted())
 			return;
 		
 		int instAddr = m.getProgramCounter();

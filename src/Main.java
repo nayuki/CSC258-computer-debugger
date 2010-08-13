@@ -32,7 +32,7 @@ public class Main {
 		for (int j = 0; j < image.length; j++)
 			m.setMemoryAt(j, image[j]);
 		Executor e = new Executor();
-		while (!m.getHalted()) {
+		while (!m.isHalted()) {
 			e.step(m);
 		}
 	}

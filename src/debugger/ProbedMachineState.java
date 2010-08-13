@@ -11,14 +11,14 @@ import csc258comp.Program;
 import csc258comp.SimpleMachineState;
 
 
-public final class ProbedState implements MachineState {
+public final class ProbedMachineState implements MachineState {
 	
 	private MachineState state;
 	
 	private Set<MachineStateListener> listeners;
 	
 	
-	public ProbedState() {
+	public ProbedMachineState() {
 		state = new SimpleMachineState();
 		listeners = new HashSet<MachineStateListener>();
 	}
@@ -26,8 +26,8 @@ public final class ProbedState implements MachineState {
 	
 	
 	@Override
-	public boolean getHalted() {
-		return state.getHalted();
+	public boolean isHalted() {
+		return state.isHalted();
 	}
 	
 	

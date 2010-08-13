@@ -3,7 +3,7 @@ package csc258comp;
 
 public final class SimpleMachineState implements MachineState {
 	
-	private boolean halted;
+	private boolean isHalted;
 	
 	private int programCounter;
 	
@@ -16,7 +16,7 @@ public final class SimpleMachineState implements MachineState {
 	
 	
 	public SimpleMachineState() {
-		halted = false;
+		isHalted = false;
 		programCounter = 0;
 		accumulator = 0;
 		conditionCode = false;
@@ -26,14 +26,14 @@ public final class SimpleMachineState implements MachineState {
 	
 	
 	@Override
-	public boolean getHalted() {
-		return halted;
+	public boolean isHalted() {
+		return isHalted;
 	}
 	
 	
 	@Override
 	public void setHalted(boolean halted) {
-		this.halted = halted;
+		this.isHalted = halted;
 	}
 	
 	
