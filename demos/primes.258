@@ -1,0 +1,84 @@
+zero: I 0
+one: I 1
+two: I 2
+ten: I 10
+newLine: H 0A
+charZero: H 30
+highestBit: H 80000000
+
+
+main_i: I 2
+main:
+	LDA main_i
+	STA isPrime_val
+	BSA isPrime_retAddr
+	BZE main_next
+	LDA main_i
+	STA printNum_val
+	BSA printNum_retAddr
+main_next:
+	LDA main_i
+	ADD one
+	STA main_i
+	BUN main
+
+
+isPrime_val: W 1
+isPrime_i: W 1
+isPrime_retAddr: W 1
+isPrime:
+	LDA two
+	STA isPrime_i
+isPrime_loop:
+	LDA isPrime_i
+	XOR isPrime_val
+	BZE isPrime_isPrime
+	LDA isPrime_val
+	MOD isPrime_i
+	IOR zero
+	BZE isPrime_ret
+	LDA isPrime_i
+	ADD one
+	STA isPrime_i
+	BUN isPrime_loop
+isPrime_isPrime:
+	LDA one
+	IOR one
+isPrime_ret:
+	BIN isPrime_retAddr
+
+
+printNum_val: W 1
+printNum_divisor: W 1
+printNum_retAddr: W 1
+printNum:
+	LDA one
+	STA printNum_divisor
+printNum_divisorLoop:
+	LDA printNum_val
+	DIV printNum_divisor
+	SUB ten
+	AND highestBit
+	BZE printNum_biggenDivisor
+	BUN printNum_printLoop
+printNum_biggenDivisor:
+	LDA printNum_divisor
+	MUL ten
+	STA printNum_divisor
+	BUN printNum_divisorLoop
+printNum_printLoop:
+	LDA printNum_val
+	DIV printNum_divisor
+	MOD ten
+	ADD charZero
+	printNum_out0: OUT printNum_out0
+	LDA printNum_divisor
+	DIV ten
+	STA printNum_divisor
+	IOR zero
+	BZE printNum_ret
+	BUN printNum_printLoop
+printNum_ret:
+	LDA newLine
+	printNum_out1: OUT printNum_out1
+	BIN printNum_retAddr
