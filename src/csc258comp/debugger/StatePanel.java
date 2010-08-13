@@ -2,6 +2,7 @@ package csc258comp.debugger;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -33,6 +34,8 @@ final class StatePanel extends JPanel implements MachineStateListener {
 	
 	private static final Color unchangedColor = Color.WHITE;
 	private static final Color changedColor = new Color(1.0f, 1.0f, 0.5f);
+	
+	private static final Font monospacedFont = new Font("Monospaced", Font.PLAIN, 12);
 	
 	
 	private ProbedMachineState machineState;
@@ -94,6 +97,11 @@ final class StatePanel extends JPanel implements MachineStateListener {
 		g.fill = GridBagConstraints.BOTH;
 		tableModel = new MachineStateTableModel(machineState, breakpoints);
 		JTable table = new JTable(tableModel);
+		table.setFont(monospacedFont);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		int[] columnWidths = {30, 100, 80, 400};
+		for (int i = 0; i < columnWidths.length; i++)
+			table.getColumnModel().getColumn(i).setPreferredWidth(columnWidths[i]);
 		table.setColumnSelectionAllowed(true);
 		JScrollPane scrollpane = new JScrollPane(table);
 		add(scrollpane, g);
@@ -120,6 +128,7 @@ final class StatePanel extends JPanel implements MachineStateListener {
 		programCounter.setEditable(false);
 		programCounter.setHorizontalAlignment(SwingConstants.RIGHT);
 		programCounter.setBackground(unchangedColor);
+		programCounter.setFont(monospacedFont);
 		g.gridy = 1;
 		panel.add(programCounter, g);
 		
@@ -130,6 +139,7 @@ final class StatePanel extends JPanel implements MachineStateListener {
 		accumulator.setEditable(false);
 		accumulator.setHorizontalAlignment(SwingConstants.RIGHT);
 		accumulator.setBackground(unchangedColor);
+		accumulator.setFont(monospacedFont);
 		g.gridy = 1;
 		panel.add(accumulator, g);
 		
@@ -140,6 +150,7 @@ final class StatePanel extends JPanel implements MachineStateListener {
 		conditionCode.setEditable(false);
 		conditionCode.setHorizontalAlignment(SwingConstants.RIGHT);
 		conditionCode.setBackground(unchangedColor);
+		conditionCode.setFont(monospacedFont);
 		g.gridy = 1;
 		panel.add(conditionCode, g);
 		
@@ -150,6 +161,7 @@ final class StatePanel extends JPanel implements MachineStateListener {
 		nextInstruction.setEditable(false);
 		nextInstruction.setHorizontalAlignment(SwingConstants.LEADING);
 		nextInstruction.setBackground(unchangedColor);
+		nextInstruction.setFont(monospacedFont);
 		g.gridy = 1;
 		panel.add(nextInstruction, g);
 		
