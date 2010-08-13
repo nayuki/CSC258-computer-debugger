@@ -1,7 +1,7 @@
 package csc258comp.debugger;
 
 import java.awt.Color;
-import java.awt.Component;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -11,9 +11,8 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -42,10 +41,10 @@ final class StatePanel extends JPanel implements MachineStateListener {
 	
 	private Machine machine;
 	
-	private final JTextField programCounter;
-	private final JTextField accumulator;
-	private final JTextField conditionCode;
-	private final JTextField nextInstruction;
+	private JTextField programCounter;
+	private JTextField accumulator;
+	private JTextField conditionCode;
+	private JTextField nextInstruction;
 	
 	private MachineStateTableModel tableModel;
 	
@@ -61,90 +60,118 @@ final class StatePanel extends JPanel implements MachineStateListener {
 		this.machineState = machineState;
 		breakpoints = new HashSet<Integer>();
 		
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		setLayout(new GridBagLayout());
+		GridBagConstraints g = new GridBagConstraints();
+		g.anchor = GridBagConstraints.CENTER;
+		g.insets = new Insets(4, 4, 4, 4);
 		
-		{
-			JPanel panel = new JPanel(new GridBagLayout());
-			GridBagConstraints g = new GridBagConstraints();
-			g.anchor = GridBagConstraints.FIRST_LINE_START;
-			g.insets = new Insets(4, 4, 4, 4);
-			g.fill = GridBagConstraints.HORIZONTAL;
-			
-			g.gridx = 0;
-			g.gridy = 0;
-			panel.add(new JLabel("Program counter"), g);
-			programCounter = new JTextField();
-			programCounter.setEditable(false);
-			programCounter.setHorizontalAlignment(SwingConstants.RIGHT);
-			programCounter.setBackground(unchangedColor);
-			g.gridy = 1;
-			panel.add(programCounter, g);
-			
-			g.gridx = 1;
-			g.gridy = 0;
-			panel.add(new JLabel("Accumulator"), g);
-			accumulator = new JTextField();
-			accumulator.setEditable(false);
-			accumulator.setHorizontalAlignment(SwingConstants.RIGHT);
-			accumulator.setBackground(unchangedColor);
-			g.gridy = 1;
-			panel.add(accumulator, g);
-			
-			g.gridx = 2;
-			g.gridy = 0;
-			panel.add(new JLabel("Condition code"), g);
-			conditionCode = new JTextField();
-			conditionCode.setEditable(false);
-			conditionCode.setHorizontalAlignment(SwingConstants.RIGHT);
-			conditionCode.setBackground(unchangedColor);
-			g.gridy = 1;
-			panel.add(conditionCode, g);
-			
-			g.gridx = 3;
-			g.gridy = 0;
-			panel.add(new JLabel("Next instruction"), g);
-			nextInstruction = new JTextField();
-			nextInstruction.setEditable(false);
-			nextInstruction.setHorizontalAlignment(SwingConstants.LEADING);
-			nextInstruction.setBackground(unchangedColor);
-			g.gridy = 1;
-			panel.add(nextInstruction, g);
-			
-			g.gridx = 4;
-			g.gridy = 0;
-			g.gridheight = 2;
-			g.weightx = 1;
-			panel.add(Box.createHorizontalGlue(), g);
-			
-			panel.setAlignmentX(Component.LEFT_ALIGNMENT);
-			add(panel);
-		}
+		g.gridx = 0;
+		g.gridy = 0;
+		g.weightx = 0;
+		g.weighty = 0;
+		g.fill = GridBagConstraints.NONE;
+		add(makeRegistersPanel(), g);
 		
-		{
-			Box box = Box.createHorizontalBox();
-			
-			JButton step = new JButton("Step");
-			step.addActionListener(new StepAction());
-			box.add(step);
-			
-			JButton run = new JButton("Run");
-			run.addActionListener(new RunAction());
-			box.add(run);
-			
-			add(box);
-		}
+		g.gridx = 1;
+		g.gridy = 0;
+		g.weightx = 0;
+		g.weighty = 0;
+		g.fill = GridBagConstraints.NONE;
+		add(makeActionsPanel(), g);
 		
+		g.gridx = 2;
+		g.gridy = 0;
+		g.weightx = 1;
+		g.weighty = 0;
+		g.fill = GridBagConstraints.HORIZONTAL;
+		add(new JPanel(), g);
+		
+		g.gridx = 0;
+		g.gridy = 1;
+		g.gridwidth = 3;
+		g.weightx = 1;
+		g.weighty = 1;
+		g.fill = GridBagConstraints.BOTH;
 		tableModel = new MachineStateTableModel(machineState, breakpoints);
 		JTable table = new JTable(tableModel);
 		table.setColumnSelectionAllowed(true);
 		JScrollPane scrollpane = new JScrollPane(table);
-		add(scrollpane);
+		add(scrollpane, g);
 		
 		programCounterChanged(machineState);
 		accumulatorChanged(machineState);
 		conditionCodeChanged(machineState);
 		
 		machineState.addListener(this);
+	}
+	
+	
+	private JPanel makeRegistersPanel() {
+		JPanel panel = new JPanel(new GridBagLayout());
+		GridBagConstraints g = new GridBagConstraints();
+		g.anchor = GridBagConstraints.FIRST_LINE_START;
+		g.insets = new Insets(4, 4, 4, 4);
+		g.fill = GridBagConstraints.HORIZONTAL;
+		
+		g.gridx = 0;
+		g.gridy = 0;
+		panel.add(new JLabel("Program counter"), g);
+		programCounter = new JTextField();
+		programCounter.setEditable(false);
+		programCounter.setHorizontalAlignment(SwingConstants.RIGHT);
+		programCounter.setBackground(unchangedColor);
+		g.gridy = 1;
+		panel.add(programCounter, g);
+		
+		g.gridx = 1;
+		g.gridy = 0;
+		panel.add(new JLabel("Accumulator"), g);
+		accumulator = new JTextField();
+		accumulator.setEditable(false);
+		accumulator.setHorizontalAlignment(SwingConstants.RIGHT);
+		accumulator.setBackground(unchangedColor);
+		g.gridy = 1;
+		panel.add(accumulator, g);
+		
+		g.gridx = 2;
+		g.gridy = 0;
+		panel.add(new JLabel("Condition code"), g);
+		conditionCode = new JTextField();
+		conditionCode.setEditable(false);
+		conditionCode.setHorizontalAlignment(SwingConstants.RIGHT);
+		conditionCode.setBackground(unchangedColor);
+		g.gridy = 1;
+		panel.add(conditionCode, g);
+		
+		g.gridx = 3;
+		g.gridy = 0;
+		panel.add(new JLabel("Next instruction"), g);
+		nextInstruction = new JTextField();
+		nextInstruction.setEditable(false);
+		nextInstruction.setHorizontalAlignment(SwingConstants.LEADING);
+		nextInstruction.setBackground(unchangedColor);
+		g.gridy = 1;
+		panel.add(nextInstruction, g);
+		
+		g.gridx = 4;
+		g.gridy = 0;
+		
+		return panel;
+	}
+	
+	
+	private JComponent makeActionsPanel() {
+		JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		
+		JButton step = new JButton("Step");
+		step.addActionListener(new StepAction());
+		panel.add(step);
+		
+		JButton run = new JButton("Run");
+		run.addActionListener(new RunAction());
+		panel.add(run);
+		
+		return panel;
 	}
 	
 	
