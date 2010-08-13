@@ -44,6 +44,9 @@ final class StatePanel extends JPanel implements MachineStateListener {
 	
 	private Machine machine;
 	
+	private long stepCount;
+	
+	private JTextField stepCountField;
 	private JTextField programCounter;
 	private JTextField accumulator;
 	private JTextField conditionCode;
@@ -62,6 +65,7 @@ final class StatePanel extends JPanel implements MachineStateListener {
 		machine = new SimpleMachine(machineState, System.in, System.out);
 		this.machineState = machineState;
 		breakpoints = new HashSet<Integer>();
+		stepCount = 0;
 		
 		setLayout(new GridBagLayout());
 		GridBagConstraints g = new GridBagConstraints();
@@ -123,6 +127,17 @@ final class StatePanel extends JPanel implements MachineStateListener {
 		
 		g.gridx = 0;
 		g.gridy = 0;
+		panel.add(new JLabel("Step count"), g);
+		stepCountField = new JTextField("0");
+		stepCountField.setEditable(false);
+		stepCountField.setHorizontalAlignment(SwingConstants.RIGHT);
+		stepCountField.setBackground(unchangedColor);
+		stepCountField.setFont(monospacedFont);
+		g.gridy = 1;
+		panel.add(stepCountField, g);
+		
+		g.gridx = 1;
+		g.gridy = 0;
 		panel.add(new JLabel("Program counter"), g);
 		programCounter = new JTextField();
 		programCounter.setEditable(false);
@@ -132,7 +147,7 @@ final class StatePanel extends JPanel implements MachineStateListener {
 		g.gridy = 1;
 		panel.add(programCounter, g);
 		
-		g.gridx = 1;
+		g.gridx = 2;
 		g.gridy = 0;
 		panel.add(new JLabel("Accumulator"), g);
 		accumulator = new JTextField();
@@ -143,7 +158,7 @@ final class StatePanel extends JPanel implements MachineStateListener {
 		g.gridy = 1;
 		panel.add(accumulator, g);
 		
-		g.gridx = 2;
+		g.gridx = 3;
 		g.gridy = 0;
 		panel.add(new JLabel("Condition code"), g);
 		conditionCode = new JTextField();
@@ -154,7 +169,7 @@ final class StatePanel extends JPanel implements MachineStateListener {
 		g.gridy = 1;
 		panel.add(conditionCode, g);
 		
-		g.gridx = 3;
+		g.gridx = 4;
 		g.gridy = 0;
 		panel.add(new JLabel("Next instruction"), g);
 		nextInstruction = new JTextField();
@@ -258,7 +273,11 @@ final class StatePanel extends JPanel implements MachineStateListener {
 				nextInstruction.setBackground(unchangedColor);
 				oldConditionCode = machineState.getConditionCode();
 				oldProgramCounter = machineState.getProgramCounter();
-				Executor.step(machine);
+				if (!machineState.isHalted()) {
+					Executor.step(machine);
+					stepCount++;
+					stepCountField.setText(Long.toString(stepCount));
+				}
 			} catch (IOException ex) {
 				throw new RuntimeException(ex);
 			}
@@ -273,9 +292,13 @@ final class StatePanel extends JPanel implements MachineStateListener {
 		public void actionPerformed(ActionEvent e) {
 			try {
 				machineState.removeListener(StatePanel.this);
-				do {
+				while (!machineState.isHalted()) {
 					Executor.step(machine);
-				} while (!machineState.isHalted() && !breakpoints.contains(machineState.getProgramCounter()));
+					stepCount++;
+					stepCountField.setText(Long.toString(stepCount));
+					if (breakpoints.contains(machineState.getProgramCounter()))
+						break;
+				}
 				programCounterChanged(machineState);
 				accumulatorChanged(machineState);
 				conditionCodeChanged(machineState);
