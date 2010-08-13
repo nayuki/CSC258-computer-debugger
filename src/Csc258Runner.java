@@ -8,10 +8,11 @@ import csc258comp.machine.impl.SimpleMachineState;
 import csc258comp.machine.model.MachineState;
 
 
-public class Main {
+public class Csc258Runner {
 	
 	public static void main(String[] args) throws IOException, CompilationException {
 		SourceCode s = SourceCode.readFile(new File(args[0]));
+		
 		Program p;
 		try {
 			p = Program.parseProgram(s);
@@ -26,14 +27,17 @@ public class Main {
 			System.err.printf("%d error%s%n", errorMessages.size(), errorMessages.size() == 1 ? "" : "s");
 			return;
 		}
+		
 		MachineState m = new SimpleMachineState();
 		m.setHalted(false);
 		m.setProgramCounter(p.getMainAddress());
 		m.setAccumulator(0);
 		m.setConditionCode(false);
+		
 		int[] image = p.getImage();
 		for (int j = 0; j < image.length; j++)
 			m.setMemoryAt(j, image[j]);
+		
 		Executor e = new Executor();
 		while (!m.isHalted()) {
 			e.step(m);
