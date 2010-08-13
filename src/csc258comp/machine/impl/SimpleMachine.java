@@ -38,6 +38,7 @@ public final class SimpleMachine implements Machine {
 	@Override
 	public boolean output(int b) throws IOException {
 		output.write(b);
+		output.flush();
 		return true;
 	}
 	
