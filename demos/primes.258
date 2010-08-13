@@ -20,7 +20,9 @@ main_next:
 	LDA main_i
 	ADD one
 	STA main_i
-	BUN main
+	AND signBit
+	BZE main
+	BUN opsys
 
 
 isPrime_val: W 1
