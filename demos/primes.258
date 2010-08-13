@@ -4,7 +4,7 @@ two: I 2
 ten: I 10
 newLine: H 0A
 charZero: H 30
-highestBit: H 80000000
+signBit: H 80000000
 
 
 main_i: I 2
@@ -30,9 +30,13 @@ isPrime:
 	LDA two
 	STA isPrime_i
 isPrime_loop:
-	LDA isPrime_i
-	XOR isPrime_val
-	BZE isPrime_isPrime
+	LDA isPrime_val
+	DIV isPrime_i
+	SUB isPrime_i
+	AND signBit
+	BZE isPrime_continue
+	BUN isPrime_isPrime
+isPrime_continue:
 	LDA isPrime_val
 	MOD isPrime_i
 	IOR zero
@@ -58,7 +62,7 @@ printNum_divisorLoop:
 	LDA printNum_val
 	DIV printNum_divisor
 	SUB ten
-	AND highestBit
+	AND signBit
 	BZE printNum_biggenDivisor
 	BUN printNum_printLoop
 printNum_biggenDivisor:
