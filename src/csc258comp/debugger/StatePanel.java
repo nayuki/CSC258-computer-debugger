@@ -30,7 +30,7 @@ import csc258comp.machine.model.MachineStateListener;
 
 
 @SuppressWarnings("serial")
-class StatePanel extends JPanel implements MachineStateListener {
+final class StatePanel extends JPanel implements MachineStateListener {
 	
 	private static final Color unchangedColor = Color.WHITE;
 	private static final Color changedColor = new Color(1.0f, 1.0f, 0.5f);
@@ -40,7 +40,7 @@ class StatePanel extends JPanel implements MachineStateListener {
 	
 	private Set<Integer> breakpoints;
 	
-	private Machine machine = new SimpleMachine(System.in, System.out);
+	private Machine machine;
 	
 	private final JTextField programCounter;
 	private final JTextField accumulator;
@@ -57,6 +57,7 @@ class StatePanel extends JPanel implements MachineStateListener {
 	
 	
 	public StatePanel(final ProbedMachineState machineState) {
+		machine = new SimpleMachine(machineState, System.in, System.out);
 		this.machineState = machineState;
 		breakpoints = new HashSet<Integer>();
 		

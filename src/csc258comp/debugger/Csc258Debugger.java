@@ -4,9 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.SortedMap;
 
-import javax.swing.*;
+import javax.swing.JFrame;
 
-import csc258comp.compiler.*;
+import csc258comp.compiler.CompilationException;
+import csc258comp.compiler.Program;
+import csc258comp.compiler.SourceCode;
 
 
 public class Csc258Debugger {

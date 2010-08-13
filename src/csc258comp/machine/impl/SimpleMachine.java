@@ -19,7 +19,12 @@ public final class SimpleMachine implements Machine {
 	
 	
 	public SimpleMachine(InputStream in, OutputStream out) {
-		state = new SimpleMachineState();
+		this(new SimpleMachineState(), in, out);
+	}
+	
+	
+	public SimpleMachine(MachineState state, InputStream in, OutputStream out) {
+		this.state = state;
 		input = in;
 		output = out;
 	}
