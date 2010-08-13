@@ -8,32 +8,33 @@ import csc258comp.compiler.CompilationException;
 import csc258comp.compiler.Program;
 import csc258comp.compiler.SourceCode;
 import csc258comp.machine.impl.Executor;
-import csc258comp.machine.impl.SimpleMachineState;
+import csc258comp.machine.impl.SimpleMachine;
+import csc258comp.machine.model.Machine;
 import csc258comp.machine.model.MachineState;
 
 
 public class TicTacToeTester {
 	
 	public static void main(String[] args) throws IOException, CompilationException {
-		SourceCode s = SourceCode.readFile(new File(args[0]));
-		Program p = Program.parseProgram(s);
+		SourceCode sc = SourceCode.readFile(new File(args[0]));
+		Program p = Program.parseProgram(sc);
 		int[] image = p.getImage();
-		MachineState m = new SimpleMachineState();
 		
 		for (int i = 0; i < 19683; i++) {
 			byte[] board = numberToBoard(i);
 			ByteArrayInputStream in = new ByteArrayInputStream(board);
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			
-			m.setHalted(false);
-			m.setProgramCounter(p.getMainAddress());
-			m.setAccumulator(0);
-			m.setConditionCode(false);
+			Machine m = new SimpleMachine(in, out);
+			MachineState st = m.getState();
+			st.setHalted(false);
+			st.setProgramCounter(p.getMainAddress());
+			st.setAccumulator(0);
+			st.setConditionCode(false);
 			for (int j = 0; j < image.length; j++)
-				m.setMemoryAt(j, image[j]);
-			Executor e = new Executor(in, out);
-			while (!m.isHalted()) {
-				e.step(m);
+				st.setMemoryAt(j, image[j]);
+			while (!st.isHalted()) {
+				Executor.step(m);
 			}
 			
 			boolean xWins = checkWin(board, (byte)'X');

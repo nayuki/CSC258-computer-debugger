@@ -2,20 +2,23 @@ import java.io.File;
 import java.io.IOException;
 import java.util.SortedMap;
 
-import csc258comp.compiler.*;
+import csc258comp.compiler.CompilationException;
+import csc258comp.compiler.Program;
+import csc258comp.compiler.SourceCode;
 import csc258comp.machine.impl.Executor;
-import csc258comp.machine.impl.SimpleMachineState;
+import csc258comp.machine.impl.SimpleMachine;
+import csc258comp.machine.model.Machine;
 import csc258comp.machine.model.MachineState;
 
 
 public class Csc258Runner {
 	
 	public static void main(String[] args) throws IOException, CompilationException {
-		SourceCode s = SourceCode.readFile(new File(args[0]));
+		SourceCode sc = SourceCode.readFile(new File(args[0]));
 		
 		Program p;
 		try {
-			p = Program.parseProgram(s);
+			p = Program.parseProgram(sc);
 		} catch (CompilationException e) {
 			SortedMap<Integer,String> errorMessages = e.getErrorMessages();
 			SourceCode sourceCode = e.getSourceCode();
@@ -28,19 +31,20 @@ public class Csc258Runner {
 			return;
 		}
 		
-		MachineState m = new SimpleMachineState();
-		m.setHalted(false);
-		m.setProgramCounter(p.getMainAddress());
-		m.setAccumulator(0);
-		m.setConditionCode(false);
+		Machine m = new SimpleMachine(System.in, System.out);
+		
+		MachineState st = m.getState();
+		st.setHalted(false);
+		st.setProgramCounter(p.getMainAddress());
+		st.setAccumulator(0);
+		st.setConditionCode(false);
 		
 		int[] image = p.getImage();
 		for (int j = 0; j < image.length; j++)
-			m.setMemoryAt(j, image[j]);
+			st.setMemoryAt(j, image[j]);
 		
-		Executor e = new Executor();
-		while (!m.isHalted()) {
-			e.step(m);
+		while (!st.isHalted()) {
+			Executor.step(m);
 		}
 	}
 	

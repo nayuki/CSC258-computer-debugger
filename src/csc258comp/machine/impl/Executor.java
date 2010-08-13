@@ -1,59 +1,42 @@
 package csc258comp.machine.impl;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 
 import csc258comp.compiler.Program;
+import csc258comp.machine.model.Machine;
 import csc258comp.machine.model.MachineState;
 
 
-public class Executor {
+public final class Executor {
 	
-	private InputStream inputStream;
-	
-	private OutputStream outputStream;
-	
-	
-	
-	public Executor() {
-		this(System.in, System.out);
-	}
-	
-	
-	public Executor(InputStream in, OutputStream out) {
-		inputStream = in;
-		outputStream = out;
-	}
-	
-	
-	
-	public void step(MachineState m) throws IOException {
-		if (m.isHalted())
+	public static void step(Machine m) throws IOException {
+		MachineState s = m.getState();
+		
+		if (s.isHalted())
 			return;
 		
-		int instAddr = m.getProgramCounter();
+		int instAddr = s.getProgramCounter();
 		if (instAddr == Program.OPSYS_ADDRESS) {
-			m.setHalted(true);
+			s.setHalted(true);
 			return;
 		}
 		
-		int word = m.getMemoryAt(instAddr);
+		int word = s.getMemoryAt(instAddr);
 		int oper = word >>> 24;
 		int addr = word & ((1 << 24) - 1);
 		int nextInstAddr;
 		
 		if (oper == 0) {  // LDA
-			m.setAccumulator(m.getMemoryAt(addr));
+			s.setAccumulator(s.getMemoryAt(addr));
 			nextInstAddr = instAddr + 1;
 				
 		} else if (oper == 1) {  // STA
-			m.setMemoryAt(addr, m.getAccumulator());
+			s.setMemoryAt(addr, s.getAccumulator());
 			nextInstAddr = instAddr + 1;
 				
 		} else if (oper >= 2 && oper <= 6 || oper >= 13 && oper <= 15) {  // ADD, SUB, MUL, DIV, MOD, AND, IOR, XOR
-			int x = m.getAccumulator();
-			int y = m.getMemoryAt(addr);
+			int x = s.getAccumulator();
+			int y = s.getMemoryAt(addr);
 			int result;
 			switch (oper) {
 				case  2:  result = x + y;  break;
@@ -66,22 +49,22 @@ public class Executor {
 				case 15:  result = x ^ y;  break;
 				default:  throw new AssertionError();
 			}
-			m.setAccumulator(result);
+			s.setAccumulator(result);
 			if (oper == 2)
-				m.setConditionCode(result != (long)x + y);
+				s.setConditionCode(result != (long)x + y);
 			else if (oper == 3)
-				m.setConditionCode(result != (long)x - y);
+				s.setConditionCode(result != (long)x - y);
 			else if (oper == 4)
-				m.setConditionCode(result != (long)x * y);
+				s.setConditionCode(result != (long)x * y);
 			else if (oper == 5 || oper == 6)
-				m.setConditionCode(y == 0);
+				s.setConditionCode(y == 0);
 			else
-				m.setConditionCode(result != 0);
+				s.setConditionCode(result != 0);
 			nextInstAddr = instAddr + 1;
 				
 		} else if (oper >= 7 && oper <= 10) {  // FLA, FLS, FLM, FLD
-			float x = Float.intBitsToFloat(m.getAccumulator());
-			float y = Float.intBitsToFloat(m.getMemoryAt(addr));
+			float x = Float.intBitsToFloat(s.getAccumulator());
+			float y = Float.intBitsToFloat(s.getMemoryAt(addr));
 			float result;
 			switch (oper) {
 				case  7:  result = x + y;  break;
@@ -90,50 +73,55 @@ public class Executor {
 				case 10:  result = (y != 0 ? x / y : x);  break;
 				default:  throw new AssertionError();
 			}
-			m.setAccumulator(Float.floatToRawIntBits(result));
-			m.setConditionCode(Float.isInfinite(result));
+			s.setAccumulator(Float.floatToRawIntBits(result));
+			s.setConditionCode(Float.isInfinite(result));
 			if (oper >= 7 && oper <= 9)
-				m.setConditionCode(false);  // Overflow detection not implemented
+				s.setConditionCode(false);  // Overflow detection not implemented
 			else if (y == 0)
-				m.setConditionCode(true);
+				s.setConditionCode(true);
 			nextInstAddr = instAddr + 1;
 			
 		} else if (oper == 11) {  // CIF
-			m.setAccumulator(Float.floatToRawIntBits((float)m.getMemoryAt(addr)));
+			s.setAccumulator(Float.floatToRawIntBits((float)s.getMemoryAt(addr)));
 			nextInstAddr = instAddr + 1;
 			
 		} else if (oper == 12) {  // CFI
-			m.setAccumulator((int)Math.round(Float.intBitsToFloat(m.getMemoryAt(addr))));
+			s.setAccumulator((int)Math.round(Float.intBitsToFloat(s.getMemoryAt(addr))));
 			nextInstAddr = instAddr + 1;
 			
 		} else if (oper >= 16 && oper <= 19) {  // BUN, BZE, BSA, BIN
 			switch (oper) {
 				case 16:  nextInstAddr = addr;  break;
-				case 17:  nextInstAddr = (m.getConditionCode() ? instAddr + 1 : addr);  break;
-				case 18:  m.setMemoryAt(addr, instAddr + 1);  nextInstAddr = addr + 1;  break;
-				case 19:  nextInstAddr = m.getMemoryAt(addr);  break;
+				case 17:  nextInstAddr = (s.getConditionCode() ? instAddr + 1 : addr);  break;
+				case 18:  s.setMemoryAt(addr, instAddr + 1);  nextInstAddr = addr + 1;  break;
+				case 19:  nextInstAddr = s.getMemoryAt(addr);  break;
 				default:  throw new AssertionError();
 			}
 			
 		} else if (oper == 20) {  // INP
-			int c = inputStream.read();
+			int c = m.input();
 			if (c != -1) {
-				m.setAccumulator(c);
+				s.setAccumulator(c);
 				nextInstAddr = instAddr + 1;
 			} else {  // EOF reached
 				nextInstAddr = addr;
 			}
 			
 		} else if (oper == 21) {  // OUT
-			outputStream.write(m.getAccumulator() & 0xFF);
-			outputStream.flush();
-			nextInstAddr = instAddr + 1;
+			if (m.output(s.getAccumulator() & 0xFF)) {
+				nextInstAddr = instAddr + 1;
+			} else {
+				nextInstAddr = addr;
+			}
 			
 		} else {
 			throw new IllegalStateException("Illegal opcode");
 		}
 		
-		m.setProgramCounter(nextInstAddr);
+		s.setProgramCounter(nextInstAddr);
 	}
+	
+	
+	private Executor() {}
 	
 }

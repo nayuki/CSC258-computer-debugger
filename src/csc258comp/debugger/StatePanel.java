@@ -23,6 +23,8 @@ import javax.swing.SwingConstants;
 
 import csc258comp.compiler.Program;
 import csc258comp.machine.impl.Executor;
+import csc258comp.machine.impl.SimpleMachine;
+import csc258comp.machine.model.Machine;
 import csc258comp.machine.model.MachineState;
 import csc258comp.machine.model.MachineStateListener;
 
@@ -38,7 +40,7 @@ class StatePanel extends JPanel implements MachineStateListener {
 	
 	private Set<Integer> breakpoints;
 	
-	private Executor executor = new Executor();
+	private Machine machine = new SimpleMachine(System.in, System.out);
 	
 	private final JTextField programCounter;
 	private final JTextField accumulator;
@@ -216,7 +218,7 @@ class StatePanel extends JPanel implements MachineStateListener {
 				nextInstruction.setBackground(unchangedColor);
 				oldConditionCode = machineState.getConditionCode();
 				oldProgramCounter = machineState.getProgramCounter();
-				machineState.step(executor);
+				Executor.step(machine);
 			} catch (IOException ex) {
 				throw new RuntimeException(ex);
 			}
@@ -233,7 +235,7 @@ class StatePanel extends JPanel implements MachineStateListener {
 				do {
 					if (machineState.isHalted())
 						return;
-					machineState.step(executor);
+					Executor.step(machine);
 				} while (!breakpoints.contains(machineState.getProgramCounter()));
 				programCounter.setBackground(unchangedColor);
 				accumulator.setBackground(unchangedColor);

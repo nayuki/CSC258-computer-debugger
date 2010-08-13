@@ -1,11 +1,9 @@
 package csc258comp.debugger;
 
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
 import csc258comp.compiler.Program;
-import csc258comp.machine.impl.Executor;
 import csc258comp.machine.impl.SimpleMachineState;
 import csc258comp.machine.model.MachineState;
 import csc258comp.machine.model.MachineStateListener;
@@ -110,11 +108,6 @@ public final class ProbedMachineState implements MachineState {
 	
 	public void addListener(MachineStateListener listener) {
 		listeners.add(listener);
-	}
-	
-	
-	public void step(Executor e) throws IOException {
-		e.step(this);
 	}
 	
 }
