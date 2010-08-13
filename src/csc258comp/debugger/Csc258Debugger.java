@@ -9,7 +9,7 @@ import javax.swing.*;
 import csc258comp.compiler.*;
 
 
-public class Main {
+public class Csc258Debugger {
 	
 	public static void main(String[] args) throws IOException {
 		SourceCode s = SourceCode.readFile(new File(args[0]));
