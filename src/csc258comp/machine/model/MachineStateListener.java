@@ -5,16 +5,16 @@ import csc258comp.compiler.Program;
 
 public interface MachineStateListener {
 	
-	public void haltedChanged(MachineState m);
+	public void haltedChanged(Machine m);
 	
-	public void programCounterChanged(MachineState m);
+	public void programCounterChanged(Machine m);
 	
-	public void accumulatorChanged(MachineState m);
+	public void accumulatorChanged(Machine m);
 	
-	public void conditionCodeChanged(MachineState m);
+	public void conditionCodeChanged(Machine m);
 	
-	public void memoryChanged(MachineState m, int addr);
+	public void memoryChanged(Machine m, int addr);
 	
-	public void programLoaded(MachineState m, Program p);
+	public void programLoaded(Machine m, Program p);
 	
 }

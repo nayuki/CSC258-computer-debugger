@@ -11,7 +11,6 @@ import csc258comp.compiler.SourceCode;
 import csc258comp.machine.impl.Executor;
 import csc258comp.machine.impl.SimpleMachine;
 import csc258comp.machine.model.Machine;
-import csc258comp.machine.model.MachineState;
 
 
 public class TicTacToeTester {
@@ -26,8 +25,7 @@ public class TicTacToeTester {
 			ByteArrayInputStream in = new ByteArrayInputStream(board);
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			
-			Machine m = new SimpleMachine(in, out);
-			MachineState st = m.getState();
+			Machine st = new SimpleMachine(in, out);
 			st.setHalted(false);
 			st.setProgramCounter(p.getMainAddress());
 			st.setAccumulator(0);
@@ -35,7 +33,7 @@ public class TicTacToeTester {
 			for (int j = 0; j < image.length; j++)
 				st.setMemoryAt(j, image[j]);
 			while (!st.isHalted()) {
-				Executor.step(m);
+				Executor.step(st);
 			}
 			
 			boolean xWins = checkWin(board, (byte)'X');

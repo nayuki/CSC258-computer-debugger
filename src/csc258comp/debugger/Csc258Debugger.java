@@ -31,7 +31,7 @@ public class Csc258Debugger {
 			return;
 		}
 		
-		ProbedMachineState m = new ProbedMachineState();
+		ProbedMachine m = new ProbedMachine(System.in, System.out);
 		StatePanel panel = new StatePanel(m);
 		m.loadProgram(p);
 		

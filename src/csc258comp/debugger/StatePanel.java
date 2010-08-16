@@ -23,9 +23,7 @@ import javax.swing.SwingConstants;
 
 import csc258comp.compiler.Program;
 import csc258comp.machine.impl.Executor;
-import csc258comp.machine.impl.SimpleMachine;
 import csc258comp.machine.model.Machine;
-import csc258comp.machine.model.MachineState;
 import csc258comp.machine.model.MachineStateListener;
 
 
@@ -38,11 +36,9 @@ final class StatePanel extends JPanel implements MachineStateListener {
 	private static final Font monospacedFont = new Font("Monospaced", Font.PLAIN, 12);
 	
 	
-	private ProbedMachineState machineState;
+	private ProbedMachine machineState;
 	
 	private Set<Integer> breakpoints;
-	
-	private Machine machine;
 	
 	private long stepCount;
 	
@@ -61,8 +57,7 @@ final class StatePanel extends JPanel implements MachineStateListener {
 	
 	
 	
-	public StatePanel(final ProbedMachineState machineState) {
-		machine = new SimpleMachine(machineState, System.in, System.out);
+	public StatePanel(final ProbedMachine machineState) {
 		this.machineState = machineState;
 		breakpoints = new HashSet<Integer>();
 		stepCount = 0;
@@ -203,11 +198,11 @@ final class StatePanel extends JPanel implements MachineStateListener {
 	
 	
 	@Override
-	public void haltedChanged(MachineState m) {}
+	public void haltedChanged(Machine m) {}
 	
 	
 	@Override
-	public void programCounterChanged(MachineState m) {
+	public void programCounterChanged(Machine m) {
 		int newProgramCounter = m.getProgramCounter();
 		programCounter.setText(String.format("%06X", newProgramCounter));
 		if (newProgramCounter != ((oldProgramCounter + 1) & 0xFFFFFF))
@@ -229,14 +224,14 @@ final class StatePanel extends JPanel implements MachineStateListener {
 	
 	
 	@Override
-	public void accumulatorChanged(MachineState m) {
+	public void accumulatorChanged(Machine m) {
 		accumulator.setText(String.format("%08X", m.getAccumulator() & 0xFFFFFFFFL));
 		accumulator.setBackground(changedColor);
 	}
 	
 	
 	@Override
-	public void conditionCodeChanged(MachineState m) {
+	public void conditionCodeChanged(Machine m) {
 		conditionCode.setText(m.getConditionCode() ? "1" : "0");
 		if (m.getConditionCode() != oldConditionCode)
 			conditionCode.setBackground(changedColor);
@@ -244,12 +239,12 @@ final class StatePanel extends JPanel implements MachineStateListener {
 	
 	
 	@Override
-	public void memoryChanged(MachineState m, int addr) {
+	public void memoryChanged(Machine m, int addr) {
 		tableModel.fireTableCellUpdated(addr, 2);
 	}
 	
 	@Override
-	public void programLoaded(MachineState m, Program p) {
+	public void programLoaded(Machine m, Program p) {
 		programCounterChanged(m);
 		programCounter.setBackground(unchangedColor);
 		accumulator.setBackground(unchangedColor);
@@ -274,7 +269,7 @@ final class StatePanel extends JPanel implements MachineStateListener {
 				oldConditionCode = machineState.getConditionCode();
 				oldProgramCounter = machineState.getProgramCounter();
 				if (!machineState.isHalted()) {
-					Executor.step(machine);
+					Executor.step(machineState);
 					stepCount++;
 					stepCountField.setText(Long.toString(stepCount));
 				}
@@ -293,7 +288,7 @@ final class StatePanel extends JPanel implements MachineStateListener {
 			try {
 				machineState.removeListener(StatePanel.this);
 				while (!machineState.isHalted()) {
-					Executor.step(machine);
+					Executor.step(machineState);
 					stepCount++;
 					stepCountField.setText(Long.toString(stepCount));
 					if (breakpoints.contains(machineState.getProgramCounter()))

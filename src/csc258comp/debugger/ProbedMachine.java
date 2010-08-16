@@ -1,23 +1,26 @@
 package csc258comp.debugger;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.HashSet;
 import java.util.Set;
 
 import csc258comp.compiler.Program;
-import csc258comp.machine.impl.SimpleMachineState;
-import csc258comp.machine.model.MachineState;
+import csc258comp.machine.impl.SimpleMachine;
+import csc258comp.machine.model.Machine;
 import csc258comp.machine.model.MachineStateListener;
 
 
-public final class ProbedMachineState implements MachineState {
+public final class ProbedMachine implements Machine {
 	
-	private MachineState state;
+	private Machine state;
 	
 	private Set<MachineStateListener> listeners;
 	
 	
-	public ProbedMachineState() {
-		state = new SimpleMachineState();
+	public ProbedMachine(InputStream in, OutputStream out) {
+		state = new SimpleMachine(in, out);
 		listeners = new HashSet<MachineStateListener>();
 	}
 	
@@ -90,6 +93,18 @@ public final class ProbedMachineState implements MachineState {
 		state.setMemoryAt(addr, val);
 		for (MachineStateListener listener : listeners)
 			listener.memoryChanged(this, addr);
+	}
+	
+	
+	@Override
+	public int input() throws IOException {
+		return state.input();
+	}
+	
+	
+	@Override
+	public boolean output(int b) throws IOException {
+		return state.output(b);
 	}
 	
 	

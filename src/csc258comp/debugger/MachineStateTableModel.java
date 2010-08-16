@@ -5,7 +5,7 @@ import java.util.Set;
 import javax.swing.table.AbstractTableModel;
 
 import csc258comp.compiler.Program;
-import csc258comp.machine.model.MachineState;
+import csc258comp.machine.model.Machine;
 
 
 @SuppressWarnings("serial")
@@ -17,7 +17,7 @@ class MachineStateTableModel extends AbstractTableModel {
 	
 	
 	
-	private MachineState machineState;
+	private Machine machineState;
 	
 	private int rowCount;
 	
@@ -27,7 +27,7 @@ class MachineStateTableModel extends AbstractTableModel {
 	
 	
 	
-	public MachineStateTableModel(MachineState m, Set<Integer> breakpoints) {
+	public MachineStateTableModel(Machine m, Set<Integer> breakpoints) {
 		machineState = m;
 		rowCount = 0;
 		this.breakpoints = breakpoints;

@@ -9,7 +9,6 @@ import csc258comp.compiler.SourceCode;
 import csc258comp.machine.impl.Executor;
 import csc258comp.machine.impl.SimpleMachine;
 import csc258comp.machine.model.Machine;
-import csc258comp.machine.model.MachineState;
 
 
 public class Csc258Runner {
@@ -32,9 +31,7 @@ public class Csc258Runner {
 			return;
 		}
 		
-		Machine m = new SimpleMachine(System.in, System.out);
-		
-		MachineState st = m.getState();
+		Machine st = new SimpleMachine(System.in, System.out);
 		st.setHalted(false);
 		st.setProgramCounter(p.getMainAddress());
 		st.setAccumulator(0);
@@ -45,7 +42,7 @@ public class Csc258Runner {
 			st.setMemoryAt(j, image[j]);
 		
 		while (!st.isHalted()) {
-			Executor.step(m);
+			Executor.step(st);
 		}
 	}
 	

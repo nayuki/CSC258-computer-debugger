@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import csc258comp.compiler.Program;
 import csc258comp.machine.model.Machine;
-import csc258comp.machine.model.MachineState;
 
 
 public final class Executor {
@@ -15,9 +14,7 @@ public final class Executor {
 	 * @throws IllegalStateException if an invalid opcode is encountered
 	 * @throws IOException if an I/O exception occurs
 	 */
-	public static void step(Machine m) throws IOException {
-		MachineState s = m.getState();
-		
+	public static void step(Machine s) throws IOException {
 		// Do nothing if halted
 		if (s.isHalted())
 			return;
@@ -95,14 +92,14 @@ public final class Executor {
 			}
 			
 		} else if (op == 20) {  // INP
-			int c = m.input();
+			int c = s.input();
 			if (c != -1)
 				s.setAccumulator(c);
 			else
 				nextPc = memAddr;
 			
 		} else if (op == 21) {  // OUT
-			if (m.output(s.getAccumulator() & 0xFF))
+			if (s.output(s.getAccumulator() & 0xFF))
 				;  // Success, do nothing, go to next instruction
 			else
 				nextPc = memAddr;
