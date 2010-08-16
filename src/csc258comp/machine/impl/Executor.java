@@ -75,14 +75,14 @@ public final class Executor {
 			
 		} else if (op == 11) {  // CIF
 			int ival = s.getMemoryAt(memAddr);
-			float fval = (float)ival;
+			float fval = ival;  // Implicit cast to float32
 			int bits = Float.floatToRawIntBits(fval);
 			s.setAccumulator(bits);
 			
 		} else if (op == 12) {  // CFI
 			int bits = s.getMemoryAt(memAddr);
 			float fval = Float.intBitsToFloat(bits);
-			int ival = (int)Math.round(fval);
+			int ival = Math.round(fval);
 			s.setAccumulator(ival);
 			
 		} else if (op >= 16 && op <= 19) {  // BUN, BZE, BSA, BIN
