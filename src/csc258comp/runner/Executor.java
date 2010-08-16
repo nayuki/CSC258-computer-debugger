@@ -2,7 +2,6 @@ package csc258comp.runner;
 
 import java.io.IOException;
 
-import csc258comp.compiler.Program;
 
 
 public final class Executor {

@@ -1,7 +1,7 @@
 package csc258comp.debugger;
 
-import csc258comp.compiler.Program;
 import csc258comp.runner.Machine;
+import csc258comp.runner.Program;
 
 
 public interface MachineStateListener {

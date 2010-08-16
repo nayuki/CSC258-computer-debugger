@@ -1,4 +1,4 @@
-package csc258comp.compiler;
+package csc258comp.runner;
 
 import java.util.Map;
 

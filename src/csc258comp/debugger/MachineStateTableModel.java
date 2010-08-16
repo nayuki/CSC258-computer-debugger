@@ -4,8 +4,8 @@ import java.util.Set;
 
 import javax.swing.table.AbstractTableModel;
 
-import csc258comp.compiler.Program;
 import csc258comp.runner.Machine;
+import csc258comp.runner.Program;
 
 
 @SuppressWarnings("serial")

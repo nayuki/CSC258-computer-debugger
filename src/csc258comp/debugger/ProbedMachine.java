@@ -6,8 +6,8 @@ import java.io.OutputStream;
 import java.util.HashSet;
 import java.util.Set;
 
-import csc258comp.compiler.Program;
 import csc258comp.runner.Machine;
+import csc258comp.runner.Program;
 import csc258comp.runner.SimpleMachine;
 
 

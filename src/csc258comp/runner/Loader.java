@@ -1,6 +1,5 @@
 package csc258comp.runner;
 
-import csc258comp.compiler.Program;
 
 public final class Loader {
 	

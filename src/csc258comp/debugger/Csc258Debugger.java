@@ -8,8 +8,8 @@ import javax.swing.JFrame;
 
 import csc258comp.compiler.CompilationException;
 import csc258comp.compiler.Csc258Compiler;
-import csc258comp.compiler.Program;
 import csc258comp.compiler.SourceCode;
+import csc258comp.runner.Program;
 
 
 public class Csc258Debugger {
