@@ -44,4 +44,9 @@ public final class Fragment {
 		return references;
 	}
 	
+	
+	public String getSourceLine(int index) {
+		return imageSourceCode.get(index);
+	}
+	
 }
