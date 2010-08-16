@@ -50,6 +50,13 @@ public final class IntBuffer {
 	}
 	
 	
+	public void append(int[] vals) {
+		ensureCapacity(length + values.length);
+		System.arraycopy(values, length, vals, 0, vals.length);
+		length += vals.length;
+	}
+	
+	
 	public int[] toArray() {
 		return Arrays.copyOf(values, length);
 	}
