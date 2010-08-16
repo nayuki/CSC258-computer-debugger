@@ -27,28 +27,28 @@
 				<th>Description</th>
 			</thead>
 			<tbody>
-				<tr><td>LDA <var>m</var></td><td>Load accumulator</td><td>Load the contents of memory location <var>m</var> into AC.</td></tr>
-				<tr><td>STA <var>m</var></td><td>Store accumulator</td><td>Store the contents of AC at memory location <var>m</var>.</td></tr>
-				<tr><td>ADD <var>m</var></td><td>Add</td><td>Integer add the contents of memory location <var>m</var> to the contents of AC and put the sum in AC; if overflow, E is 1, otherwise E is 0.</td></tr>
-				<tr><td>SUB <var>m</var></td><td>Subtract</td><td>Integer subtract the contents of memory location <var>m</var> from the contents of AC and put the difference in AC; if overflow, E is 1, otherwise E is 0.</td></tr>
-				<tr><td>MUL <var>m</var></td><td>Multiply</td><td>Integer multiply the contents of AC by the contents of memory location <var>m</var> and put the product in AC; if overflow, E is 1, otherwise E is 0.</td></tr>
-				<tr><td>DIV <var>m</var></td><td>Divide</td><td>Integer divide the contents of the accumulator by the contents of memory location <var>m</var> and put the quotient in AC; if divisor is 0, E is 1, otherwise E is 0.</td></tr>
-				<tr><td>MOD <var>m</var></td><td>Modulo</td><td>Integer divide the contents of the accumulator by the contents of memory location <var>m</var> and put the remainder in AC; if divisor is 0, E is 1, otherwise E is 0.</td></tr>
-				<tr><td>FLA <var>m</var></td><td>Floating add</td><td>Floating-point add the contents of memory location <var>m</var> to the contents of AC and put the sum in AC; if overflow, E is 1, otherwise E is 0.</td></tr>
-				<tr><td>FLS <var>m</var></td><td>Floating subtract</td><td>Floating-point subtract the contents of memory location <var>m</var> from the contents of AC and put the difference in AC; if overflow, E is 1, otherwise E is 0.</td></tr>
-				<tr><td>FLM <var>m</var></td><td>Floating multiply</td><td>Floating-point multiply the contents of AC by the contents of memory location <var>m</var> and put the product in AC; if overflow, E is 1, otherwise E is 0.</td></tr>
-				<tr><td>FLD <var>m</var></td><td>Floating divide</td><td>Floating-point divide the contents of the accumulator by the contents of memory location <var>m</var> and put the quotient in AC; if divisor is 0 or overflow, E is 1, otherwise E is 0.</td></tr>
-				<tr><td>CIF <var>m</var></td><td>Convert integer to float</td><td>Load the contents of memory location <var>m</var> into AC and convert from integer to float.</td></tr>
-				<tr><td>CFI <var>m</var></td><td>Convert float to integer</td><td>Load the contents of memory location <var>m</var> into AC and convert from float to the nearest integer.</td></tr>
-				<tr><td>AND <var>m</var></td><td>AND</td><td>AND each bit of AC with the corresponding bit of memory location <var>m</var> and put the result in AC; if the result is all 0s, E is 0, otherwise E is 1.</td></tr>
-				<tr><td>IOR <var>m</var></td><td>Inclusive OR</td><td>OR each bit of AC with the corresponding bit of memory location <var>m</var> and put the result in AC; if the result is all 0s, E is 0, otherwise E is 1.</td></tr>
-				<tr><td>XOR <var>m</var></td><td>Exclusive OR</td><td>XOR each bit of AC with the corresponding bit of memory location <var>m</var> and put the result in AC; if the result is all 0s, E is 0, otherwise E is 1.</td></tr>
-				<tr><td>BUN <var>m</var></td><td>Branch unconditional</td><td>Branch to memory location <var>m</var>.</td></tr>
-				<tr><td>BZE <var>m</var></td><td>Branch on zero E</td><td>If E is 0, branch to memory location <var>m</var>.</td></tr>
-				<tr><td>BSA <var>m</var></td><td>Branch and save address</td><td>Store the address of the next instruction (i.e., following this instruction) at memory location <var>m</var>, and branch to memory location <var>m</var> + 1.</td></tr>
-				<tr><td>BIN <var>m</var></td><td>Branch indirect</td><td>Branch to the memory location whose address is contained in memory location <var>m</var>.</td></tr>
-				<tr><td>INP <var>m</var></td><td>Input</td><td>If the input port has a byte of information ready, put it in the low-order (rightmost) 8 bits of AC and 0s in the high-order 24 bits; otherwise branch to memory location <var>m</var>.</td></tr>
-				<tr><td>OUT <var>m</var></td><td>Output</td><td>If the output port is ready to receive a byte of information, send the low-order 8 bits of AC; otherwise branch to memory location <var>m</var>.</td></tr>
+				<tr><td><code>LDA </code><var>m</var></td><td>Load accumulator</td><td>Load the contents of memory location <var>m</var> into AC.</td></tr>
+				<tr><td><code>STA </code><var>m</var></td><td>Store accumulator</td><td>Store the contents of AC at memory location <var>m</var>.</td></tr>
+				<tr><td><code>ADD </code><var>m</var></td><td>Add</td><td>Integer add the contents of memory location <var>m</var> to the contents of AC and put the sum in AC; if overflow, E is 1, otherwise E is 0.</td></tr>
+				<tr><td><code>SUB </code><var>m</var></td><td>Subtract</td><td>Integer subtract the contents of memory location <var>m</var> from the contents of AC and put the difference in AC; if overflow, E is 1, otherwise E is 0.</td></tr>
+				<tr><td><code>MUL </code><var>m</var></td><td>Multiply</td><td>Integer multiply the contents of AC by the contents of memory location <var>m</var> and put the product in AC; if overflow, E is 1, otherwise E is 0.</td></tr>
+				<tr><td><code>DIV </code><var>m</var></td><td>Divide</td><td>Integer divide the contents of the accumulator by the contents of memory location <var>m</var> and put the quotient in AC; if divisor is 0, E is 1, otherwise E is 0.</td></tr>
+				<tr><td><code>MOD </code><var>m</var></td><td>Modulo</td><td>Integer divide the contents of the accumulator by the contents of memory location <var>m</var> and put the remainder in AC; if divisor is 0, E is 1, otherwise E is 0.</td></tr>
+				<tr><td><code>FLA </code><var>m</var></td><td>Floating add</td><td>Floating-point add the contents of memory location <var>m</var> to the contents of AC and put the sum in AC; if overflow, E is 1, otherwise E is 0.</td></tr>
+				<tr><td><code>FLS </code><var>m</var></td><td>Floating subtract</td><td>Floating-point subtract the contents of memory location <var>m</var> from the contents of AC and put the difference in AC; if overflow, E is 1, otherwise E is 0.</td></tr>
+				<tr><td><code>FLM </code><var>m</var></td><td>Floating multiply</td><td>Floating-point multiply the contents of AC by the contents of memory location <var>m</var> and put the product in AC; if overflow, E is 1, otherwise E is 0.</td></tr>
+				<tr><td><code>FLD </code><var>m</var></td><td>Floating divide</td><td>Floating-point divide the contents of the accumulator by the contents of memory location <var>m</var> and put the quotient in AC; if divisor is 0 or overflow, E is 1, otherwise E is 0.</td></tr>
+				<tr><td><code>CIF </code><var>m</var></td><td>Convert integer to float</td><td>Load the contents of memory location <var>m</var> into AC and convert from integer to float.</td></tr>
+				<tr><td><code>CFI </code><var>m</var></td><td>Convert float to integer</td><td>Load the contents of memory location <var>m</var> into AC and convert from float to the nearest integer.</td></tr>
+				<tr><td><code>AND </code><var>m</var></td><td>AND</td><td>AND each bit of AC with the corresponding bit of memory location <var>m</var> and put the result in AC; if the result is all 0s, E is 0, otherwise E is 1.</td></tr>
+				<tr><td><code>IOR </code><var>m</var></td><td>Inclusive OR</td><td>OR each bit of AC with the corresponding bit of memory location <var>m</var> and put the result in AC; if the result is all 0s, E is 0, otherwise E is 1.</td></tr>
+				<tr><td><code>XOR </code><var>m</var></td><td>Exclusive OR</td><td>XOR each bit of AC with the corresponding bit of memory location <var>m</var> and put the result in AC; if the result is all 0s, E is 0, otherwise E is 1.</td></tr>
+				<tr><td><code>BUN </code><var>m</var></td><td>Branch unconditional</td><td>Branch to memory location <var>m</var>.</td></tr>
+				<tr><td><code>BZE </code><var>m</var></td><td>Branch on zero E</td><td>If E is 0, branch to memory location <var>m</var>.</td></tr>
+				<tr><td><code>BSA </code><var>m</var></td><td>Branch and save address</td><td>Store the address of the next instruction (i.e., following this instruction) at memory location <var>m</var>, and branch to memory location <var>m</var> + 1.</td></tr>
+				<tr><td><code>BIN </code><var>m</var></td><td>Branch indirect</td><td>Branch to the memory location whose address is contained in memory location <var>m</var>.</td></tr>
+				<tr><td><code>INP </code><var>m</var></td><td>Input</td><td>If the input port has a byte of information ready, put it in the low-order (rightmost) 8 bits of AC and 0s in the high-order 24 bits; otherwise branch to memory location <var>m</var>.</td></tr>
+				<tr><td><code>OUT </code><var>m</var></td><td>Output</td><td>If the output port is ready to receive a byte of information, send the low-order 8 bits of AC; otherwise branch to memory location <var>m</var>.</td></tr>
 			</tbody>
 		</table>
 		
@@ -60,17 +60,17 @@
 				<th>Description</th>
 			</thead>
 			<tbody>
-				<tr><td>I 123</td><td>Data word, integer format</td></tr>
-				<tr><td>F -1.2</td><td>Data word, floating-point format</td></tr>
-				<tr><td>C 'abc'</td><td>Data word, character format, in reverse order padded on left with 0s to 4 characters</td></tr>
-				<tr><td>B 1010</td><td>Data word, binary format, padded on left with 0s to 32 bits</td></tr>
-				<tr><td>H 5BF2</td><td>Data word, hexadecimal integer format, padded on left with 0s to 8 digits</td></tr>
-				<tr><td>A there</td><td>Data word, address (identifier or number)</td></tr>
-				<tr><td>W 123</td><td>The specified number of data words, with no initialization</td></tr>
+				<tr><td><code>I 123</code></td><td>Data word, integer format</td></tr>
+				<tr><td><code>F -1.2</code></td><td>Data word, floating-point format</td></tr>
+				<tr><td><code>C 'abc'</code></td><td>Data word, character format, in reverse order padded on left with 0s to 4 characters</td></tr>
+				<tr><td><code>B 1010</code></td><td>Data word, binary format, padded on left with 0s to 32 bits</td></tr>
+				<tr><td><code>H 5BF2</code></td><td>Data word, hexadecimal integer format, padded on left with 0s to 8 digits</td></tr>
+				<tr><td><code>A there</code></td><td>Data word, address (identifier or number)</td></tr>
+				<tr><td><code>W 123</code></td><td>The specified number of data words, with no initialization</td></tr>
 			</tbody>
 		</table>
 		
-		<p>An assembly language program consists of a sequence of lines; each line says what's in one word of memory (except for the W data format). A line begins with zero or more labels; each label is an identifier followed by a colon. After that, the line is either in instruction format or in data format. Instruction format is an op-code followed by an address. The op-code is three letters, and the address is either a number or an identifier. Data format is one of I (for two's complement integer), F (for IEEE floating point number), C (for ASCII character), B (for binary), H (for hexadecimal), A (for address), or W (for word) followed by the indicated data. The W format reserves the indicated number of words of memory. The remainder of any line can be used for comments. W 0 can be used just for a label, or just for a comment. Here is a sequence of example lines (this is not a sensible program).</p>
+		<p>An assembly language program consists of a sequence of lines; each line says what's in one word of memory (except for the <code>W</code> data format). A line begins with zero or more labels; each label is an identifier followed by a colon. After that, the line is either in instruction format or in data format. Instruction format is an op-code followed by an address. The op-code is three letters, and the address is either a number or an identifier. Data format is one of <code>I</code> (for two's complement integer), <code>F</code> (for IEEE floating point number), <code>C</code> (for ASCII character), <code>B</code> (for binary), <code>H</code> (for hexadecimal), <code>A</code> (for address), or <code>W</code> (for word) followed by the indicated data. The <code>W</code> format reserves the indicated number of words of memory. The remainder of any line can be used for comments. <code>W 0</code> can be used just for a label, or just for a comment. Here is a sequence of example lines (this is not a sensible program).</p>
 		
 		<pre> main: LDA x
        ADD c3
