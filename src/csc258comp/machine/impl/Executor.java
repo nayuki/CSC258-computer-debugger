@@ -11,10 +11,9 @@ public final class Executor {
 	/**
 	 * Executes one instruction on the specified machine.
 	 * @param m the machine to execute on
-	 * @throws IllegalStateException if an invalid opcode is encountered
-	 * @throws IOException if an I/O exception occurs
+	 * @throws MachineException if an invalid opcode is encountered or if an I/O exception occurs
 	 */
-	public static void step(Machine m) throws IOException {
+	public static void step(Machine m) {
 		// Do nothing if halted
 		if (m.isHalted())
 			return;
@@ -92,20 +91,28 @@ public final class Executor {
 			}
 			
 		} else if (op == 20) {  // INP
-			int c = m.input();
-			if (c != -1)
-				m.setAccumulator(c);
-			else
-				nextPc = memAddr;
+			try {
+				int c = m.input();
+				if (c != -1)
+					m.setAccumulator(c);
+				else
+					nextPc = memAddr;
+			} catch (IOException e) {
+				throw new MachineException("Input stream exception", e);
+			}
 			
 		} else if (op == 21) {  // OUT
-			if (m.output(m.getAccumulator() & 0xFF))
-				;  // Success, do nothing, go to next instruction
-			else
-				nextPc = memAddr;
+			try {
+				if (m.output(m.getAccumulator() & 0xFF))
+					;  // Success, do nothing, go to next instruction
+				else
+					nextPc = memAddr;
+			} catch (IOException e) {
+				throw new MachineException("Output stream exception", e);
+			}
 			
 		} else {  // Illegal
-			throw new IllegalStateException("Illegal opcode");
+			throw new MachineException("Illegal opcode");
 		}
 		
 		// Set next program counter

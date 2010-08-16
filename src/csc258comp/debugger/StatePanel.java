@@ -8,7 +8,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,6 +22,7 @@ import javax.swing.SwingConstants;
 
 import csc258comp.compiler.Program;
 import csc258comp.machine.impl.Executor;
+import csc258comp.machine.impl.MachineException;
 import csc258comp.machine.model.Machine;
 
 
@@ -272,7 +272,7 @@ final class StatePanel extends JPanel implements MachineStateListener {
 					stepCount++;
 					stepCountField.setText(Long.toString(stepCount));
 				}
-			} catch (IOException ex) {
+			} catch (MachineException ex) {
 				throw new RuntimeException(ex);
 			}
 		}
@@ -297,7 +297,7 @@ final class StatePanel extends JPanel implements MachineStateListener {
 				accumulatorChanged(machineState);
 				conditionCodeChanged(machineState);
 				machineState.addListener(StatePanel.this);
-			} catch (IOException ex) {
+			} catch (MachineException ex) {
 				throw new RuntimeException(ex);
 			}
 		}
