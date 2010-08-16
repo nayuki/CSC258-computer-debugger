@@ -6,6 +6,10 @@ import java.io.IOException;
 
 public final class Executor {
 	
+	public static final int OPSYS_ADDRESS = 0xFF0000;
+	
+	
+	
 	/**
 	 * Executes one instruction on the specified machine.
 	 * @param m the machine to execute on
