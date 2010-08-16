@@ -14,4 +14,8 @@ public final class Loader {
 			m.setMemoryAt(j, image[j]);
 	}
 	
+	
+	
+	private Loader() {}
+	
 }

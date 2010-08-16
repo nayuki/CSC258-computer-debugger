@@ -33,4 +33,8 @@ public final class InstructionSet {
 		return -1;
 	}
 	
+	
+	
+	private InstructionSet() {}
+	
 }
