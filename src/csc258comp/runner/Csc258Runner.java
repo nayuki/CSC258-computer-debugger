@@ -17,14 +17,8 @@ public class Csc258Runner {
 		try {
 			p = Csc258Compiler.compile(sc);
 		} catch (CompilationException e) {
-			SortedMap<Integer,String> errorMessages = e.getErrorMessages();
-			SourceCode sourceCode = e.getSourceCode();
-			for (int line : errorMessages.keySet()) {
-				System.err.printf("Line %d: %s%n", line + 1, errorMessages.get(line));
-				System.err.println(sourceCode.getLineAt(line));
-				System.err.println();
-			}
-			System.err.printf("%d error%s%n", errorMessages.size(), errorMessages.size() == 1 ? "" : "s");
+			printCompilerErrors(e.getErrorMessages(), e.getSourceCode());
+			System.exit(1);
 			return;
 		}
 		
@@ -42,6 +36,17 @@ public class Csc258Runner {
 				cause.printStackTrace();
 			System.exit(1);
 		}
+	}
+	
+	
+	private static void printCompilerErrors(SortedMap<Integer,String> msgs, SourceCode sc) {
+		String filename = sc.getFile() != null ? sc.getFile().getName() : "(no file)";
+		for (int line : msgs.keySet()) {
+			System.err.printf("%s:%d: %s%n", filename, line + 1, msgs.get(line));
+			System.err.println(sc.getLineAt(line));
+			System.err.println();
+		}
+		System.err.printf("%d error%s%n", msgs.size(), msgs.size() == 1 ? "" : "s");
 	}
 	
 }

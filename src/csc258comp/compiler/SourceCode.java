@@ -26,18 +26,32 @@ public final class SourceCode implements Iterable<String> {
 		} finally {
 			in.close();
 		}
-		return new SourceCode(lines);
+		return new SourceCode(file, lines);
 	}
 	
 	
+	
+	private File file;
 	
 	private List<String> lines;
 	
 	
+	
 	public SourceCode(List<String> lines) {
+		this(null, lines);
+	}
+	
+	
+	public SourceCode(File file, List<String> lines) {
+		this.file = file;
 		this.lines = Collections.unmodifiableList(new ArrayList<String>(lines));
 	}
 	
+	
+	
+	public File getFile() {
+		return file;
+	}
 	
 	
 	public int getLineCount() {
