@@ -1,7 +1,11 @@
 <!-- Source: http://www.cs.toronto.edu/~hehner/csc258/comp.html -->
-<html><head>
-<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"><title>The CSC 258 Computer</title></head><body bgcolor="white">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+<title>The CSC 258 Computer</title>
+</head>
 
+<body bgcolor="white">
 <h1>the CSC 258 Computer</h1>
 
 <p>- up to 64 Megabytes of memory, 4 bytes per word, word addressable
@@ -9,9 +13,9 @@
 <br>- accumulator, 32 bits (AC)
 <br>- condition code, 1 bit (E)
 <br>- input port, 8-bit parallel
-<br>- output port, 8-bit parallel
+<br>- output port, 8-bit parallel</p>
 
-</p><h2>Instructions</h2>
+<h2>Instructions</h2>
 
 <p><table>
 
@@ -93,13 +97,18 @@ port is ready to receive a byte of information, send the low-order eight
 
 </p><h2>Data</h2>
 
-<p><table><tbody><tr><td valign="top" width="70">I 123</td><td valign="top">Data word, integer format</td></tr>
+<p><table>
+<tbody>
+<tr><td valign="top" width="70">I 123</td><td valign="top">Data word, integer format</td></tr>
 <tr><td valign="top">F -1.2</td><td valign="top">Data word, floating-point format</td></tr>
 <tr><td valign="top">C 'abc'</td><td valign="top">Data word, character format, in reverse order padded on left with 0s to 4 characters</td></tr>
 <tr><td valign="top">B 1010</td><td valign="top">Data word, binary format, padded on left with 0s to 32 bits</td></tr>
 <tr><td valign="top">H 5BF2</td><td valign="top">Data word, hexadecimal format, padded on left with 0s to 8 digits</td></tr>
 <tr><td valign="top">A there</td><td valign="top">Data word, address (identifier or number)</td></tr>
-<tr><td valign="top">W 123</td><td valign="top">The specified number of data words, with no initialization</td></tr></tbody></table><br>
+<tr><td valign="top">W 123</td><td valign="top">The specified number of data words, with no initialization</td></tr>
+</tbody>
+</table>
+<br>
 
 An Assembly Language program consists of a sequence of 
 lines;  each line says what's in one word of memory (except for
@@ -119,7 +128,9 @@ remainder of any line can be used for comments.  W 0 can be used just for a
 label, or just for a comment.  Here 
 is a sequence of example lines (this is not a sensible 
 program).<br>
-</p><pre> main: LDA x
+</p>
+
+<pre> main: LDA x
        ADD c3
        STA y
        BUN there
@@ -128,6 +139,7 @@ program).<br>
    c3: I   3
 there: BUN opsys
 </pre>
+
 Execution starts at label <code>main</code> .
 Execution of your program ends with a branch to 
 the operating system at address <code>opsys</code>.  
@@ -135,4 +147,5 @@ All identifiers used as addresses, except <code>opsys</code>, should
 be defined as labels.  An identifier cannot be defined more 
 than once as a label.<br>
 
-</body></html>
+</body>
+</html>
