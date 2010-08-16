@@ -1,4 +1,4 @@
-package csc258comp.machine.model;
+package csc258comp.runner;
 
 import java.io.IOException;
 

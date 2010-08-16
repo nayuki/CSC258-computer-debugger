@@ -1,10 +1,9 @@
-package csc258comp.machine.impl;
+package csc258comp.runner;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import csc258comp.machine.model.Machine;
 
 
 public final class SimpleMachine implements Machine {

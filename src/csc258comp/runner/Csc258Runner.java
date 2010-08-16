@@ -1,3 +1,4 @@
+package csc258comp.runner;
 import java.io.File;
 import java.io.IOException;
 import java.util.SortedMap;
@@ -6,9 +7,6 @@ import csc258comp.compiler.CompilationException;
 import csc258comp.compiler.Csc258Compiler;
 import csc258comp.compiler.Program;
 import csc258comp.compiler.SourceCode;
-import csc258comp.machine.impl.Executor;
-import csc258comp.machine.impl.SimpleMachine;
-import csc258comp.machine.model.Machine;
 
 
 public class Csc258Runner {

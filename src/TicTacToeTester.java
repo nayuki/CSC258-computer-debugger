@@ -8,9 +8,9 @@ import csc258comp.compiler.CompilationException;
 import csc258comp.compiler.Csc258Compiler;
 import csc258comp.compiler.Program;
 import csc258comp.compiler.SourceCode;
-import csc258comp.machine.impl.Executor;
-import csc258comp.machine.impl.SimpleMachine;
-import csc258comp.machine.model.Machine;
+import csc258comp.runner.Executor;
+import csc258comp.runner.Machine;
+import csc258comp.runner.SimpleMachine;
 
 
 public class TicTacToeTester {

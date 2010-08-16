@@ -5,7 +5,7 @@ import java.util.Set;
 import javax.swing.table.AbstractTableModel;
 
 import csc258comp.compiler.Program;
-import csc258comp.machine.model.Machine;
+import csc258comp.runner.Machine;
 
 
 @SuppressWarnings("serial")

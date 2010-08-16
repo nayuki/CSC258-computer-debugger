@@ -7,8 +7,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import csc258comp.compiler.Program;
-import csc258comp.machine.impl.SimpleMachine;
-import csc258comp.machine.model.Machine;
+import csc258comp.runner.Machine;
+import csc258comp.runner.SimpleMachine;
 
 
 public final class ProbedMachine implements Machine {
