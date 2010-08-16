@@ -7,6 +7,7 @@ import java.util.SortedMap;
 import javax.swing.JFrame;
 
 import csc258comp.compiler.CompilationException;
+import csc258comp.compiler.Csc258Compiler;
 import csc258comp.compiler.Program;
 import csc258comp.compiler.SourceCode;
 
@@ -17,7 +18,7 @@ public class Csc258Debugger {
 		SourceCode s = SourceCode.readFile(new File(args[0]));
 		Program p;
 		try {
-			p = Program.parseProgram(s);
+			p = Csc258Compiler.compile(s);
 		} catch (CompilationException e) {
 			SortedMap<Integer,String> errorMessages = e.getErrorMessages();
 			SourceCode sourceCode = e.getSourceCode();

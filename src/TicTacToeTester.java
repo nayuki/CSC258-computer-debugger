@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import csc258comp.compiler.CompilationException;
+import csc258comp.compiler.Csc258Compiler;
 import csc258comp.compiler.Program;
 import csc258comp.compiler.SourceCode;
 import csc258comp.machine.impl.Executor;
@@ -17,7 +18,7 @@ public class TicTacToeTester {
 	
 	public static void main(String[] args) throws IOException, CompilationException {
 		SourceCode sc = SourceCode.readFile(new File(args[0]));
-		Program p = Program.parseProgram(sc);
+		Program p = Csc258Compiler.compile(sc);
 		int[] image = p.getImage();
 		
 		for (int i = 0; i < 19683; i++) {

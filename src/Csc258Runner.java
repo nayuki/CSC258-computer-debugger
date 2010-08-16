@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.util.SortedMap;
 
 import csc258comp.compiler.CompilationException;
+import csc258comp.compiler.Csc258Compiler;
 import csc258comp.compiler.Program;
 import csc258comp.compiler.SourceCode;
 import csc258comp.machine.impl.Executor;
@@ -18,7 +19,7 @@ public class Csc258Runner {
 		
 		Program p;
 		try {
-			p = Program.parseProgram(sc);
+			p = Csc258Compiler.compile(sc);
 		} catch (CompilationException e) {
 			SortedMap<Integer,String> errorMessages = e.getErrorMessages();
 			SourceCode sourceCode = e.getSourceCode();
