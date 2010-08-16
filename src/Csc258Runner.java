@@ -14,7 +14,7 @@ import csc258comp.machine.model.MachineState;
 
 public class Csc258Runner {
 	
-	public static void main(String[] args) throws IOException, CompilationException {
+	public static void main(String[] args) throws IOException {
 		SourceCode sc = SourceCode.readFile(new File(args[0]));
 		
 		Program p;
