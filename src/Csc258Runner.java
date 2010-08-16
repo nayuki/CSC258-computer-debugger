@@ -31,18 +31,18 @@ public class Csc258Runner {
 			return;
 		}
 		
-		Machine st = new SimpleMachine(System.in, System.out);
-		st.setHalted(false);
-		st.setProgramCounter(p.getMainAddress());
-		st.setAccumulator(0);
-		st.setConditionCode(false);
+		Machine m = new SimpleMachine(System.in, System.out);
+		m.setHalted(false);
+		m.setProgramCounter(p.getMainAddress());
+		m.setAccumulator(0);
+		m.setConditionCode(false);
 		
 		int[] image = p.getImage();
 		for (int j = 0; j < image.length; j++)
-			st.setMemoryAt(j, image[j]);
+			m.setMemoryAt(j, image[j]);
 		
-		while (!st.isHalted()) {
-			Executor.step(st);
+		while (!m.isHalted()) {
+			Executor.step(m);
 		}
 	}
 	

@@ -14,13 +14,13 @@ import csc258comp.machine.model.MachineStateListener;
 
 public final class ProbedMachine implements Machine {
 	
-	private Machine state;
+	private Machine machine;
 	
 	private Set<MachineStateListener> listeners;
 	
 	
 	public ProbedMachine(InputStream in, OutputStream out) {
-		state = new SimpleMachine(in, out);
+		machine = new SimpleMachine(in, out);
 		listeners = new HashSet<MachineStateListener>();
 	}
 	
@@ -28,13 +28,13 @@ public final class ProbedMachine implements Machine {
 	
 	@Override
 	public boolean isHalted() {
-		return state.isHalted();
+		return machine.isHalted();
 	}
 	
 	
 	@Override
 	public void setHalted(boolean halted) {
-		state.setHalted(halted);
+		machine.setHalted(halted);
 		for (MachineStateListener listener : listeners)
 			listener.haltedChanged(this);
 	}
@@ -42,13 +42,13 @@ public final class ProbedMachine implements Machine {
 	
 	@Override
 	public int getProgramCounter() {
-		return state.getProgramCounter();
+		return machine.getProgramCounter();
 	}
 	
 	
 	@Override
 	public void setProgramCounter(int addr) {
-		state.setProgramCounter(addr);
+		machine.setProgramCounter(addr);
 		for (MachineStateListener listener : listeners)
 			listener.programCounterChanged(this);
 	}
@@ -56,13 +56,13 @@ public final class ProbedMachine implements Machine {
 	
 	@Override
 	public int getAccumulator() {
-		return state.getAccumulator();
+		return machine.getAccumulator();
 	}
 	
 	
 	@Override
 	public void setAccumulator(int val) {
-		state.setAccumulator(val);
+		machine.setAccumulator(val);
 		for (MachineStateListener listener : listeners)
 			listener.accumulatorChanged(this);
 	}
@@ -70,13 +70,13 @@ public final class ProbedMachine implements Machine {
 	
 	@Override
 	public boolean getConditionCode() {
-		return state.getConditionCode();
+		return machine.getConditionCode();
 	}
 	
 	
 	@Override
 	public void setConditionCode(boolean val) {
-		state.setConditionCode(val);
+		machine.setConditionCode(val);
 		for (MachineStateListener listener : listeners)
 			listener.conditionCodeChanged(this);
 	}
@@ -84,13 +84,13 @@ public final class ProbedMachine implements Machine {
 	
 	@Override
 	public int getMemoryAt(int addr) {
-		return state.getMemoryAt(addr);
+		return machine.getMemoryAt(addr);
 	}
 	
 	
 	@Override
 	public void setMemoryAt(int addr, int val) {
-		state.setMemoryAt(addr, val);
+		machine.setMemoryAt(addr, val);
 		for (MachineStateListener listener : listeners)
 			listener.memoryChanged(this, addr);
 	}
@@ -98,13 +98,13 @@ public final class ProbedMachine implements Machine {
 	
 	@Override
 	public int input() throws IOException {
-		return state.input();
+		return machine.input();
 	}
 	
 	
 	@Override
 	public boolean output(int b) throws IOException {
-		return state.output(b);
+		return machine.output(b);
 	}
 	
 	

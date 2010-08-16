@@ -25,15 +25,15 @@ public class TicTacToeTester {
 			ByteArrayInputStream in = new ByteArrayInputStream(board);
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			
-			Machine st = new SimpleMachine(in, out);
-			st.setHalted(false);
-			st.setProgramCounter(p.getMainAddress());
-			st.setAccumulator(0);
-			st.setConditionCode(false);
+			Machine m = new SimpleMachine(in, out);
+			m.setHalted(false);
+			m.setProgramCounter(p.getMainAddress());
+			m.setAccumulator(0);
+			m.setConditionCode(false);
 			for (int j = 0; j < image.length; j++)
-				st.setMemoryAt(j, image[j]);
-			while (!st.isHalted()) {
-				Executor.step(st);
+				m.setMemoryAt(j, image[j]);
+			while (!m.isHalted()) {
+				Executor.step(m);
 			}
 			
 			boolean xWins = checkWin(board, (byte)'X');

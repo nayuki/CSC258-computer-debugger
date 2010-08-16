@@ -14,51 +14,51 @@ public final class Executor {
 	 * @throws IllegalStateException if an invalid opcode is encountered
 	 * @throws IOException if an I/O exception occurs
 	 */
-	public static void step(Machine s) throws IOException {
+	public static void step(Machine m) throws IOException {
 		// Do nothing if halted
-		if (s.isHalted())
+		if (m.isHalted())
 			return;
 		
 		// Check if halting
-		int pc = s.getProgramCounter();
+		int pc = m.getProgramCounter();
 		if (pc == Program.OPSYS_ADDRESS) {
-			s.setHalted(true);
+			m.setHalted(true);
 			return;
 		}
 		
 		// Fetch instruction
-		int instWord = s.getMemoryAt(pc);
+		int instWord = m.getMemoryAt(pc);
 		int op = instWord >>> 24;
 		int memAddr = instWord & ((1 << 24) - 1);  // The memory address embedded in the instruction word
 		int nextPc = -1;  // -1 is the default value that signifies that nextPc should be pc + 1
 		
 		// Execute instruction
 		if (op == 0) {  // LDA
-			s.setAccumulator(s.getMemoryAt(memAddr));
+			m.setAccumulator(m.getMemoryAt(memAddr));
 			
 		} else if (op == 1) {  // STA
-			s.setMemoryAt(memAddr, s.getAccumulator());
+			m.setMemoryAt(memAddr, m.getAccumulator());
 			
 		} else if (op >= 2 && op <= 6 || op >= 13 && op <= 15) {  // ADD, SUB, MUL, DIV, MOD, AND, IOR, XOR
-			int x = s.getAccumulator();
-			int y = s.getMemoryAt(memAddr);
+			int x = m.getAccumulator();
+			int y = m.getMemoryAt(memAddr);
 			int result;
 			switch (op) {
-				case  2:  result = x + y;  s.setConditionCode(result != (long)x + y);  break;
-				case  3:  result = x - y;  s.setConditionCode(result != (long)x - y);  break;
-				case  4:  result = x * y;  s.setConditionCode(result != (long)x * y);  break;
-				case  5:  result = (y != 0 ? x / y : x);  s.setConditionCode(y == 0);  break;
-				case  6:  result = (y != 0 ? x % y : x);  s.setConditionCode(y == 0);  break;
-				case 13:  result = x & y;  s.setConditionCode(result != 0);  break;
-				case 14:  result = x | y;  s.setConditionCode(result != 0);  break;
-				case 15:  result = x ^ y;  s.setConditionCode(result != 0);  break;
+				case  2:  result = x + y;  m.setConditionCode(result != (long)x + y);  break;
+				case  3:  result = x - y;  m.setConditionCode(result != (long)x - y);  break;
+				case  4:  result = x * y;  m.setConditionCode(result != (long)x * y);  break;
+				case  5:  result = (y != 0 ? x / y : x);  m.setConditionCode(y == 0);  break;
+				case  6:  result = (y != 0 ? x % y : x);  m.setConditionCode(y == 0);  break;
+				case 13:  result = x & y;  m.setConditionCode(result != 0);  break;
+				case 14:  result = x | y;  m.setConditionCode(result != 0);  break;
+				case 15:  result = x ^ y;  m.setConditionCode(result != 0);  break;
 				default:  throw new AssertionError();
 			}
-			s.setAccumulator(result);
+			m.setAccumulator(result);
 			
 		} else if (op >= 7 && op <= 10) {  // FLA, FLS, FLM, FLD
-			float x = Float.intBitsToFloat(s.getAccumulator());
-			float y = Float.intBitsToFloat(s.getMemoryAt(memAddr));
+			float x = Float.intBitsToFloat(m.getAccumulator());
+			float y = Float.intBitsToFloat(m.getMemoryAt(memAddr));
 			float result;
 			switch (op) {
 				case  7:  result = x + y;  break;
@@ -67,39 +67,39 @@ public final class Executor {
 				case 10:  result = (y != 0 ? x / y : x);  break;
 				default:  throw new AssertionError();
 			}
-			s.setAccumulator(Float.floatToRawIntBits(result));
-			s.setConditionCode(Float.isInfinite(result) || op == 10 && y == 0);
+			m.setAccumulator(Float.floatToRawIntBits(result));
+			m.setConditionCode(Float.isInfinite(result) || op == 10 && y == 0);
 			
 		} else if (op == 11) {  // CIF
-			int ival = s.getMemoryAt(memAddr);
+			int ival = m.getMemoryAt(memAddr);
 			float fval = ival;  // Implicit cast to float32
 			int bits = Float.floatToRawIntBits(fval);
-			s.setAccumulator(bits);
+			m.setAccumulator(bits);
 			
 		} else if (op == 12) {  // CFI
-			int bits = s.getMemoryAt(memAddr);
+			int bits = m.getMemoryAt(memAddr);
 			float fval = Float.intBitsToFloat(bits);
 			int ival = Math.round(fval);
-			s.setAccumulator(ival);
+			m.setAccumulator(ival);
 			
 		} else if (op >= 16 && op <= 19) {  // BUN, BZE, BSA, BIN
 			switch (op) {
 				case 16:  nextPc = memAddr;  break;
-				case 17:  nextPc = (s.getConditionCode() ? pc + 1 : memAddr);  break;
-				case 18:  s.setMemoryAt(memAddr, pc + 1);  nextPc = memAddr + 1;  break;
-				case 19:  nextPc = s.getMemoryAt(memAddr);  break;
+				case 17:  nextPc = (m.getConditionCode() ? pc + 1 : memAddr);  break;
+				case 18:  m.setMemoryAt(memAddr, pc + 1);  nextPc = memAddr + 1;  break;
+				case 19:  nextPc = m.getMemoryAt(memAddr);  break;
 				default:  throw new AssertionError();
 			}
 			
 		} else if (op == 20) {  // INP
-			int c = s.input();
+			int c = m.input();
 			if (c != -1)
-				s.setAccumulator(c);
+				m.setAccumulator(c);
 			else
 				nextPc = memAddr;
 			
 		} else if (op == 21) {  // OUT
-			if (s.output(s.getAccumulator() & 0xFF))
+			if (m.output(m.getAccumulator() & 0xFF))
 				;  // Success, do nothing, go to next instruction
 			else
 				nextPc = memAddr;
@@ -111,7 +111,7 @@ public final class Executor {
 		// Set next program counter
 		if (nextPc == -1)
 			nextPc = pc + 1;
-		s.setProgramCounter(nextPc);
+		m.setProgramCounter(nextPc);
 	}
 	
 	
