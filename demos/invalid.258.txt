@@ -1,0 +1,21 @@
+dummy: UND dummy  # Undefined mnemonic
+
+dup: LDA dummy
+dup: STA dummy  # Duplicate label
+
+BUN nowhere  # Undefined label
+
+I asdf  # Not an integer
+I 2147483648  # Integer constant too big
+
+H efg  # Not an integer
+H 100000000  # Integer constant too big
+
+B 100000000000000000000000000000000  # Binary constant too big
+
+F jkl  # Not a floating-point number
+
+A nowhere  # Undefined label
+
+W -1  # Negative size
+W 16777217  # Size exceeds address space
