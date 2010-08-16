@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.util.HashSet;
 import java.util.Set;
 
+import csc258comp.runner.Loader;
 import csc258comp.runner.Machine;
 import csc258comp.runner.Program;
 import csc258comp.runner.SimpleMachine;
@@ -108,13 +109,7 @@ public final class ProbedMachine implements Machine {
 	
 	
 	public void loadProgram(Program prog) {
-		int[] image = prog.getImage();
-		setHalted(false);
-		setProgramCounter(prog.getMainAddress());
-		setAccumulator(0);
-		setConditionCode(false);
-		for (int i = 0; i < image.length; i++)
-			setMemoryAt(i, image[i]);
+		Loader.load(this, prog);
 		for (MachineStateListener listener : listeners)
 			listener.programLoaded(this, prog);
 	}
