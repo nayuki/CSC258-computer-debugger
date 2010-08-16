@@ -1,3 +1,4 @@
+W 0  # Integer constants
 negOne: I   -1
 zero:   I    0
 one:    I    1
@@ -15,18 +16,23 @@ i100:   I  100
 i256:   I  256
 i1000:  I 1000
 
-signBit: H 80000000
-allBits: H FFFFFFFF  # Same as negOne
+W 0  # Integer bitwise constants
+signBit:  H 80000000
+byteMask: H 000000FF
+allBits:  H FFFFFFFF  # Same as negOne
 
+W 0  # Character constants
 cNewLine: H 0A
 cSpace:   H 20
 cZero:    H 30
 
+W 0  # Floating-point constants
 fNegOne: F -1.0
 fZero:   F  0.0
 fOne:    F  1.0
 fTwo:    F  2.0
 
+W 0  # Instruction-related bitwise constants
 ldaBlank: H 00000000
 staBlank: H 01000000
 memMask:  H 00FFFFFF
