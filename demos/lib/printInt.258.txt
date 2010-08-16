@@ -1,0 +1,33 @@
+printInt_val: W 1
+printInt_divisor: W 1
+printInt: W 1
+	LDA one
+	STA printInt_divisor
+printInt_divisorLoop:
+	LDA printInt_val
+	DIV printInt_divisor
+	SUB ten
+	AND signBit
+	BZE printInt_biggenDivisor
+	BUN printInt_printLoop
+printInt_biggenDivisor:
+	LDA printInt_divisor
+	MUL ten
+	STA printInt_divisor
+	BUN printInt_divisorLoop
+printInt_printLoop:
+	LDA printInt_val
+	DIV printInt_divisor
+	MOD ten
+	ADD charZero
+	printInt_out0: OUT printInt_out0
+	LDA printInt_divisor
+	DIV ten
+	STA printInt_divisor
+	IOR zero
+	BZE printInt_ret
+	BUN printInt_printLoop
+printInt_ret:
+	LDA newLine
+	printInt_out1: OUT printInt_out1
+	BIN printInt
