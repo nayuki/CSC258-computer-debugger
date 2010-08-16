@@ -22,7 +22,7 @@ public final class Executor {
 		
 		// Check if halting
 		int pc = m.getProgramCounter();
-		if (pc == Program.OPSYS_ADDRESS) {
+		if (pc == OPSYS_ADDRESS) {
 			m.setHalted(true);
 			return;
 		}

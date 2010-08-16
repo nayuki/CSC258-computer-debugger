@@ -1,0 +1,14 @@
+strAddr: A str 
+str:
+	C 'H'
+	C 'e'
+	C 'l'
+	C 'o'
+	H 0D
+	H 0
+
+main:
+	LDA strAddr
+	STA printStr_str
+	BSA printStr
+	BUN opsys

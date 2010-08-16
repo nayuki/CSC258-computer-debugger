@@ -1,0 +1,33 @@
+negOne: I   -1
+zero:   I    0
+one:    I    1
+two:    I    2
+three:  I    3
+four:   I    4
+five:   I    5
+six:    I    6
+seven:  I    7
+eight:  I    8
+nine:   I    9
+ten:    I   10
+i16:    I   16
+i100:   I  100
+i256:   I  256
+i1000:  I 1000
+
+signBit: H 80000000
+allBits: H FFFFFFFF  # Same as negOne
+
+cNewLine: H 0A
+cSpace:   H 20
+cZero:    H 30
+
+fNegOne: F -1.0
+fZero:   F  0.0
+fOne:    F  1.0
+fTwo:    F  2.0
+
+ldaBlank: H 00000000
+staBlank: H 01000000
+memMask:  H 00FFFFFF
+opMask:   H FF000000

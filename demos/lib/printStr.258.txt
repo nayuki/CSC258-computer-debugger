@@ -1,0 +1,15 @@
+printStr_str: W 1
+printStr: W 1
+	LDA ldaBlank
+	ADD printStr_str
+	STA printStr_load
+printStr_load: W 1
+	IOR zero
+	BZE printStr_ret
+printStr_out: OUT printStr_out
+	LDA printStr_load
+	ADD one
+	STA printStr_load
+	BUN printStr_load
+printStr_ret:
+	BIN printStr
