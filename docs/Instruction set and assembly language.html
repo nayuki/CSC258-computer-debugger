@@ -23,31 +23,32 @@
 		<table>
 			<thead>
 				<th>Mnemonic</th>
+				<th>Name</th>
 				<th>Description</th>
 			</thead>
 			<tbody>
-				<tr><td>LDA <var>m</var></td><td>(LoaD Accumulator) Load the contents of memory location <var>m</var> into AC.</td></tr>
-				<tr><td>STA <var>m</var></td><td>(STore Accumulator) Store the contents of AC at memory location <var>m</var>.</td></tr>
-				<tr><td>ADD <var>m</var></td><td>(ADD) Integer add the contents of memory location <var>m</var> to the contents of AC and put the sum in AC; if overflow, E is 1, otherwise E is 0.</td></tr>
-				<tr><td>SUB <var>m</var></td><td>(SUBtract) Integer subtract the contents of memory location <var>m</var> from the contents of AC and put the difference in AC; if overflow, E is 1, otherwise E is 0.</td></tr>
-				<tr><td>MUL <var>m</var></td><td>(MULtilpy) Integer multiply the contents of AC by the contents of memory location <var>m</var> and put the product in AC; if overflow, E is 1, otherwise E is 0.</td></tr>
-				<tr><td>DIV <var>m</var></td><td>(DIVide) Integer divide the contents of the accumulator by the contents of memory location <var>m</var> and put the quotient in AC; if divisor is 0, E is 1, otherwise E is 0.</td></tr>
-				<tr><td>MOD <var>m</var></td><td>(MODulo) Integer divide the contents of the accumulator by the contents of memory location <var>m</var> and put the remainder in AC; if divisor is 0, E is 1, otherwise E is 0.</td></tr>
-				<tr><td>FLA <var>m</var></td><td>(FLoating Add) Floating-point add the contents of memory location <var>m</var> to the contents of AC and put the sum in AC; if overflow, E is 1, otherwise E is 0.</td></tr>
-				<tr><td>FLS <var>m</var></td><td>(FLoating Subtract) Floating-point subtract the contents of memory location <var>m</var> from the contents of AC and put the difference in AC; if overflow, E is 1, otherwise E is 0.</td></tr>
-				<tr><td>FLM <var>m</var></td><td>(FLoating Multiply) Floating-point multiply the contents of AC by the contents of memory location <var>m</var> and put the product in AC; if overflow, E is 1, otherwise E is 0.</td></tr>
-				<tr><td>FLD <var>m</var></td><td>(FLoating Divide) Floating-point divide the contents of the accumulator by the contents of memory location <var>m</var> and put the quotient in AC; if divisor is 0 or overflow, E is 1, otherwise E is 0.</td></tr>
-				<tr><td>CIF <var>m</var></td><td>(Convert Integer to Float) Load the contents of memory location <var>m</var> into AC and convert from integer to float.</td></tr>
-				<tr><td>CFI <var>m</var></td><td>(Convert Float to Integer) Load the contents of memory location <var>m</var> into AC and convert from float to the nearest integer.</td></tr>
-				<tr><td>AND <var>m</var></td><td>(AND) AND each bit of AC with the corresponding bit of memory location <var>m</var> and put the result in AC; if the result is all 0s, E is 0, otherwise E is 1.</td></tr>
-				<tr><td>IOR <var>m</var></td><td>(Inclusive OR) OR each bit of AC with the corresponding bit of memory location <var>m</var> and put the result in AC; if the result is all 0s, E is 0, otherwise E is 1.</td></tr>
-				<tr><td>XOR <var>m</var></td><td>(eXclusive OR) XOR each bit of AC with the corresponding bit of memory location <var>m</var> and put the result in AC; if the result is all 0s, E is 0, otherwise E is 1.</td></tr>
-				<tr><td>BUN <var>m</var></td><td>(Branch UNconditional) Branch to memory location <var>m</var>.</td></tr>
-				<tr><td>BZE <var>m</var></td><td>(Branch on Zero E) If E is 0, branch to memory location <var>m</var>.</td></tr>
-				<tr><td>BSA <var>m</var></td><td>(Branch and Save Address) Store the address of the next instruction (i.e., following this instruction) at memory location <var>m</var>, and branch to memory location <var>m</var> + 1.</td></tr>
-				<tr><td>BIN <var>m</var></td><td>(Branch INdirect) Branch to the memory location whose address is contained in memory location <var>m</var>.</td></tr>
-				<tr><td>INP <var>m</var></td><td>(INPut) If the input port has a byte of information ready, put it in the low-order (rightmost) 8 bits of AC and 0s in the high-order 24 bits; otherwise branch to memory location <var>m</var>.</td></tr>
-				<tr><td>OUT <var>m</var></td><td>(OUTput) If the output port is ready to receive a byte of information, send the low-order 8 bits of AC; otherwise branch to memory location <var>m</var>.</td></tr>
+				<tr><td>LDA <var>m</var></td><td>LoaD Accumulator</td><td>Load the contents of memory location <var>m</var> into AC.</td></tr>
+				<tr><td>STA <var>m</var></td><td>STore Accumulator</td><td>Store the contents of AC at memory location <var>m</var>.</td></tr>
+				<tr><td>ADD <var>m</var></td><td>ADD</td><td>Integer add the contents of memory location <var>m</var> to the contents of AC and put the sum in AC; if overflow, E is 1, otherwise E is 0.</td></tr>
+				<tr><td>SUB <var>m</var></td><td>SUBtract</td><td>Integer subtract the contents of memory location <var>m</var> from the contents of AC and put the difference in AC; if overflow, E is 1, otherwise E is 0.</td></tr>
+				<tr><td>MUL <var>m</var></td><td>MULtilpy</td><td>Integer multiply the contents of AC by the contents of memory location <var>m</var> and put the product in AC; if overflow, E is 1, otherwise E is 0.</td></tr>
+				<tr><td>DIV <var>m</var></td><td>DIVide</td><td>Integer divide the contents of the accumulator by the contents of memory location <var>m</var> and put the quotient in AC; if divisor is 0, E is 1, otherwise E is 0.</td></tr>
+				<tr><td>MOD <var>m</var></td><td>MODulo</td><td>Integer divide the contents of the accumulator by the contents of memory location <var>m</var> and put the remainder in AC; if divisor is 0, E is 1, otherwise E is 0.</td></tr>
+				<tr><td>FLA <var>m</var></td><td>FLoating Add</td><td>Floating-point add the contents of memory location <var>m</var> to the contents of AC and put the sum in AC; if overflow, E is 1, otherwise E is 0.</td></tr>
+				<tr><td>FLS <var>m</var></td><td>FLoating Subtract</td><td>Floating-point subtract the contents of memory location <var>m</var> from the contents of AC and put the difference in AC; if overflow, E is 1, otherwise E is 0.</td></tr>
+				<tr><td>FLM <var>m</var></td><td>FLoating Multiply</td><td>Floating-point multiply the contents of AC by the contents of memory location <var>m</var> and put the product in AC; if overflow, E is 1, otherwise E is 0.</td></tr>
+				<tr><td>FLD <var>m</var></td><td>FLoating Divide</td><td>Floating-point divide the contents of the accumulator by the contents of memory location <var>m</var> and put the quotient in AC; if divisor is 0 or overflow, E is 1, otherwise E is 0.</td></tr>
+				<tr><td>CIF <var>m</var></td><td>Convert Integer to Float</td><td>Load the contents of memory location <var>m</var> into AC and convert from integer to float.</td></tr>
+				<tr><td>CFI <var>m</var></td><td>Convert Float to Integer</td><td>Load the contents of memory location <var>m</var> into AC and convert from float to the nearest integer.</td></tr>
+				<tr><td>AND <var>m</var></td><td>AND</td><td>AND each bit of AC with the corresponding bit of memory location <var>m</var> and put the result in AC; if the result is all 0s, E is 0, otherwise E is 1.</td></tr>
+				<tr><td>IOR <var>m</var></td><td>Inclusive OR</td><td>OR each bit of AC with the corresponding bit of memory location <var>m</var> and put the result in AC; if the result is all 0s, E is 0, otherwise E is 1.</td></tr>
+				<tr><td>XOR <var>m</var></td><td>eXclusive OR</td><td>XOR each bit of AC with the corresponding bit of memory location <var>m</var> and put the result in AC; if the result is all 0s, E is 0, otherwise E is 1.</td></tr>
+				<tr><td>BUN <var>m</var></td><td>Branch UNconditional</td><td>Branch to memory location <var>m</var>.</td></tr>
+				<tr><td>BZE <var>m</var></td><td>Branch on Zero E</td><td>If E is 0, branch to memory location <var>m</var>.</td></tr>
+				<tr><td>BSA <var>m</var></td><td>Branch and Save Address</td><td>Store the address of the next instruction (i.e., following this instruction) at memory location <var>m</var>, and branch to memory location <var>m</var> + 1.</td></tr>
+				<tr><td>BIN <var>m</var></td><td>Branch INdirect</td><td>Branch to the memory location whose address is contained in memory location <var>m</var>.</td></tr>
+				<tr><td>INP <var>m</var></td><td>INPut</td><td>If the input port has a byte of information ready, put it in the low-order (rightmost) 8 bits of AC and 0s in the high-order 24 bits; otherwise branch to memory location <var>m</var>.</td></tr>
+				<tr><td>OUT <var>m</var></td><td>OUTput</td><td>If the output port is ready to receive a byte of information, send the low-order 8 bits of AC; otherwise branch to memory location <var>m</var>.</td></tr>
 			</tbody>
 		</table>
 		
