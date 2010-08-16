@@ -22,6 +22,7 @@ import javax.swing.SwingConstants;
 
 import csc258comp.compiler.Program;
 import csc258comp.runner.Executor;
+import csc258comp.runner.InstructionSet;
 import csc258comp.runner.Machine;
 import csc258comp.runner.MachineException;
 
@@ -209,7 +210,7 @@ final class StatePanel extends JPanel implements MachineStateListener {
 		
 		int nextinst = m.getMemoryAt(newProgramCounter);
 		int opcode = nextinst >>> 24;
-		String mnemonic = Program.getOpcodeName(opcode);
+		String mnemonic = InstructionSet.getOpcodeName(opcode);
 		if (mnemonic != null)
 			nextInstruction.setText(String.format("%s %06X", mnemonic, nextinst & 0xFFFFFF));
 		else {

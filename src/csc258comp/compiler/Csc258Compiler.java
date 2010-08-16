@@ -9,6 +9,8 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import csc258comp.runner.InstructionSet;
+
 
 
 public final class Csc258Compiler {
@@ -56,8 +58,8 @@ public final class Csc258Compiler {
 			Queue<String> tokens = toQueue(line.split("\\s+"));
 			
 			// Instruction word
-			if (Program.getOpcodeIndex(tokens.element()) != -1) {
-				int word = Program.getOpcodeIndex(tokens.remove()) << 24;
+			if (InstructionSet.getOpcodeIndex(tokens.element()) != -1) {
+				int word = InstructionSet.getOpcodeIndex(tokens.remove()) << 24;
 				if (!tokens.isEmpty()) {
 					references.put(image.length(), tokens.remove());
 					referenceSourceLines.put(image.length(), i);
