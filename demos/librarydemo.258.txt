@@ -1,0 +1,23 @@
+messageAddr: A message 
+message:
+	C 'H'
+	C 'e'
+	C 'l'
+	C 'l'
+	C 'o'
+	C ','
+	H 20
+	C 'w'
+	C 'o'
+	C 'r'
+	C 'l'
+	C 'd'
+	C '!'
+	H 0D
+	H 0
+
+main:
+	LDA messageAddr
+	STA printStr_str
+	BSA printStr
+	BUN opsys

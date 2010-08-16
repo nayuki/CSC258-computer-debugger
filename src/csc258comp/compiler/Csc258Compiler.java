@@ -10,7 +10,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import csc258comp.runner.InstructionSet;
-import csc258comp.runner.Program;
 import csc258comp.util.IntBuffer;
 
 
@@ -21,7 +20,7 @@ public final class Csc258Compiler {
 	
 	
 	
-	public static Program compile(SourceCode source) throws CompilationException {
+	public static Fragment compile(SourceCode source) throws CompilationException {
 		IntBuffer image = new IntBuffer();
 		Map<Integer,String> imageSourceCode = new HashMap<Integer,String>();
 		
@@ -30,8 +29,6 @@ public final class Csc258Compiler {
 		Map<Integer,Integer> referenceSourceLines = new HashMap<Integer,Integer>();
 		
 		SortedMap<Integer,String> errorMessages = new TreeMap<Integer,String>();
-		
-		labels.put("opsys", Program.OPSYS_ADDRESS);
 		
 		String imageLine = "";
 		for (int i = 0; i < source.getLineCount(); i++) {
@@ -165,17 +162,8 @@ public final class Csc258Compiler {
 			// Ignore the rest of the tokens in the line, which are comments
 		}
 		
-		for (int index : references.keySet()) {
-			String label = references.get(index);
-			if (labels.containsKey(label))
-				image.set(index, image.get(index) | labels.get(label));
-			else
-				errorMessages.put(referenceSourceLines.get(index), String.format("Label \"%s\" not defined", label));
-			
-		}
-		
 		if (errorMessages.size() == 0)
-			return new Program(image.toArray(), labels.get("main"), imageSourceCode);
+			return new Fragment(image.toArray(), labels, references, imageSourceCode);
 		else
 			throw new CompilationException(String.format("%d compiler errors", errorMessages.size()), errorMessages, source);
 	}

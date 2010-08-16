@@ -51,8 +51,8 @@ public final class IntBuffer {
 	
 	
 	public void append(int[] vals) {
-		ensureCapacity(length + values.length);
-		System.arraycopy(values, length, vals, 0, vals.length);
+		ensureCapacity(length + vals.length);
+		System.arraycopy(vals, 0, values, length, vals.length);
 		length += vals.length;
 	}
 	

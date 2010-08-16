@@ -5,10 +5,6 @@ import java.util.Map;
 
 public class Program {
 	
-	public static final int OPSYS_ADDRESS = 0x31337;
-	
-	
-	
 	private int[] image;
 	
 	private int mainAddress;
