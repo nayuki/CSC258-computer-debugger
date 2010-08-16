@@ -12,10 +12,10 @@ import csc258comp.util.IntBuffer;
 public final class Csc258Linker {
 	
 	public static Program link(Set<Fragment> frags) {
-		// Union all labels and relocate them
 		Map<String,Integer> alllabels = new HashMap<String,Integer>();
 		alllabels.put("opsys", Executor.OPSYS_ADDRESS);
 		
+		// Union all labels and relocate them
 		int offset = 0;
 		for (Fragment f : frags) {
 			Map<String,Integer> labels = f.getLabels();
@@ -31,18 +31,24 @@ public final class Csc258Linker {
 		// Resolve references and build program image
 		IntBuffer allimage = new IntBuffer();
 		for (Fragment f : frags) {
-			int[] image = f.getImage();
-			Map<Integer,String> refs = f.getReferences();
-			for (int addr : refs.keySet()) {
-				String label = refs.get(addr);
-				if (!alllabels.containsKey(label))
-					throw new IllegalArgumentException(String.format("Label \"%s\" not defined", label));
-				image[addr] |= alllabels.get(label);  // Bottom 24 bits of instruction/data word are all zeros
-			}
+			int[] image = resolveReferences(f, alllabels);
 			allimage.append(image);
 		}
 		
 		return new Program(allimage.toArray(), alllabels.get("main"), new HashMap<Integer,String>());
+	}
+	
+	
+	private static int[] resolveReferences(Fragment f, Map<String,Integer> alllabels) {
+		int[] image = f.getImage();
+		Map<Integer,String> refs = f.getReferences();
+		for (int addr : refs.keySet()) {
+			String label = refs.get(addr);
+			if (!alllabels.containsKey(label))
+				throw new IllegalArgumentException(String.format("Label \"%s\" not defined", label));
+			image[addr] |= alllabels.get(label);  // Bottom 24 bits of instruction/data word are all zeros
+		}
+		return image;
 	}
 	
 	
