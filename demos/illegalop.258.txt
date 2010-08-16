@@ -1,0 +1,8 @@
+one: I 1
+
+main:
+	LDA one
+	ADD one
+	H BF000000  # Illegal opcode
+	ADD one
+	BUN opsys
