@@ -48,7 +48,7 @@ public final class Csc258Compiler {
 				if (!labels.containsKey(label))
 					labels.put(label, image.length());
 				else
-					errorMessages.put(i, "Duplicate label: " + label);
+					errorMessages.put(i, String.format("Duplicate label \"%s\"", label));
 				line = line.substring(m.end());
 				imageLine += label + ": ";
 			}
@@ -169,14 +169,14 @@ public final class Csc258Compiler {
 			if (labels.containsKey(label))
 				image.set(index, image.get(index) | labels.get(label));
 			else
-				errorMessages.put(referenceSourceLines.get(index), "Label not found: " + label);
+				errorMessages.put(referenceSourceLines.get(index), String.format("Label \"%s\" not defined", label));
 			
 		}
 		
 		if (errorMessages.size() == 0)
 			return new Program(image.toArray(), labels.get("main"), imageSourceCode);
 		else
-			throw new CompilationException(String.format("Source code has %d errors", errorMessages.size()), errorMessages, source);
+			throw new CompilationException(String.format("%d compiler errors", errorMessages.size()), errorMessages, source);
 	}
 	
 	
