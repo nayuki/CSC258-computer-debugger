@@ -1,5 +1,7 @@
 package csc258comp.util;
 
+import java.util.Arrays;
+
 
 public final class IntBuffer {
 	
@@ -50,16 +52,12 @@ public final class IntBuffer {
 	
 	
 	public int[] toArray() {
-		int[] result = new int[length];
-		System.arraycopy(values, 0, result, 0, length);
-		return result;
+		return Arrays.copyOf(values, length);
 	}
 	
 	
 	private void resize(int newLength) {
-		int[] temp = new int[newLength];
-		System.arraycopy(values, 0, temp, 0, Math.min(values.length, newLength));
-		values = temp;
+		values = Arrays.copyOf(values, newLength);
 	}
 	
 }
