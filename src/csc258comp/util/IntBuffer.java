@@ -10,7 +10,14 @@ public final class IntBuffer {
 	
 	
 	public IntBuffer() {
-		values = new int[256];
+		this(256);
+	}
+	
+	
+	public IntBuffer(int initCapacity) {
+		if (initCapacity <= 0)
+			throw new IllegalArgumentException("Initial capacity must be positive");
+		values = new int[initCapacity];
 	}
 	
 	
