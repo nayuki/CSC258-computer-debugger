@@ -30,14 +30,7 @@ public class Csc258Runner {
 		}
 		
 		Machine m = new SimpleMachine(System.in, System.out);
-		m.setHalted(false);
-		m.setProgramCounter(p.getMainAddress());
-		m.setAccumulator(0);
-		m.setConditionCode(false);
-		
-		int[] image = p.getImage();
-		for (int j = 0; j < image.length; j++)
-			m.setMemoryAt(j, image[j]);
+		Loader.load(m, p);
 		
 		while (!m.isHalted()) {
 			Executor.step(m);
