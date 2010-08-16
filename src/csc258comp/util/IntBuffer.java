@@ -12,7 +12,7 @@ public final class IntBuffer {
 	
 	
 	public IntBuffer() {
-		this(256);
+		this(1);
 	}
 	
 	
@@ -44,8 +44,7 @@ public final class IntBuffer {
 	
 	
 	public void append(int value) {
-		while (length + 1 > values.length)
-			resize(values.length * 2);
+		ensureCapacity(length + 1);
 		values[length] = value;
 		length++;
 	}
@@ -56,8 +55,9 @@ public final class IntBuffer {
 	}
 	
 	
-	private void resize(int newLength) {
-		values = Arrays.copyOf(values, newLength);
+	private void ensureCapacity(int size) {
+		while (values.length < size)
+			values = Arrays.copyOf(values, values.length * 2);
 	}
 	
 }
