@@ -24,7 +24,6 @@ import javax.swing.SwingConstants;
 import csc258comp.compiler.Program;
 import csc258comp.machine.impl.Executor;
 import csc258comp.machine.model.Machine;
-import csc258comp.machine.model.MachineStateListener;
 
 
 @SuppressWarnings("serial")

@@ -9,7 +9,6 @@ import java.util.Set;
 import csc258comp.compiler.Program;
 import csc258comp.machine.impl.SimpleMachine;
 import csc258comp.machine.model.Machine;
-import csc258comp.machine.model.MachineStateListener;
 
 
 public final class ProbedMachine implements Machine {
