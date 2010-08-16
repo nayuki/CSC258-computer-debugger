@@ -31,8 +31,16 @@ public class Csc258Runner {
 		Machine m = new SimpleMachine(System.in, System.out);
 		Loader.load(m, p);
 		
-		while (!m.isHalted()) {
-			Executor.step(m);
+		try {
+			while (!m.isHalted()) {
+				Executor.step(m);
+			}
+		} catch (MachineException e) {
+			System.err.println(e.getMessage());
+			Throwable cause = e.getCause();
+			if (cause != null)
+				cause.printStackTrace();
+			System.exit(1);
 		}
 	}
 	
