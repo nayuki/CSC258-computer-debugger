@@ -52,39 +52,3 @@ isPrime_isPrime:
 	IOR one
 isPrime_ret:
 	BIN isPrime_retAddr
-
-
-printNum_val: W 1
-printNum_divisor: W 1
-printNum_retAddr: W 1
-printNum:
-	LDA one
-	STA printNum_divisor
-printNum_divisorLoop:
-	LDA printNum_val
-	DIV printNum_divisor
-	SUB ten
-	AND signBit
-	BZE printNum_biggenDivisor
-	BUN printNum_printLoop
-printNum_biggenDivisor:
-	LDA printNum_divisor
-	MUL ten
-	STA printNum_divisor
-	BUN printNum_divisorLoop
-printNum_printLoop:
-	LDA printNum_val
-	DIV printNum_divisor
-	MOD ten
-	ADD charZero
-	printNum_out0: OUT printNum_out0
-	LDA printNum_divisor
-	DIV ten
-	STA printNum_divisor
-	IOR zero
-	BZE printNum_ret
-	BUN printNum_printLoop
-printNum_ret:
-	LDA newLine
-	printNum_out1: OUT printNum_out1
-	BIN printNum_retAddr
