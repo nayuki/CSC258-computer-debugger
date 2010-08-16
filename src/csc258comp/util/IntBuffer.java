@@ -36,16 +36,16 @@ public final class IntBuffer {
 	}
 	
 	
-	public int set(int index, int value) {
+	public int set(int index, int val) {
 		if (index < 0 || index >= length)
 			throw new IndexOutOfBoundsException();
-		return values[index] = value;
+		return values[index] = val;
 	}
 	
 	
-	public void append(int value) {
+	public void append(int val) {
 		ensureCapacity(length + 1);
-		values[length] = value;
+		values[length] = val;
 		length++;
 	}
 	
