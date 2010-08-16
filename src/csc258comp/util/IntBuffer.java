@@ -1,7 +1,7 @@
-package csc258comp.compiler;
+package csc258comp.util;
 
 
-final class IntBuffer {
+public final class IntBuffer {
 	
 	private int[] values;
 	
