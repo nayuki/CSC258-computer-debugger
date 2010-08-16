@@ -2,8 +2,8 @@ package csc258comp.debugger;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.SortedMap;
 
 import javax.swing.JFrame;
@@ -19,7 +19,7 @@ import csc258comp.runner.Program;
 public class Csc258Debugger {
 	
 	public static void main(String[] args) throws IOException {
-		Set<Fragment> frags = new HashSet<Fragment>();
+		List<Fragment> frags = new ArrayList<Fragment>();
 		for (String arg : args) {
 			try {
 				File file = new File(arg);

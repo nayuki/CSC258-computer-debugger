@@ -2,7 +2,6 @@ package csc258comp.compiler;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import csc258comp.runner.Executor;
 import csc258comp.runner.Program;
@@ -11,7 +10,7 @@ import csc258comp.util.IntBuffer;
 
 public final class Csc258Linker {
 	
-	public static Program link(Set<Fragment> frags) {
+	public static Program link(Iterable<Fragment> frags) {
 		Map<String,Integer> alllabels = new HashMap<String,Integer>();
 		alllabels.put("opsys", Executor.OPSYS_ADDRESS);
 		

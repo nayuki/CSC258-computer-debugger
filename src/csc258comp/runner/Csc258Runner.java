@@ -2,8 +2,8 @@ package csc258comp.runner;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.SortedMap;
 
 import csc258comp.compiler.CompilationException;
@@ -16,7 +16,7 @@ import csc258comp.compiler.SourceCode;
 public class Csc258Runner {
 	
 	public static void main(String[] args) throws IOException {
-		Set<Fragment> frags = new HashSet<Fragment>();
+		List<Fragment> frags = new ArrayList<Fragment>();
 		for (String arg : args) {
 			try {
 				File file = new File(arg);
