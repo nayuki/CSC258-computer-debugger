@@ -12,28 +12,36 @@ import java.io.Reader;
 
 public final class Utf8Reader extends BufferedReader {
 	
+	private final File file;
+	
 	private boolean initialLine;
 	
 	
 	
 	public Utf8Reader(File file) throws IOException {
-		this(new FileInputStream(file));
+		this(file, new BufferedInputStream(new FileInputStream(file)));
 		initialLine = true;
 	}
 	
 	
-	public Utf8Reader(FileInputStream in) throws IOException {
-		this(new BufferedInputStream(in));
+	public Utf8Reader(InputStream in) throws IOException {
+		this(null, in);
 	}
 	
 	
-	public Utf8Reader(InputStream in) throws IOException {
-		this(new InputStreamReader(in, "UTF-8"));
+	private Utf8Reader(File file, InputStream in) throws IOException {
+		this(file, new InputStreamReader(in, "UTF-8"));
 	}
 	
 	
 	public Utf8Reader(Reader in) {
+		this(null, in);
+	}
+	
+	
+	private Utf8Reader(File file, Reader in) {
 		super(in);
+		this.file = file;
 	}
 	
 	
@@ -49,6 +57,14 @@ public final class Utf8Reader extends BufferedReader {
 	
 	public void close() throws IOException {
 		super.close();
+	}
+	
+	
+	public String toString() {
+		if (file != null)
+			return super.toString() + ": " + file.getPath();
+		else
+			return super.toString();
 	}
 	
 }
