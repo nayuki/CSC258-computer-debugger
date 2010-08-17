@@ -19,6 +19,7 @@ public final class ProbedMachine implements Machine {
 	private Set<MachineStateListener> listeners;
 	
 	
+	
 	public ProbedMachine(InputStream in, OutputStream out) {
 		if (in == null || out == null)
 			throw new NullPointerException();
