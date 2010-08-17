@@ -28,7 +28,6 @@ public final class Csc258Compiler {
 		
 		Map<String,Integer> labels = new HashMap<String,Integer>();
 		Map<Integer,String> references = new HashMap<Integer,String>();
-		Map<Integer,Integer> referenceSourceLines = new HashMap<Integer,Integer>();
 		
 		SortedMap<Integer,String> errorMessages = new TreeMap<Integer,String>();
 		
@@ -63,7 +62,6 @@ public final class Csc258Compiler {
 				int word = InstructionSet.getOpcodeIndex(tokens.remove()) << 24;
 				if (!tokens.isEmpty()) {
 					references.put(image.length(), tokens.remove());
-					referenceSourceLines.put(image.length(), i);
 					imageLine += line;
 					imageSourceCode.put(image.length(), imageLine);
 					image.append(word);
@@ -139,7 +137,6 @@ public final class Csc258Compiler {
 							imageLine += line;
 							imageSourceCode.put(image.length(), imageLine);
 							references.put(image.length(), value);
-							referenceSourceLines.put(image.length(), i);
 							image.append(0);
 							break;
 							
