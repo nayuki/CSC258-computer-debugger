@@ -11,18 +11,18 @@ public final class Program {
 	
 	private int mainAddress;
 	
-	private Map<SourceLine,Integer> addressBySourceLine;
-	private Map<Integer,SourceLine> sourceLineByAddress;
+	private Map<SourceLine,Integer> sourceLineToAddress;
+	private Map<Integer,SourceLine> addressToSourceLine;
 	
 	
 	
-	public Program(int[] image, int mainAddress, Map<SourceLine,Integer> addrBySrcLine, Map<Integer,SourceLine> srcLineByAddr) {
+	public Program(int[] image, int mainAddress, Map<SourceLine,Integer> srcLineToAddr, Map<Integer,SourceLine> addrToSrcLine) {
 		if (image == null)
 			throw new NullPointerException();
 		this.image = image.clone();
 		this.mainAddress = mainAddress;
-		addressBySourceLine = addrBySrcLine;
-		sourceLineByAddress = srcLineByAddr;
+		sourceLineToAddress = srcLineToAddr;
+		addressToSourceLine = addrToSrcLine;
 		
 	}
 	
@@ -44,7 +44,7 @@ public final class Program {
 	
 	
 	public String getSourceLine(int addr) {
-		return sourceLineByAddress.get(addr).getString();
+		return addressToSourceLine.get(addr).getString();
 	}
 	
 }

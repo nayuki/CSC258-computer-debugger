@@ -12,28 +12,28 @@ public final class Fragment {
 	private Map<Integer,String> references;
 	
 	private SourceCode sourceCode;
-	private Map<Integer,Integer> addressBySourceLine;
-	private Map<Integer,Integer> sourceLineByAddress;
+	private Map<Integer,Integer> sourceLineToAddress;
+	private Map<Integer,Integer> addressToSourceLine;
 	
 	
 	
-	public Fragment(int[] image, Map<String,Integer> labels, Map<Integer,String> references, SourceCode source, Map<Integer,Integer> addrBySrcLine, Map<Integer,Integer> srcLineByAddr) {
+	public Fragment(int[] image, Map<String,Integer> labels, Map<Integer,String> references, SourceCode source, Map<Integer,Integer> srcLineToAddr, Map<Integer,Integer> addrToSrcLine) {
 		this.image = image.clone();
 		this.labels = Collections.unmodifiableMap(labels);
 		this.references = Collections.unmodifiableMap(references);
 		
 		if (source != null) {
-			if (addrBySrcLine == null || srcLineByAddr == null)
+			if (srcLineToAddr == null || addrToSrcLine == null)
 				throw new NullPointerException();
 			sourceCode = source;
-			addressBySourceLine = Collections.unmodifiableMap(addrBySrcLine);
-			sourceLineByAddress = Collections.unmodifiableMap(srcLineByAddr);
+			sourceLineToAddress = Collections.unmodifiableMap(srcLineToAddr);
+			addressToSourceLine = Collections.unmodifiableMap(addrToSrcLine);
 		} else {
-			if (addrBySrcLine != null || srcLineByAddr != null)
+			if (srcLineToAddr != null || addrToSrcLine != null)
 				throw new IllegalArgumentException();
 			sourceCode = null;
-			addressBySourceLine = null;
-			sourceLineByAddress = null;
+			sourceLineToAddress = null;
+			addressToSourceLine = null;
 		}
 	}
 	
@@ -65,12 +65,12 @@ public final class Fragment {
 	
 	
 	public Map<Integer,Integer> getAddressBySourceLineMap() {
-		return addressBySourceLine;
+		return sourceLineToAddress;
 	}
 	
 	
 	public Map<Integer,Integer> getSourceLineByAddressMap() {
-		return sourceLineByAddress;
+		return addressToSourceLine;
 	}
 	
 }

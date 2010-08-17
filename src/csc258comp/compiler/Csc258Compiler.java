@@ -28,8 +28,8 @@ public final class Csc258Compiler {
 		Map<String,Integer> labels = new HashMap<String,Integer>();
 		Map<Integer,String> references = new HashMap<Integer,String>();
 		
-		Map<Integer,Integer> addrBySrcLine = new HashMap<Integer,Integer>();
-		Map<Integer,Integer> srcLineByAddr = new HashMap<Integer,Integer>();
+		Map<Integer,Integer> srcLineToAddr = new HashMap<Integer,Integer>();
+		Map<Integer,Integer> addrToSrcLine = new HashMap<Integer,Integer>();
 		
 		SortedMap<Integer,String> errorMessages = new TreeMap<Integer,String>();
 		
@@ -65,8 +65,8 @@ public final class Csc258Compiler {
 				if (!tokens.isEmpty()) {
 					references.put(image.length(), tokens.remove());
 					imageLine += line;
-					addrBySrcLine.put(i, image.length());
-					srcLineByAddr.put(image.length(), i);
+					srcLineToAddr.put(i, image.length());
+					addrToSrcLine.put(image.length(), i);
 					image.append(word);
 				} else {
 					errorMessages.put(i, "Reference expected after opcode");
@@ -83,8 +83,8 @@ public final class Csc258Compiler {
 						case 'I':
 							try {
 								imageLine += line;
-								addrBySrcLine.put(i, image.length());
-								srcLineByAddr.put(image.length(), i);
+								srcLineToAddr.put(i, image.length());
+								addrToSrcLine.put(image.length(), i);
 								image.append(Integer.parseInt(value));
 							} catch (NumberFormatException e) {
 								errorMessages.put(i, "Invalid integer value");
@@ -94,8 +94,8 @@ public final class Csc258Compiler {
 						case 'F':
 							try {
 								imageLine += line;
-								addrBySrcLine.put(i, image.length());
-								srcLineByAddr.put(image.length(), i);
+								srcLineToAddr.put(i, image.length());
+								addrToSrcLine.put(image.length(), i);
 								image.append(Float.floatToRawIntBits(Float.parseFloat(value)));
 							} catch (NumberFormatException e) {
 								errorMessages.put(i, "Invalid floating-point value");
@@ -104,8 +104,8 @@ public final class Csc258Compiler {
 							
 						case 'C':
 							imageLine += line;
-							addrBySrcLine.put(i, image.length());
-							srcLineByAddr.put(image.length(), i);
+							srcLineToAddr.put(i, image.length());
+							addrToSrcLine.put(image.length(), i);
 							image.append(parseChars(value));
 							break;
 							
@@ -114,8 +114,8 @@ public final class Csc258Compiler {
 								long binval = Long.parseLong(value, 2);
 								if (binval >= 0 && binval <= 0xFFFFFFFFL) {
 									imageLine += line;
-									addrBySrcLine.put(i, image.length());
-									srcLineByAddr.put(image.length(), i);
+									srcLineToAddr.put(i, image.length());
+									addrToSrcLine.put(image.length(), i);
 									image.append((int)binval);
 								} else {
 									errorMessages.put(i, "Binary value out of range");
@@ -130,8 +130,8 @@ public final class Csc258Compiler {
 								long hexval = Long.parseLong(value, 16);
 								if (hexval >= 0 && hexval <= 0xFFFFFFFFL) {
 									imageLine += line;
-									addrBySrcLine.put(i, image.length());
-									srcLineByAddr.put(image.length(), i);
+									srcLineToAddr.put(i, image.length());
+									addrToSrcLine.put(image.length(), i);
 									image.append((int)hexval);
 								} else {
 									errorMessages.put(i, "Hexadecimal value out of range");
@@ -143,8 +143,8 @@ public final class Csc258Compiler {
 							
 						case 'A':
 							imageLine += line;
-							addrBySrcLine.put(i, image.length());
-							srcLineByAddr.put(image.length(), i);
+							srcLineToAddr.put(i, image.length());
+							addrToSrcLine.put(image.length(), i);
 							references.put(image.length(), value);
 							image.append(0);
 							break;
@@ -153,8 +153,8 @@ public final class Csc258Compiler {
 							int length = Integer.parseInt(value);
 							imageLine += line;
 							if (length > 0) {
-								addrBySrcLine.put(i, image.length());
-								srcLineByAddr.put(image.length(), i);
+								srcLineToAddr.put(i, image.length());
+								addrToSrcLine.put(image.length(), i);
 							}
 							for (int j = 0; j < length; j++)
 								image.append(0);
@@ -173,7 +173,7 @@ public final class Csc258Compiler {
 		}
 		
 		if (errorMessages.size() == 0)
-			return new Fragment(image.toArray(), labels, references, source, addrBySrcLine, srcLineByAddr);
+			return new Fragment(image.toArray(), labels, references, source, srcLineToAddr, addrToSrcLine);
 		else
 			throw new CompilationException(String.format("%d compiler errors", errorMessages.size()), errorMessages, source);
 	}
