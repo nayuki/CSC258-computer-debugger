@@ -14,6 +14,8 @@ public final class Program {
 	
 	
 	public Program(int[] image, int mainAddress, Map<Integer,String> imageSourceCode) {
+		if (image == null || imageSourceCode == null)
+			throw new NullPointerException();
 		this.image = image.clone();
 		this.mainAddress = mainAddress;
 		this.imageSourceCode = imageSourceCode;

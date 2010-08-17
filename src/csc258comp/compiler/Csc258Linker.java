@@ -11,6 +11,9 @@ import csc258comp.util.IntBuffer;
 public final class Csc258Linker {
 	
 	public static Program link(Iterable<Fragment> frags) {
+		if (frags == null)
+			throw new NullPointerException();
+		
 		Map<String,Integer> alllabels = new HashMap<String,Integer>();
 		alllabels.put("opsys", Executor.OPSYS_ADDRESS);
 		

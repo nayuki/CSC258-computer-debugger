@@ -58,6 +58,8 @@ final class StatePanel extends JPanel implements MachineStateListener {
 	
 	
 	public StatePanel(final ProbedMachine machineState) {
+		if (machineState == null)
+			throw new NullPointerException();
 		this.machineState = machineState;
 		breakpoints = new HashSet<Integer>();
 		stepCount = 0;

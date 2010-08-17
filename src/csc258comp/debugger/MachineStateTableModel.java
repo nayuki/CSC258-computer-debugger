@@ -28,6 +28,8 @@ final class MachineStateTableModel extends AbstractTableModel {
 	
 	
 	public MachineStateTableModel(Machine m, Set<Integer> breakpoints) {
+		if (m == null || breakpoints == null)
+			throw new NullPointerException();
 		machineState = m;
 		rowCount = 0;
 		this.breakpoints = breakpoints;

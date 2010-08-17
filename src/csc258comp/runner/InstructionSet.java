@@ -25,6 +25,8 @@ public final class InstructionSet {
 	
 	
 	public static int getOpcodeIndex(String opcode) {
+		if (opcode == null)
+			throw new NullPointerException();
 		// Uses linear search, which is good enough for parsing small programs
 		for (int i = 0; i < OPCODES.length; i++) {
 			if (opcode.equals(OPCODES[i]))

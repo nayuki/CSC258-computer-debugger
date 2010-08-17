@@ -43,6 +43,8 @@ public final class SourceCode implements Iterable<String> {
 	
 	
 	public SourceCode(File file, List<String> lines) {
+		if (lines == null)
+			throw new NullPointerException();
 		this.file = file;
 		this.lines = Collections.unmodifiableList(new ArrayList<String>(lines));
 	}

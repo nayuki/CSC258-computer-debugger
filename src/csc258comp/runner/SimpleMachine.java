@@ -24,6 +24,8 @@ public final class SimpleMachine implements Machine {
 	
 	
 	public SimpleMachine(InputStream in, OutputStream out) {
+		if (in == null || out == null)
+			throw new NullPointerException();
 		isHalted = false;
 		programCounter = 0;
 		accumulator = 0;

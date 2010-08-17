@@ -51,6 +51,8 @@ public final class IntBuffer {
 	
 	
 	public void append(int[] vals) {
+		if (vals == null)
+			throw new NullPointerException();
 		ensureCapacity(length + vals.length);
 		System.arraycopy(vals, 0, values, length, vals.length);
 		length += vals.length;

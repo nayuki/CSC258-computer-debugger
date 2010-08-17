@@ -20,6 +20,8 @@ public final class ProbedMachine implements Machine {
 	
 	
 	public ProbedMachine(InputStream in, OutputStream out) {
+		if (in == null || out == null)
+			throw new NullPointerException();
 		machine = new SimpleMachine(in, out);
 		listeners = new HashSet<MachineStateListener>();
 	}
@@ -109,6 +111,8 @@ public final class ProbedMachine implements Machine {
 	
 	
 	public void loadProgram(Program prog) {
+		if (prog == null)
+			throw new NullPointerException();
 		Loader.load(this, prog);
 		for (MachineStateListener listener : listeners)
 			listener.programLoaded(this, prog);

@@ -20,6 +20,9 @@ public final class Csc258Compiler {
 	
 	
 	public static Fragment compile(SourceCode source) throws CompilationException {
+		if (source == null)
+			throw new NullPointerException();
+		
 		IntBuffer image = new IntBuffer();
 		Map<Integer,String> imageSourceCode = new HashMap<Integer,String>();
 		

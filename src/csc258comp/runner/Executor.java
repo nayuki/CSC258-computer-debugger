@@ -15,6 +15,9 @@ public final class Executor {
 	 * @throws MachineException if an invalid opcode is encountered or if an I/O exception occurs
 	 */
 	public static void step(Machine m) {
+		if (m == null)
+			throw new NullPointerException();
+		
 		// Do nothing if halted
 		if (m.isHalted())
 			return;

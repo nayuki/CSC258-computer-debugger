@@ -4,6 +4,8 @@ package csc258comp.runner;
 public final class Loader {
 	
 	public static void load(Machine m, Program p) {
+		if (m == null || p == null)
+			throw new NullPointerException();
 		m.setHalted(false);
 		m.setProgramCounter(p.getMainAddress());
 		m.setAccumulator(0);
