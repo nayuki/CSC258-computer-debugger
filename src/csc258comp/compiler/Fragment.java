@@ -35,12 +35,12 @@ public final class Fragment {
 	}
 	
 	
-	public Map<String, Integer> getLabels() {
+	public Map<String,Integer> getLabels() {
 		return labels;
 	}
 	
 	
-	public Map<Integer, String> getReferences() {
+	public Map<Integer,String> getReferences() {
 		return references;
 	}
 	
