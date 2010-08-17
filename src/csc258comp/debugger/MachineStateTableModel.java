@@ -9,7 +9,7 @@ import csc258comp.runner.Program;
 
 
 @SuppressWarnings("serial")
-class MachineStateTableModel extends AbstractTableModel {
+final class MachineStateTableModel extends AbstractTableModel {
 	
 	private static Class<?>[] columnClasses = {Boolean.class, String.class, String.class, String.class};
 	

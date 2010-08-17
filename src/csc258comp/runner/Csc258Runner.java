@@ -13,7 +13,7 @@ import csc258comp.compiler.Fragment;
 import csc258comp.compiler.SourceCode;
 
 
-public class Csc258Runner {
+public final class Csc258Runner {
 	
 	public static void main(String[] args) throws IOException {
 		List<Fragment> frags = new ArrayList<Fragment>();

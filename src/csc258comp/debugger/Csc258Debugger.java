@@ -16,7 +16,7 @@ import csc258comp.compiler.SourceCode;
 import csc258comp.runner.Program;
 
 
-public class Csc258Debugger {
+public final class Csc258Debugger {
 	
 	public static void main(String[] args) throws IOException {
 		List<Fragment> frags = new ArrayList<Fragment>();

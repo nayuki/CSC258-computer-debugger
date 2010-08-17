@@ -3,7 +3,7 @@ package csc258comp.runner;
 import java.util.Map;
 
 
-public class Program {
+public final class Program {
 	
 	private int[] image;
 	
