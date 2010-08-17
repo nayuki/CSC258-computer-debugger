@@ -41,8 +41,9 @@ public final class Csc258Linker {
 		offset = 0;
 		for (Fragment f : frags) {
 			int imagelen = f.getImageLength();
-			for (int i = 0; i < imagelen; i++)
-				imageSourceCode.put(i + offset, f.getSourceLine(i));
+//			FIXME
+//			for (int i = 0; i < imagelen; i++)
+//				imageSourceCode.put(i + offset, f.getSourceLine(i));
 			offset += imagelen;
 		}
 		

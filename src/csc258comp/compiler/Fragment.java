@@ -9,18 +9,32 @@ public final class Fragment {
 	private int[] image;
 	
 	private Map<String,Integer> labels;
-	
 	private Map<Integer,String> references;
 	
-	private Map<Integer,String> imageSourceCode;
+	private SourceCode sourceCode;
+	private Map<Integer,Integer> addressBySourceLine;
+	private Map<Integer,Integer> sourceLineByAddress;
 	
 	
 	
-	public Fragment(int[] image, Map<String,Integer> labels, Map<Integer,String> references, Map<Integer,String> imageSourceCode) {
+	public Fragment(int[] image, Map<String,Integer> labels, Map<Integer,String> references, SourceCode source, Map<Integer,Integer> addrBySrcLine, Map<Integer,Integer> srcLineByAddr) {
 		this.image = image.clone();
 		this.labels = Collections.unmodifiableMap(labels);
 		this.references = Collections.unmodifiableMap(references);
-		this.imageSourceCode = imageSourceCode;
+		
+		if (source != null) {
+			if (addrBySrcLine == null || srcLineByAddr == null)
+				throw new NullPointerException();
+			sourceCode = source;
+			addressBySourceLine = Collections.unmodifiableMap(addrBySrcLine);
+			sourceLineByAddress = Collections.unmodifiableMap(srcLineByAddr);
+		} else {
+			if (addrBySrcLine != null || srcLineByAddr != null)
+				throw new IllegalArgumentException();
+			sourceCode = null;
+			addressBySourceLine = null;
+			sourceLineByAddress = null;
+		}
 	}
 	
 	
@@ -45,8 +59,18 @@ public final class Fragment {
 	}
 	
 	
-	public String getSourceLine(int index) {
-		return imageSourceCode.get(index);
+	public SourceCode getSourceCode() {
+		return sourceCode;
+	}
+	
+	
+	public Map<Integer,Integer> getAddressBySourceLineMap() {
+		return addressBySourceLine;
+	}
+	
+	
+	public Map<Integer,Integer> getSourceLineByAddressMap() {
+		return sourceLineByAddress;
 	}
 	
 }
