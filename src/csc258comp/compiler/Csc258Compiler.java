@@ -13,7 +13,6 @@ import csc258comp.runner.InstructionSet;
 import csc258comp.util.IntBuffer;
 
 
-
 public final class Csc258Compiler {
 	
 	private static Pattern LABEL_REGEX = Pattern.compile("^([A-Za-z0-9_]+):\\s*");

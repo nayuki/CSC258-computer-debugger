@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 
-
 public final class SimpleMachine implements Machine {
 	
 	private boolean isHalted;
