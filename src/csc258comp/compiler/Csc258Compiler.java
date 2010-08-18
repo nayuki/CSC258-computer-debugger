@@ -147,11 +147,21 @@ public final class Csc258Compiler {
 						break;
 						
 					case 'W':
-						int length = Integer.parseInt(val);
-						if (length > 0) {
-							appendWord(0, i);
-							if (length > 1)
-								image.append(new int[length - 1]);
+						try {
+							int length = Integer.parseInt(val);
+							if (length >= 0 && length <= (1 << 24)) {
+								if (length > 0) {
+									appendWord(0, i);
+									if (length > 1)
+										image.append(new int[length - 1]);
+								}
+							} else if (length < 0) {
+								errorMessages.put(i, "Negative size");
+							} else {
+								errorMessages.put(i, "Size out of range");
+							}
+						} catch (NumberFormatException e) {
+							errorMessages.put(i, "Invalid size");
 						}
 						break;
 				}
