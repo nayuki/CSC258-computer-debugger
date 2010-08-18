@@ -206,13 +206,13 @@ public final class Csc258Compiler {
 		
 		
 		public Tokenizer(String line) {
-			this.line = line;
-			
 			// Trim leading white space
 			Matcher m = WHITESPACE.matcher(line);
 			if (!m.find())
 				throw new AssertionError();
 			line = line.substring(m.end());
+			
+			this.line = line;
 		}
 		
 		
