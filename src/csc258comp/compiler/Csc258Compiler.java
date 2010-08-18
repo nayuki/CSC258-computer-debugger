@@ -20,6 +20,16 @@ public final class Csc258Compiler {
 	
 	
 	public static Fragment compile(SourceCode source) throws CompilationException {
+		return new Csc258Compiler(source).result;
+	}
+	
+	
+	
+	private Fragment result;
+	
+	
+	
+	private Csc258Compiler(SourceCode source) throws CompilationException {
 		if (source == null)
 			throw new NullPointerException();
 		
@@ -172,10 +182,10 @@ public final class Csc258Compiler {
 			// Ignore the rest of the tokens in the line, which are comments
 		}
 		
-		if (errorMessages.size() == 0)
-			return new Fragment(image.toArray(), labels, references, source, srcLineToAddr, addrToSrcLine);
-		else
+		if (errorMessages.size() > 0)
 			throw new CompilationException(String.format("%d compiler errors", errorMessages.size()), errorMessages, source);
+		
+		result = new Fragment(image.toArray(), labels, references, source, srcLineToAddr, addrToSrcLine);
 	}
 	
 	
