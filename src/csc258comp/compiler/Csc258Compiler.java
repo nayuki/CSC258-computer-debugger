@@ -141,7 +141,7 @@ public final class Csc258Compiler {
 			case 'B':
 				try {
 					long binval = Long.parseLong(val, 2);
-					if (binval >= 0 && binval <= 0xFFFFFFFFL) {
+					if (val.charAt(0) != '-' && binval >= 0 && binval <= 0xFFFFFFFFL) {
 						appendWord((int)binval, i);
 					} else {
 						errorMessages.put(i, "Binary value out of range");
@@ -154,7 +154,7 @@ public final class Csc258Compiler {
 			case 'H':
 				try {
 					long hexval = Long.parseLong(val, 16);
-					if (hexval >= 0 && hexval <= 0xFFFFFFFFL) {
+					if (val.charAt(0) != '-' && hexval >= 0 && hexval <= 0xFFFFFFFFL) {
 						appendWord((int)hexval, i);
 					} else {
 						errorMessages.put(i, "Hexadecimal value out of range");
