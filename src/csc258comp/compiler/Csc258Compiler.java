@@ -97,10 +97,14 @@ public final class Csc258Compiler {
 						
 					case 'C':
 						val = t.nextString();
+						if (val == null) {
+							errorMessages.put(i, String.format("Expected string", val));
+							continue;
+						}
 						try {
 							appendWord(parseChars(val), i);
 						} catch (IllegalArgumentException e) {
-							errorMessages.put(i, String.format("Invalid string \'%s\'", val));
+							errorMessages.put(i, e.getMessage());
 						}
 						
 						break;
@@ -175,26 +179,34 @@ public final class Csc258Compiler {
 	}
 	
 	
-	private static int parseChars(String chars) {
+	private static int parseChars(String str) {
+		int count = 0;
 		int result = 0;
-		for (int i = 0; i < chars.length(); i++) {
-			char c = chars.charAt(i);
+		for (int i = 0; i < str.length(); i++) {
+			char c = str.charAt(i);
 			if (c >= 0x80)
-				throw new IllegalArgumentException("Non-ASCII character");
+				throw new IllegalArgumentException(String.format("Non-ASCII character U+%X", c));
 			if (c == '\\') {
 				i++;
-				if (i == chars.length())
+				if (i == str.length())
 					throw new IllegalArgumentException("Invalid escape");
-				c = chars.charAt(i);
+				c = str.charAt(i);
 				switch (c) {
 					case '0':  c = '\0';  break;
 					case 'b':  c = '\b';  break;
 					case 'n':  c = '\n';  break;
 					case 'r':  c = '\r';  break;
 					case 't':  c = '\t';  break;
+					case '\\':  break;
+					case '\'':  break;
+					default:
+						throw new IllegalArgumentException(String.format("Invalid escape '\\%c'", c));
 				}
 			}
+			if (count == 4)
+				throw new IllegalArgumentException(String.format("String '%s' too long", str));
 			result = result << 8 | c;
+			count++;
 		}
 		return result;
 	}
@@ -208,7 +220,7 @@ public final class Csc258Compiler {
 		private static Pattern MNEMONIC = Pattern.compile("^([A-Za-z0-9]+)[ \t]*");
 		private static Pattern REFERENCE = Pattern.compile("^([A-Za-z0-9_]+)");
 		private static Pattern TOKEN = Pattern.compile("^([^ \t]+)[ \t]*");
-		private static Pattern STRING = Pattern.compile("^'([^'\\\\]|\\\\[\\\\'0bnrt])*'");
+		private static Pattern STRING = Pattern.compile("^'(([^'\\\\]|\\\\.)*)'");
 		
 		
 		private String line;
