@@ -39,4 +39,12 @@ public class SourceLine {
 		return sourceCode.hashCode() + lineNumber;
 	}
 	
+	
+	public String toString() {
+		if (sourceCode.getFile() != null)
+			return String.format("%s:%d", sourceCode.getFile().getPath(), lineNumber);
+		else
+			return String.format("(%s):%d", sourceCode.toString(), lineNumber);
+	}
+	
 }

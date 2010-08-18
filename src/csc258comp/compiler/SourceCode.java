@@ -70,4 +70,12 @@ public final class SourceCode implements Iterable<String> {
 		return lines.iterator();
 	}
 	
+	
+	public String toString() {
+		if (file != null)
+			return String.format("%s (%d lines)", file.getPath(), lines.size());
+		else
+			return String.format("%s (%d lines)", super.toString(), lines.size());
+	}
+	
 }

@@ -47,4 +47,9 @@ public final class Program {
 		return addressToSourceLine.get(addr).getString();
 	}
 	
+	
+	public String toString() {
+		return String.format("%s (%d words)", super.toString(), image.length);
+	}
+	
 }
