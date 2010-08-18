@@ -37,16 +37,27 @@ public final class Csc258Linker {
 			allimage.append(image);
 		}
 		
-		Map<Integer,String> imageSourceCode = new HashMap<Integer,String>();
+		Map<SourceLine,Integer> srcLineToAddr = new HashMap<SourceLine,Integer>();
+		Map<Integer,SourceLine> addrToSrcLine = new HashMap<Integer,SourceLine>();
+		
 		offset = 0;
 		for (Fragment f : frags) {
-			int imagelen = f.getImageLength();
-			for (int i = 0; i < imagelen; i++)
-				imageSourceCode.put(i + offset, f.getSourceLine(i));
-			offset += imagelen;
+			SourceCode src = f.getSourceCode();
+			
+			Map<Integer,Integer> aBySl = f.getAddressBySourceLineMap();
+			for (int l : aBySl.keySet()) {
+				srcLineToAddr.put(new SourceLine(src, l), aBySl.get(l) + offset);
+			}
+			
+			Map<Integer,Integer> slByA = f.getSourceLineByAddressMap();
+			for (int a : slByA.keySet()) {
+				addrToSrcLine.put(a + offset, new SourceLine(src, slByA.get(a)));
+			}
+			
+			offset += f.getImageLength();
 		}
 		
-		return new Program(allimage.toArray(), alllabels.get("main"), imageSourceCode);
+		return new Program(allimage.toArray(), alllabels.get("main"), srcLineToAddr, addrToSrcLine);
 	}
 	
 	

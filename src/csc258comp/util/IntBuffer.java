@@ -64,6 +64,11 @@ public final class IntBuffer {
 	}
 	
 	
+	public String toString() {
+		return String.format("%s (length=%d)", super.toString(), length); 
+	}
+	
+	
 	private void ensureCapacity(int size) {
 		while (values.length < size)
 			values = Arrays.copyOf(values, values.length * 2);

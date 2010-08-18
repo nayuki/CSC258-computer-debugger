@@ -2,6 +2,8 @@ package csc258comp.runner;
 
 import java.util.Map;
 
+import csc258comp.compiler.SourceLine;
+
 
 public final class Program {
 	
@@ -9,16 +11,19 @@ public final class Program {
 	
 	private int mainAddress;
 	
-	private Map<Integer,String> imageSourceCode;
+	private Map<SourceLine,Integer> sourceLineToAddress;
+	private Map<Integer,SourceLine> addressToSourceLine;
 	
 	
 	
-	public Program(int[] image, int mainAddress, Map<Integer,String> imageSourceCode) {
-		if (image == null || imageSourceCode == null)
+	public Program(int[] image, int mainAddress, Map<SourceLine,Integer> srcLineToAddr, Map<Integer,SourceLine> addrToSrcLine) {
+		if (image == null)
 			throw new NullPointerException();
 		this.image = image.clone();
 		this.mainAddress = mainAddress;
-		this.imageSourceCode = imageSourceCode;
+		sourceLineToAddress = srcLineToAddr;
+		addressToSourceLine = addrToSrcLine;
+		
 	}
 	
 	
@@ -38,8 +43,13 @@ public final class Program {
 	}
 	
 	
-	public String getSourceLine(int index) {
-		return imageSourceCode.get(index);
+	public String getSourceLine(int addr) {
+		return addressToSourceLine.get(addr).getString();
+	}
+	
+	
+	public String toString() {
+		return String.format("%s (%d words)", super.toString(), image.length);
 	}
 	
 }
