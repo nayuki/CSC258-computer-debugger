@@ -54,11 +54,12 @@ public final class Csc258Compiler {
 			if (t.isEmpty())
 				continue;
 			
-			String mnemonic = t.nextMnemonic().toUpperCase();
+			String mnemonic = t.nextMnemonic();
 			if (mnemonic == null) {
 				errorMessages.put(i, "Invalid character");
 				continue;
 			}
+			mnemonic = mnemonic.toUpperCase();
 			
 			// Instruction word
 			if (InstructionSet.getOpcodeIndex(mnemonic) != -1) {
