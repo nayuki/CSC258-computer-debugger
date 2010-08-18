@@ -63,6 +63,10 @@ public final class Csc258Compiler {
 			// Instruction word
 			if (InstructionSet.getOpcodeIndex(mnemonic) != -1) {
 				String ref = t.nextReference();
+				if (ref == null) {
+					errorMessages.put(i, "Expected reference");
+					continue;
+				}
 				references.put(image.length(), ref);
 				
 				int word = InstructionSet.getOpcodeIndex(mnemonic) << 24;
@@ -128,6 +132,11 @@ public final class Csc258Compiler {
 						break;
 						
 					case 'A':
+						val = t.nextReference();
+						if (val == null) {
+							errorMessages.put(i, "Expected reference");
+							continue;
+						}
 						references.put(image.length(), val);
 						appendWord(0, i);
 						break;
