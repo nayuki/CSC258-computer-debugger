@@ -15,34 +15,32 @@ import csc258comp.util.IntBuffer;
 
 public final class Csc258Compiler {
 	
-	private static Pattern LABEL_REGEX = Pattern.compile("^([A-Za-z0-9_]+):\\s*");
-	
-	
-	
 	public static Fragment compile(SourceCode source) throws CompilationException {
+		if (source == null)
+			throw new NullPointerException();
 		return new Csc258Compiler(source).result;
 	}
 	
 	
+	
+	private static Pattern LABEL_REGEX = Pattern.compile("^([A-Za-z0-9_]+):\\s*");
+	
+	
+	private IntBuffer image = new IntBuffer();
+	
+	private Map<String,Integer> labels = new HashMap<String,Integer>();
+	private Map<Integer,String> references = new HashMap<Integer,String>();
+	
+	private Map<Integer,Integer> srcLineToAddr = new HashMap<Integer,Integer>();
+	private Map<Integer,Integer> addrToSrcLine = new HashMap<Integer,Integer>();
+	
+	private SortedMap<Integer,String> errorMessages = new TreeMap<Integer,String>();
 	
 	private Fragment result;
 	
 	
 	
 	private Csc258Compiler(SourceCode source) throws CompilationException {
-		if (source == null)
-			throw new NullPointerException();
-		
-		IntBuffer image = new IntBuffer();
-		
-		Map<String,Integer> labels = new HashMap<String,Integer>();
-		Map<Integer,String> references = new HashMap<Integer,String>();
-		
-		Map<Integer,Integer> srcLineToAddr = new HashMap<Integer,Integer>();
-		Map<Integer,Integer> addrToSrcLine = new HashMap<Integer,Integer>();
-		
-		SortedMap<Integer,String> errorMessages = new TreeMap<Integer,String>();
-		
 		String imageLine = "";
 		for (int i = 0; i < source.getLineCount(); i++) {
 			String line = source.getLineAt(i);
@@ -75,9 +73,7 @@ public final class Csc258Compiler {
 				if (!tokens.isEmpty()) {
 					references.put(image.length(), tokens.remove());
 					imageLine += line;
-					srcLineToAddr.put(i, image.length());
-					addrToSrcLine.put(image.length(), i);
-					image.append(word);
+					appendWord(word, i);
 				} else {
 					errorMessages.put(i, "Reference expected after opcode");
 				}
@@ -93,9 +89,7 @@ public final class Csc258Compiler {
 						case 'I':
 							try {
 								imageLine += line;
-								srcLineToAddr.put(i, image.length());
-								addrToSrcLine.put(image.length(), i);
-								image.append(Integer.parseInt(value));
+								appendWord(Integer.parseInt(value), i);
 							} catch (NumberFormatException e) {
 								errorMessages.put(i, "Invalid integer value");
 							}
@@ -104,9 +98,7 @@ public final class Csc258Compiler {
 						case 'F':
 							try {
 								imageLine += line;
-								srcLineToAddr.put(i, image.length());
-								addrToSrcLine.put(image.length(), i);
-								image.append(Float.floatToRawIntBits(Float.parseFloat(value)));
+								appendWord(Float.floatToRawIntBits(Float.parseFloat(value)), i);
 							} catch (NumberFormatException e) {
 								errorMessages.put(i, "Invalid floating-point value");
 							}
@@ -114,9 +106,7 @@ public final class Csc258Compiler {
 							
 						case 'C':
 							imageLine += line;
-							srcLineToAddr.put(i, image.length());
-							addrToSrcLine.put(image.length(), i);
-							image.append(parseChars(value));
+							appendWord(parseChars(value), i);
 							break;
 							
 						case 'B':
@@ -124,9 +114,7 @@ public final class Csc258Compiler {
 								long binval = Long.parseLong(value, 2);
 								if (binval >= 0 && binval <= 0xFFFFFFFFL) {
 									imageLine += line;
-									srcLineToAddr.put(i, image.length());
-									addrToSrcLine.put(image.length(), i);
-									image.append((int)binval);
+									appendWord((int)binval, i);
 								} else {
 									errorMessages.put(i, "Binary value out of range");
 								}
@@ -140,9 +128,7 @@ public final class Csc258Compiler {
 								long hexval = Long.parseLong(value, 16);
 								if (hexval >= 0 && hexval <= 0xFFFFFFFFL) {
 									imageLine += line;
-									srcLineToAddr.put(i, image.length());
-									addrToSrcLine.put(image.length(), i);
-									image.append((int)hexval);
+									appendWord((int)hexval, i);
 								} else {
 									errorMessages.put(i, "Hexadecimal value out of range");
 								}
@@ -153,21 +139,18 @@ public final class Csc258Compiler {
 							
 						case 'A':
 							imageLine += line;
-							srcLineToAddr.put(i, image.length());
-							addrToSrcLine.put(image.length(), i);
 							references.put(image.length(), value);
-							image.append(0);
+							appendWord(0, i);
 							break;
 							
 						case 'W':
 							int length = Integer.parseInt(value);
 							imageLine += line;
 							if (length > 0) {
-								srcLineToAddr.put(i, image.length());
-								addrToSrcLine.put(image.length(), i);
+								appendWord(0, i);
+								if (length > 1)
+									image.append(new int[length - 1]);
 							}
-							for (int j = 0; j < length; j++)
-								image.append(0);
 							break;
 					}
 				} else {
@@ -186,6 +169,16 @@ public final class Csc258Compiler {
 			throw new CompilationException(String.format("%d compiler errors", errorMessages.size()), errorMessages, source);
 		
 		result = new Fragment(image.toArray(), labels, references, source, srcLineToAddr, addrToSrcLine);
+	}
+	
+	
+	private void appendWord(int word, int srcLine) {
+		if (srcLine != -1) {
+			int addr = image.length();
+			srcLineToAddr.put(srcLine, addr);
+			addrToSrcLine.put(addr, srcLine);
+		}
+		image.append(word);
 	}
 	
 	
