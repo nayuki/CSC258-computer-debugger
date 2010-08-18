@@ -1,9 +1,7 @@
 package csc258comp.compiler;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Map;
-import java.util.Queue;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
@@ -23,9 +21,6 @@ public final class Csc258Compiler {
 	
 	
 	
-	private static Pattern LABEL_REGEX = Pattern.compile("^([A-Za-z0-9_]+):\\s*");
-	
-	
 	private IntBuffer image = new IntBuffer();
 	
 	private Map<String,Integer> labels = new HashMap<String,Integer>();
@@ -42,116 +37,110 @@ public final class Csc258Compiler {
 	
 	private Csc258Compiler(SourceCode source) throws CompilationException {
 		for (int i = 0; i < source.getLineCount(); i++) {
-			String line = source.getLineAt(i);
-			line = line.trim();
-			if (line.equals(""))  // Skip blank lines
-				continue;
+			Tokenizer t = new Tokenizer(source.getLineAt(i));
 			
 			// Consume labels
 			while (true) {
-				Matcher m = LABEL_REGEX.matcher(line);
-				if (!m.find())
+				String label = t.nextLabel();
+				if (label == null)
 					break;
-				String label = m.group(1);
+				
 				if (!labels.containsKey(label))
 					labels.put(label, image.length());
 				else
 					errorMessages.put(i, String.format("Duplicate label \"%s\"", label));
-				line = line.substring(m.end());
 			}
 			
-			if (line.equals(""))
+			if (t.isEmpty())
 				continue;
 			
-			Queue<String> tokens = toQueue(line.split("\\s+"));
-			
-			// Instruction word
-			if (InstructionSet.getOpcodeIndex(tokens.element()) != -1) {
-				int word = InstructionSet.getOpcodeIndex(tokens.remove()) << 24;
-				if (!tokens.isEmpty()) {
-					references.put(image.length(), tokens.remove());
-					appendWord(word, i);
-				} else {
-					errorMessages.put(i, "Reference expected after opcode");
-				}
+			String mnemonic = t.nextMnemonic();
+			if (mnemonic == null) {
+				errorMessages.put(i, "Invalid character");
+				continue;
 			}
 			
+			// Instruction word
+			if (InstructionSet.getOpcodeIndex(mnemonic) != -1) {
+				String ref = t.nextReference();
+				references.put(image.length(), ref);
+				
+				int word = InstructionSet.getOpcodeIndex(mnemonic) << 24;
+				appendWord(word, i);
+			}
 			// Data word
-			else if (tokens.element().length() == 1 && "IFCBHAW".indexOf(tokens.element()) != -1) {
-				String type = tokens.remove();
-				if (!tokens.isEmpty()) {
-					String value = tokens.remove();
-					
-					switch (type.charAt(0)) {
-						case 'I':
-							try {
-								appendWord(Integer.parseInt(value), i);
-							} catch (NumberFormatException e) {
-								errorMessages.put(i, "Invalid integer value");
+			else if (mnemonic.length() == 1 && "IFCBHAW".indexOf(mnemonic) != -1) {
+				String val = null;
+				if ("IFBHW".indexOf(mnemonic) != -1)
+					val = t.nextToken();
+				
+				switch (mnemonic.charAt(0)) {
+					case 'I':
+						try {
+							appendWord(Integer.parseInt(val), i);
+						} catch (NumberFormatException e) {
+							errorMessages.put(i, String.format("Invalid integer value \"%s\"", val));
+						}
+						break;
+						
+					case 'F':
+						try {
+							appendWord(Float.floatToRawIntBits(Float.parseFloat(val)), i);
+						} catch (NumberFormatException e) {
+							errorMessages.put(i, String.format("Invalid floating-point value \"%s\"", val));
+						}
+						break;
+						
+					case 'C':
+						appendWord(parseChars(t.nextString()), i);
+						break;
+						
+					case 'B':
+						try {
+							long binval = Long.parseLong(val, 2);
+							if (binval >= 0 && binval <= 0xFFFFFFFFL) {
+								appendWord((int)binval, i);
+							} else {
+								errorMessages.put(i, "Binary value out of range");
 							}
-							break;
-							
-						case 'F':
-							try {
-								appendWord(Float.floatToRawIntBits(Float.parseFloat(value)), i);
-							} catch (NumberFormatException e) {
-								errorMessages.put(i, "Invalid floating-point value");
+						} catch (NumberFormatException e) {
+							errorMessages.put(i, "Invalid binary value");
+						}
+						break;
+						
+					case 'H':
+						try {
+							long hexval = Long.parseLong(val, 16);
+							if (hexval >= 0 && hexval <= 0xFFFFFFFFL) {
+								appendWord((int)hexval, i);
+							} else {
+								errorMessages.put(i, "Hexadecimal value out of range");
 							}
-							break;
-							
-						case 'C':
-							appendWord(parseChars(value), i);
-							break;
-							
-						case 'B':
-							try {
-								long binval = Long.parseLong(value, 2);
-								if (binval >= 0 && binval <= 0xFFFFFFFFL) {
-									appendWord((int)binval, i);
-								} else {
-									errorMessages.put(i, "Binary value out of range");
-								}
-							} catch (NumberFormatException e) {
-								errorMessages.put(i, "Invalid binary value");
-							}
-							break;
-							
-						case 'H':
-							try {
-								long hexval = Long.parseLong(value, 16);
-								if (hexval >= 0 && hexval <= 0xFFFFFFFFL) {
-									appendWord((int)hexval, i);
-								} else {
-									errorMessages.put(i, "Hexadecimal value out of range");
-								}
-							} catch (NumberFormatException e) {
-								errorMessages.put(i, "Invalid hexadecimal value");
-							}
-							break;
-							
-						case 'A':
-							references.put(image.length(), value);
+						} catch (NumberFormatException e) {
+							errorMessages.put(i, "Invalid hexadecimal value");
+						}
+						break;
+						
+					case 'A':
+						references.put(image.length(), val);
+						appendWord(0, i);
+						break;
+						
+					case 'W':
+						int length = Integer.parseInt(val);
+						if (length > 0) {
 							appendWord(0, i);
-							break;
-							
-						case 'W':
-							int length = Integer.parseInt(value);
-							if (length > 0) {
-								appendWord(0, i);
-								if (length > 1)
-									image.append(new int[length - 1]);
-							}
-							break;
-					}
-				} else {
-					errorMessages.put(i, "Value expected after data type");
+							if (length > 1)
+								image.append(new int[length - 1]);
+						}
+						break;
 				}
 				
 			} else {
-				errorMessages.put(i, "Illegal instruction or data");
+				errorMessages.put(i, String.format("Invalid mnemonic \"%s\"", mnemonic));
 			}
 			
-			// Ignore the rest of the tokens in the line, which are comments
+			// Ignore the rest of the line, which is treated as a comment
 		}
 		
 		if (errorMessages.size() > 0)
@@ -172,6 +161,84 @@ public final class Csc258Compiler {
 	
 	
 	
+	private static class Tokenizer {
+		
+		private static Pattern WHITESPACE = Pattern.compile("^[ \t]*");
+		private static Pattern LABEL = Pattern.compile("^([A-Za-z0-9_]+):[ \t]*");
+		private static Pattern MNEMONIC = Pattern.compile("^([A-Za-z0-9]+)[ \t]*");
+		private static Pattern REFERENCE = Pattern.compile("^([A-Za-z0-9_]+)");
+		private static Pattern TOKEN = Pattern.compile("^([^ \t]+)[ \t]*");
+		private static Pattern STRING = Pattern.compile("^'([^'\\\\]|\\\\\'|\\\\\\\\)*'");
+		
+		
+		private String line;
+		
+		
+		public Tokenizer(String line) {
+			this.line = line;
+			
+			// Trim leading white space
+			Matcher m = WHITESPACE.matcher(line);
+			if (!m.find())
+				throw new AssertionError();
+			line = line.substring(m.end());
+		}
+		
+		
+		public boolean isEmpty() {
+			return line.length() == 0;
+		}
+		
+		
+		public String nextLabel() {
+			Matcher m = LABEL.matcher(line);
+			if (!m.find())
+				return null;
+			line = line.substring(m.end());
+			return m.group(1);
+		}
+		
+		
+		public String nextMnemonic() {
+			Matcher m = MNEMONIC.matcher(line);
+			if (!m.find())
+				return null;
+			line = line.substring(m.end());
+			return m.group(1);
+		}
+		
+		
+		public String nextReference() {
+			Matcher m = REFERENCE.matcher(line);
+			if (!m.find())
+				return null;
+			line = line.substring(m.end());
+			return m.group(1);
+		}
+		
+		
+		public String nextToken() {
+			Matcher m = TOKEN.matcher(line);
+			if (!m.find())
+				return null;
+			line = line.substring(m.end());
+			return m.group(1);
+		}
+		
+		
+		public String nextString() {
+			Matcher m = STRING.matcher(line);
+			if (!m.find())
+				return null;
+			line = line.substring(m.end());
+			return m.group(1);
+		}
+		
+		
+	}
+	
+	
+	
 	private static int parseChars(String chars) {
 		if (chars.length() < 2 || chars.length() > 6 || !chars.startsWith("'") || !chars.endsWith("'"))
 			throw new IllegalArgumentException("Invalid format");
@@ -182,14 +249,6 @@ public final class Csc258Compiler {
 				throw new IllegalArgumentException("Non-ASCII character");
 			result = result << 8 | chars.charAt(i);
 		}
-		return result;
-	}
-	
-	
-	private static Queue<String> toQueue(String[] array) {
-		Queue<String> result = new LinkedList<String>();
-		for (String s : array)
-			result.add(s);
 		return result;
 	}
 	
