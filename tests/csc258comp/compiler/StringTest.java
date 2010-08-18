@@ -55,20 +55,32 @@ public class StringTest {
 	
 	
 	@Test(expected=CompilationException.class)
-	public void testInvalidEscape() throws CompilationException {
-		testInvalid("s: C 'FIVER'");
+	public void testInvalidEscape0() throws CompilationException {
+		testInvalid("C '\\a'");
+	}
+	
+	
+	@Test(expected=CompilationException.class)
+	public void testInvalidEscape1() throws CompilationException {
+		testInvalid("C '\\f'");
+	}
+	
+	
+	@Test(expected=CompilationException.class)
+	public void testInvalidEscape2() throws CompilationException {
+		testInvalid("C '\\v'");
 	}
 	
 	
 	@Test(expected=CompilationException.class)
 	public void testTooLong() throws CompilationException {
-		testInvalid("s: C 'FIVER'");
+		testInvalid("C 'FIVER'");
 	}
 	
 	
 	@Test(expected=CompilationException.class)
 	public void testLongWithEscape() throws CompilationException {
-		testInvalid("s: C '\\0\\b\\n\\r\\t'");
+		testInvalid("C '\\0\\b\\n\\r\\t'");
 	}
 	
 	
