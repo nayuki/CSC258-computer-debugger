@@ -65,7 +65,7 @@ public final class Csc258Compiler {
 			if (InstructionSet.getOpcodeIndex(mnemonic) != -1) {
 				String ref = t.nextReference();
 				if (ref == null) {
-					errorMessages.put(i, "Expected reference");
+					errorMessages.put(i, "Reference expected");
 					continue;
 				}
 				references.put(image.length(), ref);
@@ -76,8 +76,13 @@ public final class Csc258Compiler {
 			// Data word
 			else if (mnemonic.length() == 1 && "IFCBHAW".indexOf(mnemonic) != -1) {
 				String val = null;
-				if ("IFBHW".indexOf(mnemonic) != -1)
+				if ("IFBHW".indexOf(mnemonic) != -1) {
 					val = t.nextToken();
+					if (val == null) {
+						errorMessages.put(i, String.format("String expected", val));
+						continue;
+					}
+				}
 				
 				switch (mnemonic.charAt(0)) {
 					case 'I':
@@ -99,7 +104,7 @@ public final class Csc258Compiler {
 					case 'C':
 						val = t.nextString();
 						if (val == null) {
-							errorMessages.put(i, String.format("Expected string", val));
+							errorMessages.put(i, "String expected");
 							continue;
 						}
 						try {
@@ -139,7 +144,7 @@ public final class Csc258Compiler {
 					case 'A':
 						val = t.nextReference();
 						if (val == null) {
-							errorMessages.put(i, "Expected reference");
+							errorMessages.put(i, "Reference expected");
 							continue;
 						}
 						references.put(image.length(), val);
@@ -296,7 +301,6 @@ public final class Csc258Compiler {
 			line = line.substring(m.end());
 			return m.group(1);
 		}
-		
 		
 	}
 	
