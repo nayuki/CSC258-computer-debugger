@@ -1,9 +1,12 @@
 dummy: UND dummy  # Invalid mnemonic
 
-dup: LDA dummy
+dup: LDA dummy  # OK
 dup: STA dummy  # Duplicate label
 
+W 0 # Reference expected:
+BIN
 BUN nowhere  # Undefined label
+
 
 I asdf  # Not an integer
 I 2147483648  # Integer constant too big
@@ -16,7 +19,18 @@ B 100000000000000000000000000000000  # Binary constant too big
 
 F jkl  # Not a floating-point number
 
+
+C ''  # OK
+C 'abcde'  # String too long
+C '\'\'\'\'\''  # String too long
+C '\a'  # Invalid escape
+
+
+W 0 # Reference expected:
+A
 A nowhere  # Undefined label
 
+
+W abc  # Invalid size
 W -1  # Negative size
 W 16777217  # Size exceeds address space
