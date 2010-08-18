@@ -92,7 +92,13 @@ public final class Csc258Compiler {
 						break;
 						
 					case 'C':
-						appendWord(parseChars(t.nextString()), i);
+						val = t.nextString();
+						try {
+							appendWord(parseChars(val), i);
+						} catch (IllegalArgumentException e) {
+							errorMessages.put(i, String.format("Invalid string \'%s\'", val));
+						}
+						
 						break;
 						
 					case 'B':
@@ -160,6 +166,31 @@ public final class Csc258Compiler {
 	}
 	
 	
+	private static int parseChars(String chars) {
+		int result = 0;
+		for (int i = 0; i < chars.length(); i++) {
+			char c = chars.charAt(i);
+			if (c >= 0x80)
+				throw new IllegalArgumentException("Non-ASCII character");
+			if (c == '\\') {
+				i++;
+				if (i == chars.length())
+					throw new IllegalArgumentException("Invalid escape");
+				c = chars.charAt(i);
+				switch (c) {
+					case '0':  c = '\0';  break;
+					case 'b':  c = '\b';  break;
+					case 'n':  c = '\n';  break;
+					case 'r':  c = '\r';  break;
+					case 't':  c = '\t';  break;
+				}
+			}
+			result = result << 8 | c;
+		}
+		return result;
+	}
+	
+	
 	
 	private static class Tokenizer {
 		
@@ -168,7 +199,7 @@ public final class Csc258Compiler {
 		private static Pattern MNEMONIC = Pattern.compile("^([A-Za-z0-9]+)[ \t]*");
 		private static Pattern REFERENCE = Pattern.compile("^([A-Za-z0-9_]+)");
 		private static Pattern TOKEN = Pattern.compile("^([^ \t]+)[ \t]*");
-		private static Pattern STRING = Pattern.compile("^'([^'\\\\]|\\\\\'|\\\\\\\\)*'");
+		private static Pattern STRING = Pattern.compile("^'([^'\\\\]|\\\\[\\\\'0bnrt])*'");
 		
 		
 		private String line;
@@ -235,21 +266,6 @@ public final class Csc258Compiler {
 		}
 		
 		
-	}
-	
-	
-	
-	private static int parseChars(String chars) {
-		if (chars.length() < 2 || chars.length() > 6 || !chars.startsWith("'") || !chars.endsWith("'"))
-			throw new IllegalArgumentException("Invalid format");
-		chars = chars.substring(1, chars.length() - 1);
-		int result = 0;
-		for (int i = 0; i < chars.length(); i++) {
-			if (chars.charAt(i) >= 0x80)
-				throw new IllegalArgumentException("Non-ASCII character");
-			result = result << 8 | chars.charAt(i);
-		}
-		return result;
 	}
 	
 }
