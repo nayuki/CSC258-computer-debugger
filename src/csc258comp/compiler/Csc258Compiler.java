@@ -41,7 +41,6 @@ public final class Csc258Compiler {
 	
 	
 	private Csc258Compiler(SourceCode source) throws CompilationException {
-		String imageLine = "";
 		for (int i = 0; i < source.getLineCount(); i++) {
 			String line = source.getLineAt(i);
 			line = line.trim();
@@ -59,7 +58,6 @@ public final class Csc258Compiler {
 				else
 					errorMessages.put(i, String.format("Duplicate label \"%s\"", label));
 				line = line.substring(m.end());
-				imageLine += label + ": ";
 			}
 			
 			if (line.equals(""))
@@ -72,7 +70,6 @@ public final class Csc258Compiler {
 				int word = InstructionSet.getOpcodeIndex(tokens.remove()) << 24;
 				if (!tokens.isEmpty()) {
 					references.put(image.length(), tokens.remove());
-					imageLine += line;
 					appendWord(word, i);
 				} else {
 					errorMessages.put(i, "Reference expected after opcode");
@@ -88,7 +85,6 @@ public final class Csc258Compiler {
 					switch (type.charAt(0)) {
 						case 'I':
 							try {
-								imageLine += line;
 								appendWord(Integer.parseInt(value), i);
 							} catch (NumberFormatException e) {
 								errorMessages.put(i, "Invalid integer value");
@@ -97,7 +93,6 @@ public final class Csc258Compiler {
 							
 						case 'F':
 							try {
-								imageLine += line;
 								appendWord(Float.floatToRawIntBits(Float.parseFloat(value)), i);
 							} catch (NumberFormatException e) {
 								errorMessages.put(i, "Invalid floating-point value");
@@ -105,7 +100,6 @@ public final class Csc258Compiler {
 							break;
 							
 						case 'C':
-							imageLine += line;
 							appendWord(parseChars(value), i);
 							break;
 							
@@ -113,7 +107,6 @@ public final class Csc258Compiler {
 							try {
 								long binval = Long.parseLong(value, 2);
 								if (binval >= 0 && binval <= 0xFFFFFFFFL) {
-									imageLine += line;
 									appendWord((int)binval, i);
 								} else {
 									errorMessages.put(i, "Binary value out of range");
@@ -127,7 +120,6 @@ public final class Csc258Compiler {
 							try {
 								long hexval = Long.parseLong(value, 16);
 								if (hexval >= 0 && hexval <= 0xFFFFFFFFL) {
-									imageLine += line;
 									appendWord((int)hexval, i);
 								} else {
 									errorMessages.put(i, "Hexadecimal value out of range");
@@ -138,14 +130,12 @@ public final class Csc258Compiler {
 							break;
 							
 						case 'A':
-							imageLine += line;
 							references.put(image.length(), value);
 							appendWord(0, i);
 							break;
 							
 						case 'W':
 							int length = Integer.parseInt(value);
-							imageLine += line;
 							if (length > 0) {
 								appendWord(0, i);
 								if (length > 1)
@@ -161,7 +151,6 @@ public final class Csc258Compiler {
 				errorMessages.put(i, "Illegal instruction or data");
 			}
 			
-			imageLine = "";
 			// Ignore the rest of the tokens in the line, which are comments
 		}
 		
