@@ -1,4 +1,4 @@
-dummy: UND dummy  # Undefined mnemonic
+dummy: UND dummy  # Invalid mnemonic
 
 dup: LDA dummy
 dup: STA dummy  # Duplicate label
@@ -11,6 +11,7 @@ I 2147483648  # Integer constant too big
 H efg  # Not an integer
 H 100000000  # Integer constant too big
 
+B 201  # Not an integer
 B 100000000000000000000000000000000  # Binary constant too big
 
 F jkl  # Not a floating-point number

@@ -1,4 +1,4 @@
-messageAddr: A message 
+messageAddr: A message
 message:
 	C 'H'
 	C 'e'
@@ -6,15 +6,15 @@ message:
 	C 'l'
 	C 'o'
 	C ','
-	H 20
+	C ' '
 	C 'w'
 	C 'o'
 	C 'r'
 	C 'l'
 	C 'd'
 	C '!'
-	H 0D
-	H 0
+	C '\n'
+	C '\0'
 
 main:
 	LDA messageAddr
