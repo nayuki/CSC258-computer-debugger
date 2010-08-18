@@ -10,66 +10,61 @@ import java.util.List;
 import org.junit.Test;
 
 
-public class IntegerTest {
+public class BinaryTest {
 	
 	@Test
 	public void testBasic() {
-		test("n: I 0", 0);
-		test("n: I 1", 1);
-		test("n: I 10", 10);
-		test("n: I -1", -1);
+		test("n: B 0", 0);
+		test("n: B 1", 1);
+		test("n: B 1101", 13);
 	}
 	
 	
 	@Test
 	public void testZeroPadding() {
-		test("n: I 000000000000000000001", 1);
+		test("n: B 00000000000000000000000000000000000000001", 1);
 	}
 	
 	
 	@Test
 	public void testUpperLimit() {
-		test("n: I 2147483639", 2147483639);
-		test("n: I 2147483646", 2147483646);
-		test("n: I 2147483647", 2147483647);
-	}
-	
-	
-	@Test
-	public void testLowerLimit() {
-		test("n: I -2147483639", -2147483639);
-		test("n: I -2147483647", -2147483647);
-		test("n: I -2147483648", -2147483648);
+		test("n: B 11111111111111111111111111111111", 0xFFFFFFFF);
 	}
 	
 	
 	@Test(expected=CompilationException.class)
 	public void testInvalid() throws CompilationException {
-		testInvalid("I abcd");
+		testInvalid("B 201");
 	}
 	
 	
 	@Test(expected=CompilationException.class)
 	public void testPlusSign() throws CompilationException {
-		testInvalid("I +0");
+		testInvalid("B +0");
 	}
 	
 	
 	@Test(expected=CompilationException.class)
-	public void testPositiveOverflow() throws CompilationException {
-		testInvalid("I 2147483648");
+	public void testNegativeZero() throws CompilationException {
+		testInvalid("B -0");
 	}
 	
 	
 	@Test(expected=CompilationException.class)
-	public void testNegativeOverflow() throws CompilationException {
-		testInvalid("I -2147483649");
+	public void testNegative() throws CompilationException {
+		testInvalid("B -1");
 	}
 	
 	
 	@Test(expected=CompilationException.class)
-	public void testBigPositiveOverflow() throws CompilationException {
-		testInvalid("I 99999999999999999999999999999999999999999999999999");
+	public void testOverflow() throws CompilationException {
+		testInvalid("B 100000000000000000000000000000000");
+	}
+	
+	
+	@Test(expected=CompilationException.class)
+	public void testBigOverflow() throws CompilationException {
+		testInvalid("B 11111111111111111111111111111111111111111111111111111111111111111111111111111111");
 	}
 	
 	

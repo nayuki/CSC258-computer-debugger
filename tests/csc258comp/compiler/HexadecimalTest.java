@@ -10,66 +10,62 @@ import java.util.List;
 import org.junit.Test;
 
 
-public class IntegerTest {
+public class HexadecimalTest {
 	
 	@Test
 	public void testBasic() {
-		test("n: I 0", 0);
-		test("n: I 1", 1);
-		test("n: I 10", 10);
-		test("n: I -1", -1);
+		test("n: H 0", 0);
+		test("n: H 1", 1);
+		test("n: H FF", 0xFF);
+		test("n: H cafe", 0xCAFE);
 	}
 	
 	
 	@Test
 	public void testZeroPadding() {
-		test("n: I 000000000000000000001", 1);
+		test("n: H 000000000000000000001", 1);
 	}
 	
 	
 	@Test
 	public void testUpperLimit() {
-		test("n: I 2147483639", 2147483639);
-		test("n: I 2147483646", 2147483646);
-		test("n: I 2147483647", 2147483647);
-	}
-	
-	
-	@Test
-	public void testLowerLimit() {
-		test("n: I -2147483639", -2147483639);
-		test("n: I -2147483647", -2147483647);
-		test("n: I -2147483648", -2147483648);
+		test("n: H FFFFFFFF", 0xFFFFFFFF);
 	}
 	
 	
 	@Test(expected=CompilationException.class)
 	public void testInvalid() throws CompilationException {
-		testInvalid("I abcd");
+		testInvalid("H foobar");
 	}
 	
 	
 	@Test(expected=CompilationException.class)
 	public void testPlusSign() throws CompilationException {
-		testInvalid("I +0");
+		testInvalid("H +0");
 	}
 	
 	
 	@Test(expected=CompilationException.class)
-	public void testPositiveOverflow() throws CompilationException {
-		testInvalid("I 2147483648");
+	public void testNegativeZero() throws CompilationException {
+		testInvalid("H -0");
 	}
 	
 	
 	@Test(expected=CompilationException.class)
-	public void testNegativeOverflow() throws CompilationException {
-		testInvalid("I -2147483649");
+	public void testNegative() throws CompilationException {
+		testInvalid("H -1");
 	}
 	
 	
 	@Test(expected=CompilationException.class)
-	public void testBigPositiveOverflow() throws CompilationException {
-		testInvalid("I 99999999999999999999999999999999999999999999999999");
+	public void testOverflow() throws CompilationException {
+		testInvalid("H 100000000");
+	}
+	
+	
+	@Test(expected=CompilationException.class)
+	public void testBigOverflow() throws CompilationException {
+		testInvalid("H FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
 	}
 	
 	
