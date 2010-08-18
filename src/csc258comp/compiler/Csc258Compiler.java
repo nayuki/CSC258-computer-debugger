@@ -54,7 +54,7 @@ public final class Csc258Compiler {
 			if (t.isEmpty())
 				continue;
 			
-			String mnemonic = t.nextMnemonic();
+			String mnemonic = t.nextMnemonic().toUpperCase();
 			if (mnemonic == null) {
 				errorMessages.put(i, "Invalid character");
 				continue;
