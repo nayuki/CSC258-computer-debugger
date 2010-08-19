@@ -19,7 +19,7 @@ printInt_printLoop:
 	LDA printInt_val
 	DIV printInt_divisor
 	MOD ten
-	ADD charZero
+	ADD cZero
 	printInt_out0: OUT printInt_out0
 	LDA printInt_divisor
 	DIV ten
@@ -28,6 +28,6 @@ printInt_printLoop:
 	BZE printInt_ret
 	BUN printInt_printLoop
 printInt_ret:
-	LDA newLine
+	LDA cNewLine
 	printInt_out1: OUT printInt_out1
 	BIN printInt
