@@ -3,6 +3,8 @@ package csc258comp.compiler;
 import java.util.Collections;
 import java.util.Map;
 
+import csc258comp.runner.Machine;
+
 
 public final class Fragment {
 	
@@ -20,7 +22,7 @@ public final class Fragment {
 	public Fragment(int[] image, Map<String,Integer> labels, Map<Integer,String> references, SourceCode source, Map<Integer,Integer> srcLineToAddr, Map<Integer,Integer> addrToSrcLine) {
 		if (image == null || labels == null || references == null)
 			throw new NullPointerException();
-		if (image.length > (1 << 24))
+		if (image.length > Machine.ADDRESS_SPACE_SIZE)
 			throw new IllegalArgumentException("Invalid image, exceeds size of address space");
 		
 		this.image = image.clone();

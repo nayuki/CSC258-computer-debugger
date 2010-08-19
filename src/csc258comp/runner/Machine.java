@@ -9,6 +9,13 @@ import java.io.IOException;
 public interface Machine {
 	
 	/**
+	 * The size of the machine's address space, which is exactly 2<sup>24</sup>.
+	 */
+	public static final int ADDRESS_SPACE_SIZE = 1 << 24;
+	
+	
+	
+	/**
 	 * Tests whether this machine is halted.
 	 * @return whether this machine is halted
 	 */

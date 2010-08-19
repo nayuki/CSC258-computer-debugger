@@ -19,9 +19,9 @@ public final class Program {
 	public Program(int[] image, int mainAddress, Map<SourceLine,Integer> srcLineToAddr, Map<Integer,SourceLine> addrToSrcLine) {
 		if (image == null)
 			throw new NullPointerException();
-		if (image.length > (1 << 24))
+		if (image.length > Machine.ADDRESS_SPACE_SIZE)
 			throw new IllegalArgumentException("Invalid image, exceeds size of address space");
-		if (mainAddress < 0 || mainAddress >= (1 << 24))
+		if (mainAddress < 0 || mainAddress >= Machine.ADDRESS_SPACE_SIZE)
 			throw new IllegalArgumentException("Invalid address for main");
 		
 		this.image = image.clone();

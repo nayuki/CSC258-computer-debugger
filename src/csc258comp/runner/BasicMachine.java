@@ -57,7 +57,7 @@ public final class BasicMachine implements Machine {
 	
 	@Override
 	public void setProgramCounter(int addr) {
-		if (addr < 0 || addr >= (1 << 24))
+		if (addr < 0 || addr >= Machine.ADDRESS_SPACE_SIZE)
 			throw new IllegalArgumentException("Address out of bounds");
 		programCounter = addr;
 	}
@@ -89,7 +89,7 @@ public final class BasicMachine implements Machine {
 	
 	@Override
 	public int getMemoryAt(int addr) {
-		if (addr < 0 || addr >= (1 << 24))
+		if (addr < 0 || addr >= Machine.ADDRESS_SPACE_SIZE)
 			throw new IllegalArgumentException("Address out of bounds");
 		if (addr >= memory.length)
 			throw new RuntimeException("Full memory space currently not supported");
@@ -99,7 +99,7 @@ public final class BasicMachine implements Machine {
 	
 	@Override
 	public void setMemoryAt(int addr, int val) {
-		if (addr < 0 || addr >= (1 << 24))
+		if (addr < 0 || addr >= Machine.ADDRESS_SPACE_SIZE)
 			throw new IllegalArgumentException("Address out of bounds");
 		if (addr >= memory.length)
 			throw new RuntimeException("Full memory space currently not supported");

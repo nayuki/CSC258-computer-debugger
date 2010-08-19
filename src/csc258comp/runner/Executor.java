@@ -32,7 +32,7 @@ public final class Executor {
 		// Fetch instruction
 		int instWord = m.getMemoryAt(pc);
 		int op = instWord >>> 24;
-		int memAddr = instWord & ((1 << 24) - 1);  // The memory address embedded in the instruction word
+		int memAddr = instWord & (Machine.ADDRESS_SPACE_SIZE - 1);  // The memory address embedded in the instruction word
 		int nextPc = -1;  // -1 is the default value that signifies that nextPc should be pc + 1
 		
 		// Execute instruction

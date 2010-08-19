@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import csc258comp.runner.Executor;
+import csc258comp.runner.Machine;
 import csc258comp.runner.Program;
 import csc258comp.util.IntBuffer;
 
@@ -55,7 +56,7 @@ public final class Csc258Linker {
 		for (Fragment f : frags) {
 			fragToOff.put(f, offset);
 			offset += f.getImageLength();
-			if (offset > (1 << 24))
+			if (offset > Machine.ADDRESS_SPACE_SIZE)
 				throw new IllegalArgumentException("Images too large for address space");
 		}
 		return fragToOff;

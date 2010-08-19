@@ -8,6 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import csc258comp.runner.InstructionSet;
+import csc258comp.runner.Machine;
 import csc258comp.util.IntBuffer;
 
 
@@ -177,7 +178,7 @@ public final class Csc258Compiler {
 			case 'W':
 				try {
 					int length = Integer.parseInt(val);
-					if (length >= 0 && length <= (1 << 24)) {
+					if (length >= 0 && length <= Machine.ADDRESS_SPACE_SIZE) {
 						for (int i = 0; i < length; i++)
 							appendWord(0, i);
 					} else if (length < 0) {
