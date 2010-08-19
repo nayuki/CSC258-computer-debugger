@@ -55,6 +55,8 @@ public final class Csc258Linker {
 		for (Fragment f : frags) {
 			fragToOff.put(f, offset);
 			offset += f.getImageLength();
+			if (offset > (1 << 24))
+				throw new IllegalArgumentException("Images too large for address space");
 		}
 		return fragToOff;
 	}
