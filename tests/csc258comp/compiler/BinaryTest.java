@@ -3,7 +3,7 @@ package csc258comp.compiler;
 import org.junit.Test;
 
 
-public class BinaryTest {
+public final class BinaryTest {
 	
 	@Test
 	public void testBasic() {

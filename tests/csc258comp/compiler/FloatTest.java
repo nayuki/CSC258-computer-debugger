@@ -3,7 +3,7 @@ package csc258comp.compiler;
 import org.junit.Test;
 
 
-public class FloatTest {
+public final class FloatTest {
 	
 	@Test
 	public void testBasic() {

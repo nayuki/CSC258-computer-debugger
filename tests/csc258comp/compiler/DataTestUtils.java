@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 
-class DataTestUtils {
+final class DataTestUtils {
 	
 	public static void test(String code, int expectedWord) {
 		try {

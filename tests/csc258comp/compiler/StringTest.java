@@ -3,7 +3,7 @@ package csc258comp.compiler;
 import org.junit.Test;
 
 
-public class StringTest {
+public final class StringTest {
 	
 	@Test
 	public void testBlank() {

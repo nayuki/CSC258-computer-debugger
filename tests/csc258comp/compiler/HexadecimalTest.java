@@ -3,7 +3,7 @@ package csc258comp.compiler;
 import org.junit.Test;
 
 
-public class HexadecimalTest {
+public final class HexadecimalTest {
 	
 	@Test
 	public void testBasic() {
