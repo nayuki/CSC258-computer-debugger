@@ -1,0 +1,6 @@
+W 0  # Copies the input to the output, effectively echoing it back.
+
+main:
+inp: INP inp
+out: OUT out
+	BUN main
