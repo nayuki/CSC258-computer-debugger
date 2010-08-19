@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 
-public final class SimpleMachine implements Machine {
+public final class BasicMachine implements Machine {
 	
 	private boolean isHalted;
 	
@@ -23,7 +23,7 @@ public final class SimpleMachine implements Machine {
 	
 	
 	
-	public SimpleMachine(InputStream in, OutputStream out) {
+	public BasicMachine(InputStream in, OutputStream out) {
 		if (in == null || out == null)
 			throw new NullPointerException();
 		isHalted = false;

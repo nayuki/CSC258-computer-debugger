@@ -9,10 +9,10 @@ import java.util.Set;
 import csc258comp.runner.Loader;
 import csc258comp.runner.Machine;
 import csc258comp.runner.Program;
-import csc258comp.runner.SimpleMachine;
+import csc258comp.runner.BasicMachine;
 
 
-public final class ProbedMachine implements Machine {
+public final class DebugMachine implements Machine {
 	
 	private Machine machine;
 	
@@ -20,10 +20,10 @@ public final class ProbedMachine implements Machine {
 	
 	
 	
-	public ProbedMachine(InputStream in, OutputStream out) {
+	public DebugMachine(InputStream in, OutputStream out) {
 		if (in == null || out == null)
 			throw new NullPointerException();
-		machine = new SimpleMachine(in, out);
+		machine = new BasicMachine(in, out);
 		listeners = new HashSet<MachineStateListener>();
 	}
 	

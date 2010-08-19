@@ -36,7 +36,7 @@ final class StatePanel extends JPanel implements MachineStateListener {
 	private static final Font monospacedFont = new Font("Monospaced", Font.PLAIN, 12);
 	
 	
-	private ProbedMachine machineState;
+	private DebugMachine machineState;
 	
 	private Set<Integer> breakpoints;
 	
@@ -57,7 +57,7 @@ final class StatePanel extends JPanel implements MachineStateListener {
 	
 	
 	
-	public StatePanel(final ProbedMachine machineState) {
+	public StatePanel(final DebugMachine machineState) {
 		if (machineState == null)
 			throw new NullPointerException();
 		this.machineState = machineState;

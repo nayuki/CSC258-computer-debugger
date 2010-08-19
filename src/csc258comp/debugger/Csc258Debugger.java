@@ -34,7 +34,7 @@ public final class Csc258Debugger {
 		}
 		
 		Program p = Csc258Linker.link(frags);
-		ProbedMachine m = new ProbedMachine(System.in, System.out);
+		DebugMachine m = new DebugMachine(System.in, System.out);
 		StatePanel panel = new StatePanel(m);
 		m.loadProgram(p);
 		

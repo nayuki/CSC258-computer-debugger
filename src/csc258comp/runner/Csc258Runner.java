@@ -31,7 +31,7 @@ public final class Csc258Runner {
 		}
 		
 		Program p = Csc258Linker.link(frags);
-		Machine m = new SimpleMachine(System.in, System.out);
+		Machine m = new BasicMachine(System.in, System.out);
 		Loader.load(m, p);
 		
 		try {
