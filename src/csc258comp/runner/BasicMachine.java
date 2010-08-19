@@ -109,9 +109,12 @@ public final class BasicMachine implements Machine {
 	
 	@Override
 	public int input() throws IOException {
-		if (input.available() == 0)
+		if (input.available() == 0) {
+			try {
+				Thread.sleep(0, 100000);
+			} catch (InterruptedException e) {}
 			return -1;
-		else
+		} else
 			return input.read();
 	}
 	
