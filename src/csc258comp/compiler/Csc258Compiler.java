@@ -180,7 +180,7 @@ public final class Csc258Compiler {
 					int length = Integer.parseInt(val);
 					if (length >= 0 && length <= Machine.ADDRESS_SPACE_SIZE) {
 						for (int i = 0; i < length; i++)
-							appendWord(0, i);
+							appendWord(0, lineNum);
 					} else if (length < 0) {
 						errorMessages.put(lineNum, "Negative size");
 					} else {
