@@ -18,6 +18,11 @@ public final class Fragment {
 	
 	
 	public Fragment(int[] image, Map<String,Integer> labels, Map<Integer,String> references, SourceCode source, Map<Integer,Integer> srcLineToAddr, Map<Integer,Integer> addrToSrcLine) {
+		if (image == null || labels == null || references == null)
+			throw new NullPointerException();
+		if (image.length > (1 << 24))
+			throw new IllegalArgumentException("Invalid image, exceeds size of address space");
+		
 		this.image = image.clone();
 		this.labels = Collections.unmodifiableMap(labels);
 		this.references = Collections.unmodifiableMap(references);

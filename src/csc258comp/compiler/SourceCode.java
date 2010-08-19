@@ -14,6 +14,9 @@ import csc258comp.util.Utf8Reader;
 public final class SourceCode implements Iterable<String> {
 	
 	public static SourceCode readFile(File file) throws IOException {
+		if (file == null)
+			throw new NullPointerException();
+		
 		List<String> lines = new ArrayList<String>();
 		BufferedReader in = new Utf8Reader(file);
 		try {
