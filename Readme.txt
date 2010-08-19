@@ -41,16 +41,16 @@ like Eclipse or NetBeans.
 You must set the working directory or the class path to the appropriate root for
 Java class files. For example, if the runner is located at /the/package/
 csc258comp/runner/Csc258Runner.class, then you must do one of these:
-* cd /the/package
-  java csc258comp.runner.Csc258Runner [CSC258 files]
-* java -cp /the/package csc258comp.runner.Csc258Runner [CSC258 files]
-* export CLASSPATH=/the/package
-  java csc258comp.runner.Csc258Runner [CSC258 files]
+ * cd /the/package
+   java csc258comp.runner.Csc258Runner [CSC258 files]
+ * java -cp /the/package csc258comp.runner.Csc258Runner [CSC258 files]
+ * export CLASSPATH=/the/package
+   java csc258comp.runner.Csc258Runner [CSC258 files]
 
 Examples:
-* java csc258comp.runner.Csc258Runner demos/helloworld.258.txt
-* java csc258comp.runner.Csc258Runner demos/primes.258.txt
-      demos/lib/const.258.txt demos/lib/printInt.258.txt
+ * java csc258comp.runner.Csc258Runner demos/helloworld.258.txt
+ * java csc258comp.runner.Csc258Runner demos/primes.258.txt
+       demos/lib/const.258.txt demos/lib/printInt.258.txt
 
 
 == License ==
@@ -66,13 +66,13 @@ use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 the Software, and to permit persons to whom the Software is furnished to do so,
 subject to the following conditions:
 
-* The above copyright notice and this permission notice shall be included in all
-  copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+   all copies or substantial portions of the Software.
 
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-  SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+   SOFTWARE.
