@@ -1,3 +1,6 @@
+W 0  # Demonstrates compiler and linker errors. This program is invalid.
+
+
 dummy: UND dummy  # Invalid mnemonic
 
 dup: LDA dummy  # OK

@@ -1,3 +1,6 @@
+W 0  # Prints "Hello, world!\n". Standalone program with no dependencies.
+
+
 msgstr:
 	H 48
 	H 65

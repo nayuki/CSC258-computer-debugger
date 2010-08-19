@@ -1,3 +1,7 @@
+W 0  # Prints the list of primes (up to 2^31), i.e.: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, ..., 2147483647.
+W 0  # Uses: printInt
+
+
 zero: I 0
 one: I 1
 two: I 2

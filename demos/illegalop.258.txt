@@ -1,3 +1,6 @@
+W 0  # Demonstrates the execution of an illegal opcode.
+
+
 one: I 1
 
 main:
