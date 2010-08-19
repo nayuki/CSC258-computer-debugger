@@ -1,0 +1,62 @@
+W 0  # Copies the input to the output with ROT-13 encryption applied.
+W 0  # Uses: const
+
+
+i13: I 13
+i26: I 26
+
+
+main:
+inp: INP inp
+	STA rot13_c
+	BSA rot13
+	LDA rot13_c
+out: OUT out
+	BUN main
+
+
+rot13_c: W 1
+rot13: W 1
+	LDA rot13_c
+	SUB cUpperA
+	AND signBit
+	BZE rot13_l0
+	BUN rot13_ret
+rot13_l0:
+	LDA rot13_c
+	SUB cUpperA
+	SUB i26
+	AND signBit
+	BZE rot13_l1
+	BUN rot13_uppercase
+rot13_l1:
+	LDA rot13_c
+	SUB cLowerA
+	AND signBit
+	BZE rot13_l2
+	BUN rot13_ret
+rot13_l2:
+	LDA rot13_c
+	SUB cLowerA
+	SUB i26
+	AND signBit
+	BZE rot13_ret
+	BUN rot13_lowercase
+rot13_uppercase:
+	LDA rot13_c
+	SUB cUpperA
+	ADD i13
+	MOD i26
+	ADD cUpperA
+	STA rot13_c
+	BUN rot13_ret
+rot13_lowercase:
+	LDA rot13_c
+	SUB cLowerA
+	ADD i13
+	MOD i26
+	ADD cLowerA
+	STA rot13_c
+	BUN rot13_ret
+rot13_ret:
+	BIN rot13
