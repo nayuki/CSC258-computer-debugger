@@ -48,7 +48,11 @@ public final class Program {
 	
 	
 	public String getSourceLine(int addr) {
-		return addressToSourceLine.get(addr).getString();
+		SourceLine sl = addressToSourceLine.get(addr);
+		if (sl != null)
+			return sl.getString();
+		else
+			return null;
 	}
 	
 	
