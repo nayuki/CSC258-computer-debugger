@@ -6,7 +6,6 @@ import java.util.Map;
 import csc258comp.runner.Executor;
 import csc258comp.runner.Machine;
 import csc258comp.runner.Program;
-import csc258comp.util.IntBuffer;
 
 
 public final class Csc258Linker {
@@ -19,6 +18,8 @@ public final class Csc258Linker {
 	
 	
 	
+	private int imageSize;
+	
 	private Program result;
 	
 	
@@ -26,7 +27,7 @@ public final class Csc258Linker {
 	private Csc258Linker(Iterable<Fragment> frags) {
 		Map<Fragment,Integer> fragmentToOffset = layOutFragments(frags);
 		Map<String,Integer> allLabels = unionLabels(fragmentToOffset, frags);
-		int[] image = resolveAndBuildImage(frags, fragmentToOffset, allLabels);
+		int[] image = resolveAndBuildImage(frags, fragmentToOffset, allLabels, imageSize);
 		
 		// Process debugging info
 		Map<SourceLine,Integer> srcLineToAddr = new HashMap<SourceLine,Integer>();
@@ -50,7 +51,7 @@ public final class Csc258Linker {
 	}
 	
 	
-	private static Map<Fragment,Integer> layOutFragments(Iterable<Fragment> frags) {
+	private Map<Fragment,Integer> layOutFragments(Iterable<Fragment> frags) {
 		Map<Fragment,Integer> fragToOff = new HashMap<Fragment,Integer>();
 		int offset = 0;
 		for (Fragment f : frags) {
@@ -59,6 +60,7 @@ public final class Csc258Linker {
 			if (offset > Machine.ADDRESS_SPACE_SIZE)
 				throw new IllegalArgumentException("Images too large for address space");
 		}
+		imageSize = offset;
 		return fragToOff;
 	}
 	
@@ -82,13 +84,13 @@ public final class Csc258Linker {
 	}
 	
 	
-	private static int[] resolveAndBuildImage(Iterable<Fragment> frags, Map<Fragment,Integer> fragToOff, Map<String,Integer> allLabels) {
-		IntBuffer allImage = new IntBuffer();
+	private static int[] resolveAndBuildImage(Iterable<Fragment> frags, Map<Fragment,Integer> fragToOff, Map<String,Integer> allLabels, int imageSize) {
+		int[] allImage = new int[imageSize];
 		for (Fragment f : frags) {
 			int[] image = getImageAndResolveReferences(f, allLabels);
-			allImage.append(image);
+			System.arraycopy(image, 0, allImage, fragToOff.get(f), image.length);
 		}
-		return allImage.toArray();
+		return allImage;
 	}
 	
 	
