@@ -178,11 +178,8 @@ public final class Csc258Compiler {
 				try {
 					int length = Integer.parseInt(val);
 					if (length >= 0 && length <= (1 << 24)) {
-						if (length > 0) {
-							appendWord(0, lineNum);
-							if (length > 1)
-								image.append(new int[length - 1]);
-						}
+						for (int i = 0; i < length; i++)
+							appendWord(0, i);
 					} else if (length < 0) {
 						errorMessages.put(lineNum, "Negative size");
 					} else {
