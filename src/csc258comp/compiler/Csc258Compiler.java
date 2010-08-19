@@ -97,12 +97,12 @@ public final class Csc258Compiler {
 	}
 	
 	
-	private void processDataWord(Tokenizer t, char mnemonic, int i) {
+	private void processDataWord(Tokenizer t, char mnemonic, int lineNum) {
 		String val = null;
 		if ("IFBHW".indexOf(mnemonic) != -1) {
 			val = t.nextToken();
 			if (val == null) {
-				errorMessages.put(i, String.format("String expected", val));
+				errorMessages.put(lineNum, String.format("String expected", val));
 				return;
 			}
 		}
@@ -110,30 +110,30 @@ public final class Csc258Compiler {
 		switch (mnemonic) {
 			case 'I':
 				try {
-					appendWord(Integer.parseInt(val), i);
+					appendWord(Integer.parseInt(val), lineNum);
 				} catch (NumberFormatException e) {
-					errorMessages.put(i, String.format("Invalid integer value \"%s\"", val));
+					errorMessages.put(lineNum, String.format("Invalid integer value \"%s\"", val));
 				}
 				break;
 				
 			case 'F':
 				try {
-					appendWord(Float.floatToRawIntBits(Float.parseFloat(val)), i);
+					appendWord(Float.floatToRawIntBits(Float.parseFloat(val)), lineNum);
 				} catch (NumberFormatException e) {
-					errorMessages.put(i, String.format("Invalid floating-point value \"%s\"", val));
+					errorMessages.put(lineNum, String.format("Invalid floating-point value \"%s\"", val));
 				}
 				break;
 				
 			case 'C':
 				val = t.nextString();
 				if (val == null) {
-					errorMessages.put(i, "String expected");
+					errorMessages.put(lineNum, "String expected");
 					return;
 				}
 				try {
-					appendWord(parseChars(val), i);
+					appendWord(parseChars(val), lineNum);
 				} catch (IllegalArgumentException e) {
-					errorMessages.put(i, e.getMessage());
+					errorMessages.put(lineNum, e.getMessage());
 				}
 				
 				break;
@@ -142,12 +142,12 @@ public final class Csc258Compiler {
 				try {
 					long binval = Long.parseLong(val, 2);
 					if (val.charAt(0) != '-' && binval >= 0 && binval <= 0xFFFFFFFFL) {
-						appendWord((int)binval, i);
+						appendWord((int)binval, lineNum);
 					} else {
-						errorMessages.put(i, "Binary value out of range");
+						errorMessages.put(lineNum, "Binary value out of range");
 					}
 				} catch (NumberFormatException e) {
-					errorMessages.put(i, "Invalid binary value");
+					errorMessages.put(lineNum, "Invalid binary value");
 				}
 				break;
 				
@@ -155,23 +155,23 @@ public final class Csc258Compiler {
 				try {
 					long hexval = Long.parseLong(val, 16);
 					if (val.charAt(0) != '-' && hexval >= 0 && hexval <= 0xFFFFFFFFL) {
-						appendWord((int)hexval, i);
+						appendWord((int)hexval, lineNum);
 					} else {
-						errorMessages.put(i, "Hexadecimal value out of range");
+						errorMessages.put(lineNum, "Hexadecimal value out of range");
 					}
 				} catch (NumberFormatException e) {
-					errorMessages.put(i, "Invalid hexadecimal value");
+					errorMessages.put(lineNum, "Invalid hexadecimal value");
 				}
 				break;
 				
 			case 'A':
 				val = t.nextReference();
 				if (val == null) {
-					errorMessages.put(i, "Reference expected");
+					errorMessages.put(lineNum, "Reference expected");
 					return;
 				}
 				references.put(image.length(), val);
-				appendWord(0, i);
+				appendWord(0, lineNum);
 				break;
 				
 			case 'W':
@@ -179,17 +179,17 @@ public final class Csc258Compiler {
 					int length = Integer.parseInt(val);
 					if (length >= 0 && length <= (1 << 24)) {
 						if (length > 0) {
-							appendWord(0, i);
+							appendWord(0, lineNum);
 							if (length > 1)
 								image.append(new int[length - 1]);
 						}
 					} else if (length < 0) {
-						errorMessages.put(i, "Negative size");
+						errorMessages.put(lineNum, "Negative size");
 					} else {
-						errorMessages.put(i, "Size out of range");
+						errorMessages.put(lineNum, "Size out of range");
 					}
 				} catch (NumberFormatException e) {
-					errorMessages.put(i, "Invalid size");
+					errorMessages.put(lineNum, "Invalid size");
 				}
 				break;
 			
