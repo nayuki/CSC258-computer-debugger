@@ -26,6 +26,8 @@ User features:
 
 Developer features:
  * Clean code, easily modifiable and extensible
+ * Code guards against null pointers, out-of-bounds, illegal input parameters,
+   and other misuses of the API in a fail-fast way
  * Some functionality is covered by JUnit tests
  * Compilation is separated from linking
 
