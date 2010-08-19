@@ -13,7 +13,16 @@ public final class Csc258Linker {
 	public static Program link(Iterable<Fragment> frags) {
 		if (frags == null)
 			throw new NullPointerException();
-		
+		return new Csc258Linker(frags).result;
+	}
+	
+	
+	
+	private Program result;
+	
+	
+	
+	private Csc258Linker(Iterable<Fragment> frags) {
 		Map<String,Integer> alllabels = new HashMap<String,Integer>();
 		alllabels.put("opsys", Executor.OPSYS_ADDRESS);
 		
@@ -57,7 +66,7 @@ public final class Csc258Linker {
 			offset += f.getImageLength();
 		}
 		
-		return new Program(allimage.toArray(), alllabels.get("main"), srcLineToAddr, addrToSrcLine);
+		result = new Program(allimage.toArray(), alllabels.get("main"), srcLineToAddr, addrToSrcLine);
 	}
 	
 	
@@ -72,9 +81,5 @@ public final class Csc258Linker {
 		}
 		return image;
 	}
-	
-	
-	
-	private Csc258Linker() {}
 	
 }
