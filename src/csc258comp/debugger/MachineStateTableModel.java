@@ -4,7 +4,6 @@ import java.util.Set;
 
 import javax.swing.table.AbstractTableModel;
 
-import csc258comp.runner.Machine;
 import csc258comp.runner.Program;
 
 
@@ -17,22 +16,22 @@ final class MachineStateTableModel extends AbstractTableModel {
 	
 	
 	
-	private Machine machineState;
+	private StatePanel parent;
 	
 	private int rowCount;
 	
-	public Program program;
-	
 	private Set<Integer> breakpoints;
 	
+	public Program program;
 	
 	
-	public MachineStateTableModel(Machine m, Set<Integer> breakpoints) {
-		if (m == null || breakpoints == null)
+	
+	public MachineStateTableModel(StatePanel parent) {
+		if (parent == null)
 			throw new NullPointerException();
-		machineState = m;
+		this.parent = parent;
 		rowCount = 0;
-		this.breakpoints = breakpoints;
+		breakpoints = parent.controller.getBreakpoints();
 	}
 	
 	
@@ -68,10 +67,10 @@ final class MachineStateTableModel extends AbstractTableModel {
 				return breakpoints.contains(row);
 			
 			case 1:
-				return String.format("%08X%s", row, row == machineState.getProgramCounter() ? " <=" : "");
+				return String.format("%08X%s", row, row == parent.machineState.getProgramCounter() ? " <=" : "");
 			
 			case 2:
-				return String.format("%08X", machineState.getMemoryAt(row));
+				return String.format("%08X", parent.machineState.getMemoryAt(row));
 			
 			case 3:
 				if (program != null) {
@@ -101,9 +100,9 @@ final class MachineStateTableModel extends AbstractTableModel {
 		if (!(value instanceof Boolean))
 			throw new AssertionError();
 		if (((Boolean)value).booleanValue())
-			breakpoints.add(row);
+			parent.controller.addBreakpoint(row);
 		else
-			breakpoints.remove(row);
+			parent.controller.removeBreakpoint(row);
 	}
 	
 	

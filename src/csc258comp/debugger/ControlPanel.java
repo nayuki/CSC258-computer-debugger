@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import csc258comp.runner.Executor;
 import csc258comp.runner.MachineException;
 
 
@@ -36,20 +35,17 @@ final class ControlPanel extends JPanel {
 	private class StepAction implements ActionListener {
 		
 		public void actionPerformed(ActionEvent e) {
-			if (parent.machineState.isHalted())
-				return;
 			try {
-				parent.registerPanel.programCounter.setBackground(StatePanel.unchangedColor);
-				parent.registerPanel.accumulator.setBackground(StatePanel.unchangedColor);
-				parent.registerPanel.conditionCode.setBackground(StatePanel.unchangedColor);
-				parent.registerPanel.nextInstruction.setBackground(StatePanel.unchangedColor);
-				parent.oldConditionCode = parent.machineState.getConditionCode();
-				parent.oldProgramCounter = parent.machineState.getProgramCounter();
-				if (!parent.machineState.isHalted()) {
-					Executor.step(parent.machineState);
-					parent.stepCount++;
-					parent.registerPanel.stepCountField.setText(Long.toString(parent.stepCount));
-				}
+				int oldPc = parent.machineState.getProgramCounter();
+				int oldAcc = parent.machineState.getAccumulator();
+				boolean oldCond = parent.machineState.getConditionCode();
+				
+				parent.controller.step();
+				
+				parent.registerPanel.programCounter.setBackground(parent.machineState.getProgramCounter() == oldPc + 1 ? StatePanel.unchangedColor : StatePanel.changedColor);
+				parent.registerPanel.accumulator.setBackground(parent.machineState.getAccumulator() == oldAcc ? StatePanel.unchangedColor : StatePanel.changedColor);
+				parent.registerPanel.conditionCode.setBackground(parent.machineState.getConditionCode() == oldCond ? StatePanel.unchangedColor : StatePanel.changedColor);
+				parent.registerPanel.stepCountField.setText(Long.toString(parent.controller.getStepCount()));
 			} catch (MachineException ex) {
 				throw new RuntimeException(ex);
 			}
@@ -62,18 +58,21 @@ final class ControlPanel extends JPanel {
 		
 		public void actionPerformed(ActionEvent e) {
 			try {
+				int oldAcc = parent.machineState.getAccumulator();
+				boolean oldCond = parent.machineState.getConditionCode();
+				
 				parent.machineState.removeListener(parent);
-				while (!parent.machineState.isHalted()) {
-					Executor.step(parent.machineState);
-					parent.stepCount++;
-					parent.registerPanel.stepCountField.setText(Long.toString(parent.stepCount));
-					if (parent.breakpoints.contains(parent.machineState.getProgramCounter()))
-						break;
-				}
+				parent.controller.run();
 				parent.programCounterChanged(parent.machineState);
 				parent.accumulatorChanged(parent.machineState);
 				parent.conditionCodeChanged(parent.machineState);
 				parent.machineState.addListener(parent);
+				
+				parent.registerPanel.programCounter.setBackground(StatePanel.unchangedColor);
+				parent.registerPanel.accumulator.setBackground(parent.machineState.getAccumulator() == oldAcc ? StatePanel.unchangedColor : StatePanel.changedColor);
+				parent.registerPanel.conditionCode.setBackground(parent.machineState.getConditionCode() == oldCond ? StatePanel.unchangedColor : StatePanel.changedColor);
+				parent.registerPanel.stepCountField.setText(Long.toString(parent.controller.getStepCount()));
+				parent.tableModel.fireTableDataChanged();
 			} catch (MachineException ex) {
 				throw new RuntimeException(ex);
 			}

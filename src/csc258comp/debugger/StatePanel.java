@@ -5,8 +5,6 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -28,19 +26,12 @@ final class StatePanel extends JPanel implements MachineStateListener {
 	
 	DebugMachine machineState;
 	
-	Set<Integer> breakpoints;
+	Controller controller;
 	
 	RegisterPanel registerPanel;
 	
-	long stepCount;
 	
-	
-	private MachineStateTableModel tableModel;
-	
-	
-	int oldProgramCounter;
-	
-	boolean oldConditionCode;
+	MachineStateTableModel tableModel;
 	
 	
 	
@@ -48,8 +39,7 @@ final class StatePanel extends JPanel implements MachineStateListener {
 		if (machineState == null)
 			throw new NullPointerException();
 		this.machineState = machineState;
-		breakpoints = new HashSet<Integer>();
-		stepCount = 0;
+		controller = new Controller(machineState);
 		
 		setLayout(new GridBagLayout());
 		GridBagConstraints g = new GridBagConstraints();
@@ -84,7 +74,7 @@ final class StatePanel extends JPanel implements MachineStateListener {
 		g.weightx = 1;
 		g.weighty = 1;
 		g.fill = GridBagConstraints.BOTH;
-		tableModel = new MachineStateTableModel(machineState, breakpoints);
+		tableModel = new MachineStateTableModel(this);
 		JTable table = new JTable(tableModel);
 		table.setFont(monospacedFont);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -112,8 +102,6 @@ final class StatePanel extends JPanel implements MachineStateListener {
 	public void programCounterChanged(Machine m) {
 		int newProgramCounter = m.getProgramCounter();
 		registerPanel.programCounter.setText(String.format("%06X", newProgramCounter));
-		if (newProgramCounter != ((oldProgramCounter + 1) & 0xFFFFFF))
-			registerPanel.programCounter.setBackground(changedColor);
 		
 		int nextinst = m.getMemoryAt(newProgramCounter);
 		int opcode = nextinst >>> 24;
@@ -125,8 +113,7 @@ final class StatePanel extends JPanel implements MachineStateListener {
 			registerPanel.nextInstruction.setBackground(changedColor);
 		}
 		
-		tableModel.fireTableRowsUpdated(oldProgramCounter, oldProgramCounter);
-		tableModel.fireTableRowsUpdated(newProgramCounter, newProgramCounter);
+		tableModel.fireTableDataChanged();
 	}
 	
 	
@@ -140,8 +127,6 @@ final class StatePanel extends JPanel implements MachineStateListener {
 	@Override
 	public void conditionCodeChanged(Machine m) {
 		registerPanel.conditionCode.setText(m.getConditionCode() ? "1" : "0");
-		if (m.getConditionCode() != oldConditionCode)
-			registerPanel.conditionCode.setBackground(changedColor);
 	}
 	
 	
