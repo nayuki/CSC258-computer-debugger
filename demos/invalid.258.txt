@@ -32,6 +32,8 @@ C '\a'  # Invalid escape
 W 0 # Reference expected:
 A
 A nowhere  # Undefined label
+A -1024  # Address out of range
+A 16777217  # Address out of range
 
 
 W abc  # Invalid size
