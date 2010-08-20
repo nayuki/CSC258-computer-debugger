@@ -112,7 +112,7 @@ final class MachineTableModel extends AbstractTableModel implements MachineListe
 	public void programLoaded(Machine m, Program p) {
 		programCounterChanged(m);
 		program = p;
-		setRowCount(p.getImageSize());
+		rowCount = p.getImageSize();
 	}
 	
 	
@@ -136,12 +136,5 @@ final class MachineTableModel extends AbstractTableModel implements MachineListe
 	
 	@Override
 	public void conditionCodeChanged(Machine m) {}
-	
-	
-	private void setRowCount(int rows) {
-		if (rows < 0)
-			throw new IllegalArgumentException();
-		this.rowCount = rows;
-	}
 	
 }
