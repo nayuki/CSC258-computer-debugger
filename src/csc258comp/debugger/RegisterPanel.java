@@ -88,7 +88,7 @@ final class RegisterPanel extends JPanel {
 		JTextField result = new JTextField();
 		result.setEditable(false);
 		result.setHorizontalAlignment(horizAlign);
-		result.setBackground(DebugPanel.unchangedColor);
+		result.setBackground(DebugPanel.UNCHANGED_COLOR);
 		result.setFont(DebugPanel.monospacedFont);
 		return result;
 	}
@@ -186,9 +186,9 @@ final class RegisterPanel extends JPanel {
 	
 	private static Color getColor(boolean changed) {
 		if (changed)
-			return DebugPanel.changedColor;
+			return DebugPanel.CHANGED_COLOR;
 		else
-			return DebugPanel.unchangedColor;
+			return DebugPanel.UNCHANGED_COLOR;
 	}
 	
 }

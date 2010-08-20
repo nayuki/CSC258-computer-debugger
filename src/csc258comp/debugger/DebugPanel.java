@@ -16,8 +16,8 @@ import csc258comp.runner.Program;
 @SuppressWarnings("serial")
 final class DebugPanel extends JPanel {
 	
-	public static final Color unchangedColor = Color.WHITE;
-	public static final Color changedColor = new Color(1.0f, 1.0f, 0.5f);
+	public static final Color UNCHANGED_COLOR = Color.WHITE;
+	public static final Color CHANGED_COLOR = new Color(1.0f, 1.0f, 0.5f);
 	
 	public static final Font monospacedFont = new Font("Monospaced", Font.PLAIN, 12);
 	
