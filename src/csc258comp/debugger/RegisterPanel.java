@@ -83,6 +83,7 @@ final class RegisterPanel extends JPanel implements MachineListener {
 		programCounterChanged(machine);
 		accumulatorChanged(machine);
 		conditionCodeChanged(machine);
+		stepCountChanged();
 	}
 	
 	
@@ -117,7 +118,7 @@ final class RegisterPanel extends JPanel implements MachineListener {
 		programCounterChanged(machine);
 		accumulatorChanged(machine);
 		conditionCodeChanged(machine);
-		stepCountField.setText(Long.toString(controller.getStepCount()));
+		stepCountChanged();
 		
 		programCounter.setBackground(machine.getProgramCounter() == ((oldProgramCounter + 1) & 0xFFFFFF) ? DebugPanel.unchangedColor : DebugPanel.changedColor);
 		accumulator.setBackground(machine.getAccumulator() == oldAccumulator ? DebugPanel.unchangedColor : DebugPanel.changedColor);
@@ -129,7 +130,7 @@ final class RegisterPanel extends JPanel implements MachineListener {
 		programCounterChanged(machine);
 		accumulatorChanged(machine);
 		conditionCodeChanged(machine);
-		stepCountField.setText(Long.toString(controller.getStepCount()));
+		stepCountChanged();
 		
 		programCounter.setBackground(DebugPanel.unchangedColor);
 		accumulator.setBackground(machine.getAccumulator() == oldAccumulator ? DebugPanel.unchangedColor : DebugPanel.changedColor);
@@ -186,5 +187,10 @@ final class RegisterPanel extends JPanel implements MachineListener {
 	
 	@Override
 	public void memoryChanged(Machine m, int addr) {}
+	
+	
+	public void stepCountChanged() {
+		stepCountField.setText(Long.toString(controller.getStepCount()));
+	}
 	
 }
