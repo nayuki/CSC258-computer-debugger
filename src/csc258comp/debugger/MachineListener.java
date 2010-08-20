@@ -4,7 +4,7 @@ import csc258comp.runner.Machine;
 import csc258comp.runner.Program;
 
 
-public interface MachineStateListener {
+public interface MachineListener {
 	
 	public void haltedChanged(Machine m);
 	

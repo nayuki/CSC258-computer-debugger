@@ -16,7 +16,7 @@ import csc258comp.runner.Program;
 
 
 @SuppressWarnings("serial")
-final class StatePanel extends JPanel implements MachineStateListener {
+final class DebugPanel extends JPanel implements MachineListener {
 	
 	static final Color unchangedColor = Color.WHITE;
 	static final Color changedColor = new Color(1.0f, 1.0f, 0.5f);
@@ -31,11 +31,11 @@ final class StatePanel extends JPanel implements MachineStateListener {
 	RegisterPanel registerPanel;
 	
 	
-	MachineStateTableModel tableModel;
+	MachineTableModel tableModel;
 	
 	
 	
-	public StatePanel(final DebugMachine machineState) {
+	public DebugPanel(final DebugMachine machineState) {
 		if (machineState == null)
 			throw new NullPointerException();
 		this.machineState = machineState;
@@ -74,7 +74,7 @@ final class StatePanel extends JPanel implements MachineStateListener {
 		g.weightx = 1;
 		g.weighty = 1;
 		g.fill = GridBagConstraints.BOTH;
-		tableModel = new MachineStateTableModel(this);
+		tableModel = new MachineTableModel(this);
 		JTable table = new JTable(tableModel);
 		table.setFont(monospacedFont);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);

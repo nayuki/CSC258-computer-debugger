@@ -8,7 +8,7 @@ import csc258comp.runner.Program;
 
 
 @SuppressWarnings("serial")
-final class MachineStateTableModel extends AbstractTableModel {
+final class MachineTableModel extends AbstractTableModel {
 	
 	private static Class<?>[] columnClasses = {Boolean.class, String.class, String.class, String.class};
 	
@@ -16,7 +16,7 @@ final class MachineStateTableModel extends AbstractTableModel {
 	
 	
 	
-	private StatePanel parent;
+	private DebugPanel parent;
 	
 	private int rowCount;
 	
@@ -26,7 +26,7 @@ final class MachineStateTableModel extends AbstractTableModel {
 	
 	
 	
-	public MachineStateTableModel(StatePanel parent) {
+	public MachineTableModel(DebugPanel parent) {
 		if (parent == null)
 			throw new NullPointerException();
 		this.parent = parent;

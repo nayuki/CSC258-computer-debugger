@@ -13,11 +13,11 @@ import csc258comp.runner.MachineException;
 @SuppressWarnings("serial")
 final class ControlPanel extends JPanel {
 	
-	private StatePanel parent;
+	private DebugPanel parent;
 	
 	
 	
-	public ControlPanel(StatePanel parent) {
+	public ControlPanel(DebugPanel parent) {
 		super(new FlowLayout(FlowLayout.LEFT));
 		this.parent = parent;
 		
@@ -42,9 +42,9 @@ final class ControlPanel extends JPanel {
 				
 				parent.controller.step();
 				
-				parent.registerPanel.programCounter.setBackground(parent.machineState.getProgramCounter() == oldPc + 1 ? StatePanel.unchangedColor : StatePanel.changedColor);
-				parent.registerPanel.accumulator.setBackground(parent.machineState.getAccumulator() == oldAcc ? StatePanel.unchangedColor : StatePanel.changedColor);
-				parent.registerPanel.conditionCode.setBackground(parent.machineState.getConditionCode() == oldCond ? StatePanel.unchangedColor : StatePanel.changedColor);
+				parent.registerPanel.programCounter.setBackground(parent.machineState.getProgramCounter() == oldPc + 1 ? DebugPanel.unchangedColor : DebugPanel.changedColor);
+				parent.registerPanel.accumulator.setBackground(parent.machineState.getAccumulator() == oldAcc ? DebugPanel.unchangedColor : DebugPanel.changedColor);
+				parent.registerPanel.conditionCode.setBackground(parent.machineState.getConditionCode() == oldCond ? DebugPanel.unchangedColor : DebugPanel.changedColor);
 				parent.registerPanel.stepCountField.setText(Long.toString(parent.controller.getStepCount()));
 			} catch (MachineException ex) {
 				throw new RuntimeException(ex);
@@ -68,9 +68,9 @@ final class ControlPanel extends JPanel {
 				parent.conditionCodeChanged(parent.machineState);
 				parent.machineState.addListener(parent);
 				
-				parent.registerPanel.programCounter.setBackground(StatePanel.unchangedColor);
-				parent.registerPanel.accumulator.setBackground(parent.machineState.getAccumulator() == oldAcc ? StatePanel.unchangedColor : StatePanel.changedColor);
-				parent.registerPanel.conditionCode.setBackground(parent.machineState.getConditionCode() == oldCond ? StatePanel.unchangedColor : StatePanel.changedColor);
+				parent.registerPanel.programCounter.setBackground(DebugPanel.unchangedColor);
+				parent.registerPanel.accumulator.setBackground(parent.machineState.getAccumulator() == oldAcc ? DebugPanel.unchangedColor : DebugPanel.changedColor);
+				parent.registerPanel.conditionCode.setBackground(parent.machineState.getConditionCode() == oldCond ? DebugPanel.unchangedColor : DebugPanel.changedColor);
 				parent.registerPanel.stepCountField.setText(Long.toString(parent.controller.getStepCount()));
 				parent.tableModel.fireTableDataChanged();
 			} catch (MachineException ex) {

@@ -35,7 +35,7 @@ public final class Csc258Debugger {
 		
 		Program p = Csc258Linker.link(frags);
 		DebugMachine m = new DebugMachine(System.in, System.out);
-		StatePanel panel = new StatePanel(m);
+		DebugPanel panel = new DebugPanel(m);
 		m.loadProgram(p);
 		
 		JFrame frame = new JFrame("CSC258 Computer Debugger");

@@ -34,8 +34,8 @@ final class RegisterPanel extends JPanel {
 		stepCountField = new JTextField("0");
 		stepCountField.setEditable(false);
 		stepCountField.setHorizontalAlignment(SwingConstants.RIGHT);
-		stepCountField.setBackground(StatePanel.unchangedColor);
-		stepCountField.setFont(StatePanel.monospacedFont);
+		stepCountField.setBackground(DebugPanel.unchangedColor);
+		stepCountField.setFont(DebugPanel.monospacedFont);
 		g.gridy = 1;
 		add(stepCountField, g);
 		
@@ -45,8 +45,8 @@ final class RegisterPanel extends JPanel {
 		programCounter = new JTextField();
 		programCounter.setEditable(false);
 		programCounter.setHorizontalAlignment(SwingConstants.RIGHT);
-		programCounter.setBackground(StatePanel.unchangedColor);
-		programCounter.setFont(StatePanel.monospacedFont);
+		programCounter.setBackground(DebugPanel.unchangedColor);
+		programCounter.setFont(DebugPanel.monospacedFont);
 		g.gridy = 1;
 		add(programCounter, g);
 		
@@ -56,8 +56,8 @@ final class RegisterPanel extends JPanel {
 		accumulator = new JTextField();
 		accumulator.setEditable(false);
 		accumulator.setHorizontalAlignment(SwingConstants.RIGHT);
-		accumulator.setBackground(StatePanel.unchangedColor);
-		accumulator.setFont(StatePanel.monospacedFont);
+		accumulator.setBackground(DebugPanel.unchangedColor);
+		accumulator.setFont(DebugPanel.monospacedFont);
 		g.gridy = 1;
 		add(accumulator, g);
 		
@@ -67,8 +67,8 @@ final class RegisterPanel extends JPanel {
 		conditionCode = new JTextField();
 		conditionCode.setEditable(false);
 		conditionCode.setHorizontalAlignment(SwingConstants.RIGHT);
-		conditionCode.setBackground(StatePanel.unchangedColor);
-		conditionCode.setFont(StatePanel.monospacedFont);
+		conditionCode.setBackground(DebugPanel.unchangedColor);
+		conditionCode.setFont(DebugPanel.monospacedFont);
 		g.gridy = 1;
 		add(conditionCode, g);
 		
@@ -78,8 +78,8 @@ final class RegisterPanel extends JPanel {
 		nextInstruction = new JTextField();
 		nextInstruction.setEditable(false);
 		nextInstruction.setHorizontalAlignment(SwingConstants.LEADING);
-		nextInstruction.setBackground(StatePanel.unchangedColor);
-		nextInstruction.setFont(StatePanel.monospacedFont);
+		nextInstruction.setBackground(DebugPanel.unchangedColor);
+		nextInstruction.setFont(DebugPanel.monospacedFont);
 		g.gridy = 1;
 		add(nextInstruction, g);
 		
