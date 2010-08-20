@@ -21,7 +21,14 @@ public final class Csc258Runner {
 			try {
 				File file = new File(arg);
 				SourceCode sc = SourceCode.readFile(file);
-				Fragment f = Csc258Compiler.compile(sc);
+				Fragment f;
+				try {
+					f = Csc258Compiler.compile(sc);
+				} catch (OutOfMemoryError e) {
+					System.err.println("Error: Out of memory during compilation");
+					System.exit(1);
+					return;
+				}
 				frags.add(f);
 			} catch (CompilationException e) {
 				printCompilerErrors(e.getErrorMessages(), e.getSourceCode());
@@ -30,7 +37,14 @@ public final class Csc258Runner {
 			}
 		}
 		
-		Program p = Csc258Linker.link(frags);
+		Program p;
+		try {
+			p = Csc258Linker.link(frags);
+		} catch (OutOfMemoryError e) {
+			System.err.println("Error: Out of memory during linking");
+			System.exit(1);
+			return;
+		}
 		Machine m = new BasicMachine(System.in, System.out);
 		Loader.load(m, p);
 		
