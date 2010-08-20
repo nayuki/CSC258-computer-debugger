@@ -102,9 +102,11 @@ final class RegisterPanel extends JPanel {
 	// Execution handlers
 	
 	public void updateView() {
-		programCounterChanged(false);
-		accumulatorChanged(false);
-		conditionCodeChanged(false);
+		synchronized (machine) {
+			programCounterChanged(false);
+			accumulatorChanged(false);
+			conditionCodeChanged(false);
+		}
 		stepCountChanged();
 	}
 	
@@ -127,7 +129,7 @@ final class RegisterPanel extends JPanel {
 	public void beginRun() {
 		oldAccumulator = machine.getAccumulator();
 		oldConditionCode = machine.getConditionCode();
-		runThread = new Thread() {
+		runThread = new Thread("Register updater") {
 			public void run() {
 				try {
 					while (runThread == Thread.currentThread()) {

@@ -122,7 +122,9 @@ final class MachineTableModel extends AbstractTableModel implements MachineListe
 	// Execution handlers
 	
 	public void updateView() {
-		fireTableDataChanged();
+		synchronized (machine) {
+			fireTableDataChanged();
+		}
 	}
 	
 	
@@ -141,7 +143,7 @@ final class MachineTableModel extends AbstractTableModel implements MachineListe
 	public void beginRun() {
 		machine.removeListener(this);
 		
-		runThread = new Thread() {
+		runThread = new Thread("Table updater") {
 			public void run() {
 				try {
 					while (runThread == Thread.currentThread()) {

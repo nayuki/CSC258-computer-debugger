@@ -61,9 +61,11 @@ final class Controller {
 	public synchronized void step() {
 		if (isRunning)
 			return;
-		if (!machine.isHalted()) {
-			Executor.step(machine);
-			stepCount++;
+		synchronized (machine) {
+			if (!machine.isHalted()) {
+				Executor.step(machine);
+				stepCount++;
+			}
 		}
 	}
 	
@@ -78,8 +80,10 @@ final class Controller {
 		
 		while (true) {
 			synchronized (this) {
-				if (machine.isHalted())
-					break;
+				synchronized (machine) {
+					if (machine.isHalted())
+						break;
+				}
 				isRunning = false;
 				step();
 				isRunning = true;
