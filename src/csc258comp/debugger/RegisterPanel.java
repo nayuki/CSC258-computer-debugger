@@ -156,8 +156,8 @@ final class RegisterPanel extends JPanel {
 		join(temp);
 		
 		programCounterChanged(false);
-		accumulatorChanged(true);
-		conditionCodeChanged(true);
+		accumulatorChanged(false);
+		conditionCodeChanged(false);
 		stepCountChanged();
 	}
 	
