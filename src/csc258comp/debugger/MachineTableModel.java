@@ -117,6 +117,11 @@ final class MachineTableModel extends AbstractTableModel implements MachineListe
 	
 	// Execution handlers
 	
+	public void updateView() {
+		fireTableDataChanged();
+	}
+	
+	
 	public void beginStep() {
 		oldProgramCounter = machine.getProgramCounter();
 	}

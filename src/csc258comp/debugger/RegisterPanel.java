@@ -80,10 +80,7 @@ final class RegisterPanel extends JPanel {
 		nextInstruction = newJTextField(SwingConstants.LEADING);
 		add(nextInstruction, g);
 		
-		programCounterChanged(false);
-		accumulatorChanged(false);
-		conditionCodeChanged(false);
-		stepCountChanged();
+		updateView();
 	}
 	
 	
@@ -99,6 +96,14 @@ final class RegisterPanel extends JPanel {
 	
 	
 	// Execution handlers
+	
+	public void updateView() {
+		programCounterChanged(false);
+		accumulatorChanged(false);
+		conditionCodeChanged(false);
+		stepCountChanged();
+	}
+	
 	
 	public void beginStep() {
 		oldProgramCounter = machine.getProgramCounter();

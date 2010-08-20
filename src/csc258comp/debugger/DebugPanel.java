@@ -87,6 +87,12 @@ final class DebugPanel extends JPanel {
 	
 	// Execution handlers
 	
+	public void updateView() {
+		registerPanel.updateView();
+		tableModel.updateView();
+	}
+	
+	
 	public void beginStep() {
 		registerPanel.beginStep();
 		tableModel.beginStep();
