@@ -16,31 +16,37 @@ final class Controller {
 	
 	private long stepCount;
 	
+	private boolean isRunning;
+	
+	private volatile boolean suspendRequested;
+	
 	
 	
 	public Controller(Machine m) {
 		if (m == null)
 			throw new NullPointerException();
-		this.machine = m;
+		machine = m;
 		breakpoints = new HashSet<Integer>();
 		stepCount = 0;
+		isRunning = false;
+		suspendRequested = false;
 	}
 	
 	
 	
-	public long getStepCount() {
+	public synchronized long getStepCount() {
 		return stepCount;
 	}
 	
 	
-	public void addBreakpoint(int addr) {
+	public synchronized void addBreakpoint(int addr) {
 		if (addr < 0 || addr >= Machine.ADDRESS_SPACE_SIZE)
 			throw new IllegalArgumentException("Address out of bounds");
 		breakpoints.add(addr);
 	}
 	
 	
-	public void removeBreakpoint(int addr) {
+	public synchronized void removeBreakpoint(int addr) {
 		if (addr < 0 || addr >= Machine.ADDRESS_SPACE_SIZE)
 			throw new IllegalArgumentException("Address out of bounds");
 		breakpoints.remove(addr);
@@ -52,20 +58,54 @@ final class Controller {
 	}
 	
 	
-	public void step() {
-		if (!machine.isHalted()) {
-			Executor.step(machine);
-			stepCount++;
+	public synchronized void step() {
+		if (isRunning)
+			return;
+		synchronized (machine) {
+			if (!machine.isHalted()) {
+				Executor.step(machine);
+				stepCount++;
+			}
 		}
 	}
 	
 	
 	public void run() {
-		while (!machine.isHalted()) {
-			step();
-			if (breakpoints.contains(machine.getProgramCounter()))
-				break;
+		synchronized (this) {
+			if (isRunning)
+				return;
+			isRunning = true;
+			suspendRequested = false;
 		}
+		
+		while (true) {
+			synchronized (this) {
+				synchronized (machine) {
+					if (machine.isHalted())
+						break;
+				}
+				isRunning = false;
+				step();
+				isRunning = true;
+				if (breakpoints.contains(machine.getProgramCounter()))
+					break;
+			}
+		}
+		
+		synchronized (this) {
+			isRunning = false;
+			suspendRequested = false;
+		}
+	}
+	
+	
+	public void suspend() {
+		suspendRequested = true;
+	}
+	
+	
+	public synchronized boolean isRunning() {
+		return isRunning;
 	}
 	
 }

@@ -1,7 +1,9 @@
 package csc258comp.debugger;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Set;
 
+import javax.swing.SwingUtilities;
 import javax.swing.table.AbstractTableModel;
 
 import csc258comp.runner.Machine;
@@ -25,6 +27,8 @@ final class MachineTableModel extends AbstractTableModel implements MachineListe
 	public Program program;
 	
 	private int oldProgramCounter;
+	
+	private volatile Thread runThread;
 	
 	
 	
@@ -118,7 +122,9 @@ final class MachineTableModel extends AbstractTableModel implements MachineListe
 	// Execution handlers
 	
 	public void updateView() {
-		fireTableDataChanged();
+		synchronized (machine) {
+			fireTableDataChanged();
+		}
 	}
 	
 	
@@ -136,10 +142,33 @@ final class MachineTableModel extends AbstractTableModel implements MachineListe
 	
 	public void beginRun() {
 		machine.removeListener(this);
+		
+		runThread = new Thread("CSC258 debugger UI table updater") {
+			public void run() {
+				try {
+					while (runThread == Thread.currentThread()) {
+						SwingUtilities.invokeAndWait(new Runnable() {
+							public void run() {
+								updateView();
+							}
+						});
+						Thread.sleep(1000);
+					}
+				}
+				catch (InterruptedException e) {}
+				catch (InvocationTargetException e) {}
+			}
+		};
+		runThread.start();
 	}
 	
 	
 	public void endRun() {
+		Thread temp = runThread;
+		runThread = null;
+		temp.interrupt();
+		join(temp);
+		
 		machine.addListener(this);
 		fireTableDataChanged();
 	}
@@ -165,5 +194,16 @@ final class MachineTableModel extends AbstractTableModel implements MachineListe
 	
 	@Override
 	public void conditionCodeChanged(Machine m) {}
+	
+	
+	
+	private static void join(Thread t) {
+		while (true) {
+			try {
+				t.join();
+				break;
+			} catch (InterruptedException e) {}
+		}
+	}
 	
 }

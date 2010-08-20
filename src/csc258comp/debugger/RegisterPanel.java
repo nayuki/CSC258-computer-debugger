@@ -4,11 +4,13 @@ import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 
 import csc258comp.runner.Executor;
 import csc258comp.runner.InstructionSet;
@@ -30,6 +32,8 @@ final class RegisterPanel extends JPanel {
 	private int oldProgramCounter;
 	private int oldAccumulator;
 	private boolean oldConditionCode;
+	
+	private volatile Thread runThread;
 	
 	
 	
@@ -98,9 +102,11 @@ final class RegisterPanel extends JPanel {
 	// Execution handlers
 	
 	public void updateView() {
-		programCounterChanged(false);
-		accumulatorChanged(false);
-		conditionCodeChanged(false);
+		synchronized (machine) {
+			programCounterChanged(false);
+			accumulatorChanged(false);
+			conditionCodeChanged(false);
+		}
 		stepCountChanged();
 	}
 	
@@ -123,13 +129,35 @@ final class RegisterPanel extends JPanel {
 	public void beginRun() {
 		oldAccumulator = machine.getAccumulator();
 		oldConditionCode = machine.getConditionCode();
+		runThread = new Thread("CSC258 debugger UI register updater") {
+			public void run() {
+				try {
+					while (runThread == Thread.currentThread()) {
+						SwingUtilities.invokeAndWait(new Runnable() {
+							public void run() {
+								updateView();
+							}
+						});
+						Thread.sleep(100);
+					}
+				}
+				catch (InterruptedException e) {}
+				catch (InvocationTargetException e) {}
+			}
+		};
+		runThread.start();
 	}
 	
 	
 	public void endRun() {
+		Thread temp = runThread;
+		runThread = null;
+		temp.interrupt();
+		join(temp);
+		
 		programCounterChanged(false);
-		accumulatorChanged(true);
-		conditionCodeChanged(true);
+		accumulatorChanged(false);
+		conditionCodeChanged(false);
 		stepCountChanged();
 	}
 	
@@ -189,6 +217,16 @@ final class RegisterPanel extends JPanel {
 			return DebugPanel.CHANGED_COLOR;
 		else
 			return DebugPanel.UNCHANGED_COLOR;
+	}
+	
+	
+	private static void join(Thread t) {
+		while (true) {
+			try {
+				t.join();
+				break;
+			} catch (InterruptedException e) {}
+		}
 	}
 	
 }
