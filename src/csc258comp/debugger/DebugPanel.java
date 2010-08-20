@@ -82,4 +82,29 @@ final class DebugPanel extends JPanel {
 		add(scrollpane, g);
 	}
 	
+	
+	
+	public void beginStep() {
+		registerPanel.beginStep();
+		tableModel.beginStep();
+	}
+	
+	
+	public void beginRun() {
+		registerPanel.beginRun();
+		tableModel.beginRun();
+	}
+	
+	
+	public void endStep() {
+		registerPanel.endStep();
+		tableModel.endStep();
+	}
+	
+	
+	public void endRun() {
+		registerPanel.endRun();
+		tableModel.endRun();
+	}
+	
 }

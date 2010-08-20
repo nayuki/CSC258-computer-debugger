@@ -38,18 +38,9 @@ final class ControlPanel extends JPanel {
 		
 		public void actionPerformed(ActionEvent e) {
 			try {
-				DebugMachine m = parent.machine;
-				int oldPc = m.getProgramCounter();
-				int oldAcc = m.getAccumulator();
-				boolean oldCond = m.getConditionCode();
-				
+				parent.beginStep();
 				parent.controller.step();
-				
-				RegisterPanel rp = parent.registerPanel;
-				rp.programCounter.setBackground(m.getProgramCounter() == oldPc + 1 ? DebugPanel.unchangedColor : DebugPanel.changedColor);
-				rp.accumulator.setBackground(m.getAccumulator() == oldAcc ? DebugPanel.unchangedColor : DebugPanel.changedColor);
-				rp.conditionCode.setBackground(m.getConditionCode() == oldCond ? DebugPanel.unchangedColor : DebugPanel.changedColor);
-				rp.stepCountField.setText(Long.toString(parent.controller.getStepCount()));
+				parent.endStep();
 			} catch (MachineException ex) {
 				throw new RuntimeException(ex);
 			}
@@ -62,27 +53,9 @@ final class ControlPanel extends JPanel {
 		
 		public void actionPerformed(ActionEvent e) {
 			try {
-				DebugMachine m = parent.machine;
-				RegisterPanel rp = parent.registerPanel;
-				MachineTableModel tm = parent.tableModel;
-				
-				int oldAcc = parent.machine.getAccumulator();
-				boolean oldCond = parent.machine.getConditionCode();
-				
-				m.removeListener(rp);
-				m.removeListener(tm);
+				parent.beginRun();
 				parent.controller.run();
-				rp.programCounterChanged(parent.machine);
-				rp.accumulatorChanged(parent.machine);
-				rp.conditionCodeChanged(parent.machine);
-				m.addListener(rp);
-				m.addListener(tm);
-				
-				rp.programCounter.setBackground(DebugPanel.unchangedColor);
-				rp.accumulator.setBackground(parent.machine.getAccumulator() == oldAcc ? DebugPanel.unchangedColor : DebugPanel.changedColor);
-				rp.conditionCode.setBackground(parent.machine.getConditionCode() == oldCond ? DebugPanel.unchangedColor : DebugPanel.changedColor);
-				rp.stepCountField.setText(Long.toString(parent.controller.getStepCount()));
-				tm.fireTableDataChanged();
+				parent.endRun();
 			} catch (MachineException ex) {
 				throw new RuntimeException(ex);
 			}

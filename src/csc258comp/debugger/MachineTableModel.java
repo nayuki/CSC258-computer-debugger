@@ -17,7 +17,8 @@ final class MachineTableModel extends AbstractTableModel implements MachineListe
 	
 	
 	
-	private final DebugPanel parent;
+	private final DebugMachine machine;
+	private final Controller controller;
 	
 	private int rowCount;
 	
@@ -25,15 +26,19 @@ final class MachineTableModel extends AbstractTableModel implements MachineListe
 	
 	public Program program;
 	
+	private int oldProgramCounter;
+	
 	
 	
 	public MachineTableModel(DebugPanel parent) {
 		if (parent == null)
 			throw new NullPointerException();
-		this.parent = parent;
+		machine = parent.machine;
+		controller = parent.controller;
+		
 		rowCount = 0;
-		breakpoints = parent.controller.getBreakpoints();
-		parent.machine.addListener(this);
+		breakpoints = controller.getBreakpoints();
+		machine.addListener(this);
 	}
 	
 	
@@ -69,10 +74,10 @@ final class MachineTableModel extends AbstractTableModel implements MachineListe
 				return breakpoints.contains(row);
 				
 			case 1:
-				return String.format("%08X%s", row, row == parent.machine.getProgramCounter() ? " <=" : "");
+				return String.format("%08X%s", row, row == machine.getProgramCounter() ? " <=" : "");
 				
 			case 2:
-				return String.format("%08X", parent.machine.getMemoryAt(row));
+				return String.format("%08X", machine.getMemoryAt(row));
 				
 			case 3:
 				if (program != null) {
@@ -102,10 +107,35 @@ final class MachineTableModel extends AbstractTableModel implements MachineListe
 		if (!(value instanceof Boolean))
 			throw new AssertionError();
 		if (((Boolean)value).booleanValue())
-			parent.controller.addBreakpoint(row);
+			controller.addBreakpoint(row);
 		else
-			parent.controller.removeBreakpoint(row);
+			controller.removeBreakpoint(row);
 	}
+	
+	
+	
+	public void beginStep() {
+		oldProgramCounter = machine.getProgramCounter();
+	}
+	
+	
+	public void beginRun() {
+		machine.removeListener(this);
+	}
+	
+	
+	public void endStep() {
+		int newProgramCounter = machine.getProgramCounter();
+		fireTableCellUpdated(oldProgramCounter, 1);
+		fireTableCellUpdated(newProgramCounter, 1);
+	}
+	
+	
+	public void endRun() {
+		machine.addListener(this);
+		fireTableDataChanged();
+	}
+	
 	
 	
 	@Override

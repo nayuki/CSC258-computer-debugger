@@ -23,12 +23,21 @@ final class RegisterPanel extends JPanel implements MachineListener {
 	public final JTextField conditionCode;
 	public final JTextField nextInstruction;
 	
+	private final DebugMachine machine;
+	private final Controller controller;
+	
+	private int oldProgramCounter;
+	private int oldAccumulator;
+	private boolean oldConditionCode;
+	
 	
 	
 	public RegisterPanel(DebugPanel parent) {
 		super(new GridBagLayout());
 		if (parent == null)
 			throw new NullPointerException();
+		controller = parent.controller;
+		machine = parent.machine;
 		
 		GridBagConstraints g = new GridBagConstraints();
 		g.anchor = GridBagConstraints.FIRST_LINE_START;
@@ -70,11 +79,10 @@ final class RegisterPanel extends JPanel implements MachineListener {
 		nextInstruction = newJTextField(SwingConstants.LEADING);
 		add(nextInstruction, g);
 		
-		DebugMachine m = parent.machine;
-		m.addListener(this);
-		programCounterChanged(m);
-		accumulatorChanged(m);
-		conditionCodeChanged(m);
+		machine.addListener(this);
+		programCounterChanged(machine);
+		accumulatorChanged(machine);
+		conditionCodeChanged(machine);
 	}
 	
 	
@@ -85,6 +93,47 @@ final class RegisterPanel extends JPanel implements MachineListener {
 		result.setBackground(DebugPanel.unchangedColor);
 		result.setFont(DebugPanel.monospacedFont);
 		return result;
+	}
+	
+	
+	
+	public void beginStep() {
+		oldProgramCounter = machine.getProgramCounter();
+		oldAccumulator = machine.getAccumulator();
+		oldConditionCode = machine.getConditionCode();
+	}
+	
+	
+	public void beginRun() {
+		oldAccumulator = machine.getAccumulator();
+		oldConditionCode = machine.getConditionCode();
+		machine.removeListener(this);
+	}
+	
+	
+	public void endStep() {
+		programCounterChanged(machine);
+		accumulatorChanged(machine);
+		conditionCodeChanged(machine);
+		stepCountField.setText(Long.toString(controller.getStepCount()));
+		
+		programCounter.setBackground(machine.getProgramCounter() == ((oldProgramCounter + 1) & 0xFFFFFF) ? DebugPanel.unchangedColor : DebugPanel.changedColor);
+		accumulator.setBackground(machine.getAccumulator() == oldAccumulator ? DebugPanel.unchangedColor : DebugPanel.changedColor);
+		conditionCode.setBackground(machine.getConditionCode() == oldConditionCode ? DebugPanel.unchangedColor : DebugPanel.changedColor);
+	}
+	
+	
+	public void endRun() {
+		programCounterChanged(machine);
+		accumulatorChanged(machine);
+		conditionCodeChanged(machine);
+		stepCountField.setText(Long.toString(controller.getStepCount()));
+		
+		programCounter.setBackground(DebugPanel.unchangedColor);
+		accumulator.setBackground(machine.getAccumulator() == oldAccumulator ? DebugPanel.unchangedColor : DebugPanel.changedColor);
+		conditionCode.setBackground(machine.getConditionCode() == oldConditionCode ? DebugPanel.unchangedColor : DebugPanel.changedColor);
+		
+		machine.addListener(this);
 	}
 	
 	
