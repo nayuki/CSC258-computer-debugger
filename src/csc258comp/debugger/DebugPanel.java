@@ -10,13 +10,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-import csc258comp.runner.InstructionSet;
-import csc258comp.runner.Machine;
-import csc258comp.runner.Program;
-
 
 @SuppressWarnings("serial")
-final class DebugPanel extends JPanel implements MachineListener {
+final class DebugPanel extends JPanel {
 	
 	static final Color unchangedColor = Color.WHITE;
 	static final Color changedColor = new Color(1.0f, 1.0f, 0.5f);
@@ -51,7 +47,7 @@ final class DebugPanel extends JPanel implements MachineListener {
 		g.weightx = 0;
 		g.weighty = 0;
 		g.fill = GridBagConstraints.NONE;
-		registerPanel = new RegisterPanel();
+		registerPanel = new RegisterPanel(this);
 		add(registerPanel, g);
 		
 		g.gridx = 1;
@@ -84,66 +80,6 @@ final class DebugPanel extends JPanel implements MachineListener {
 		table.setColumnSelectionAllowed(true);
 		JScrollPane scrollpane = new JScrollPane(table);
 		add(scrollpane, g);
-		
-		programCounterChanged(machineState);
-		accumulatorChanged(machineState);
-		conditionCodeChanged(machineState);
-		
-		machineState.addListener(this);
-	}
-	
-	
-	
-	@Override
-	public void haltedChanged(Machine m) {}
-	
-	
-	@Override
-	public void programCounterChanged(Machine m) {
-		int newProgramCounter = m.getProgramCounter();
-		registerPanel.programCounter.setText(String.format("%06X", newProgramCounter));
-		
-		int nextinst = m.getMemoryAt(newProgramCounter);
-		int opcode = nextinst >>> 24;
-		String mnemonic = InstructionSet.getOpcodeName(opcode);
-		if (mnemonic != null)
-			registerPanel.nextInstruction.setText(String.format("%s %06X", mnemonic, nextinst & 0xFFFFFF));
-		else {
-			registerPanel.nextInstruction.setText(String.format("Invalid (%02X)", opcode));
-			registerPanel.nextInstruction.setBackground(changedColor);
-		}
-		
-		tableModel.fireTableDataChanged();
-	}
-	
-	
-	@Override
-	public void accumulatorChanged(Machine m) {
-		registerPanel.accumulator.setText(String.format("%08X", m.getAccumulator() & 0xFFFFFFFFL));
-		registerPanel.accumulator.setBackground(changedColor);
-	}
-	
-	
-	@Override
-	public void conditionCodeChanged(Machine m) {
-		registerPanel.conditionCode.setText(m.getConditionCode() ? "1" : "0");
-	}
-	
-	
-	@Override
-	public void memoryChanged(Machine m, int addr) {
-		tableModel.fireTableCellUpdated(addr, 2);
-	}
-	
-	@Override
-	public void programLoaded(Machine m, Program p) {
-		programCounterChanged(m);
-		registerPanel.programCounter.setBackground(unchangedColor);
-		registerPanel.accumulator.setBackground(unchangedColor);
-		registerPanel.conditionCode.setBackground(unchangedColor);
-		registerPanel.nextInstruction.setBackground(unchangedColor);
-		tableModel.program = p;
-		tableModel.setRowCount(p.getImageSize());
 	}
 	
 }

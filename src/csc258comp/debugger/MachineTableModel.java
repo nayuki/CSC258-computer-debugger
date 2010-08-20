@@ -4,11 +4,12 @@ import java.util.Set;
 
 import javax.swing.table.AbstractTableModel;
 
+import csc258comp.runner.Machine;
 import csc258comp.runner.Program;
 
 
 @SuppressWarnings("serial")
-final class MachineTableModel extends AbstractTableModel {
+final class MachineTableModel extends AbstractTableModel implements MachineListener {
 	
 	private static Class<?>[] columnClasses = {Boolean.class, String.class, String.class, String.class};
 	
@@ -32,6 +33,7 @@ final class MachineTableModel extends AbstractTableModel {
 		this.parent = parent;
 		rowCount = 0;
 		breakpoints = parent.controller.getBreakpoints();
+		parent.machineState.addListener(this);
 	}
 	
 	
@@ -65,13 +67,13 @@ final class MachineTableModel extends AbstractTableModel {
 		switch (col) {
 			case 0:
 				return breakpoints.contains(row);
-			
+				
 			case 1:
 				return String.format("%08X%s", row, row == parent.machineState.getProgramCounter() ? " <=" : "");
-			
+				
 			case 2:
 				return String.format("%08X", parent.machineState.getMemoryAt(row));
-			
+				
 			case 3:
 				if (program != null) {
 					String source = program.getSourceLine(row);
@@ -80,7 +82,7 @@ final class MachineTableModel extends AbstractTableModel {
 					else
 						return "";
 				}
-			
+				
 			default:
 				throw new AssertionError();
 		}
@@ -106,7 +108,37 @@ final class MachineTableModel extends AbstractTableModel {
 	}
 	
 	
-	void setRowCount(int rows) {
+	@Override
+	public void programLoaded(Machine m, Program p) {
+		programCounterChanged(m);
+		program = p;
+		setRowCount(p.getImageSize());
+	}
+	
+	
+	@Override
+	public void programCounterChanged(Machine m) {
+		fireTableDataChanged();
+	}
+	
+	
+	@Override
+	public void memoryChanged(Machine m, int addr) {
+		fireTableCellUpdated(addr, 2);
+	}
+	
+	
+	@Override
+	public void haltedChanged(Machine m) {}
+	
+	@Override
+	public void accumulatorChanged(Machine m) {}
+	
+	@Override
+	public void conditionCodeChanged(Machine m) {}
+	
+	
+	private void setRowCount(int rows) {
 		if (rows < 0)
 			throw new IllegalArgumentException();
 		this.rowCount = rows;
