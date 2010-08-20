@@ -112,17 +112,17 @@ final class RegisterPanel extends JPanel {
 	}
 	
 	
-	public void beginRun() {
-		oldAccumulator = machine.getAccumulator();
-		oldConditionCode = machine.getConditionCode();
-	}
-	
-	
 	public void endStep() {
 		programCounterChanged(true);
 		accumulatorChanged(true);
 		conditionCodeChanged(true);
 		stepCountChanged();
+	}
+	
+	
+	public void beginRun() {
+		oldAccumulator = machine.getAccumulator();
+		oldConditionCode = machine.getConditionCode();
 	}
 	
 	

@@ -99,15 +99,15 @@ final class DebugPanel extends JPanel {
 	}
 	
 	
-	public void beginRun() {
-		registerPanel.beginRun();
-		tableModel.beginRun();
-	}
-	
-	
 	public void endStep() {
 		registerPanel.endStep();
 		tableModel.endStep();
+	}
+	
+	
+	public void beginRun() {
+		registerPanel.beginRun();
+		tableModel.beginRun();
 	}
 	
 	

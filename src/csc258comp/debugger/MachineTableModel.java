@@ -127,15 +127,15 @@ final class MachineTableModel extends AbstractTableModel implements MachineListe
 	}
 	
 	
-	public void beginRun() {
-		machine.removeListener(this);
-	}
-	
-	
 	public void endStep() {
 		int newProgramCounter = machine.getProgramCounter();
 		fireTableCellUpdated(oldProgramCounter, 1);
 		fireTableCellUpdated(newProgramCounter, 1);
+	}
+	
+	
+	public void beginRun() {
+		machine.removeListener(this);
 	}
 	
 	
