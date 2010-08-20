@@ -22,6 +22,7 @@ zero: I 0
 one:  I 1
 mask: H 00FFFFFF
 
+
 main:
 	load: LDA msgstr
 	IOR zero
@@ -33,4 +34,4 @@ main:
 	AND mask
 	STA load
 	
-	BUN load
+	BUN main
