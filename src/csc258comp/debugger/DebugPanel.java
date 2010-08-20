@@ -10,6 +10,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import csc258comp.runner.Program;
+
 
 @SuppressWarnings("serial")
 final class DebugPanel extends JPanel {
@@ -30,7 +32,7 @@ final class DebugPanel extends JPanel {
 	
 	
 	
-	public DebugPanel(final DebugMachine m) {
+	public DebugPanel(DebugMachine m, Program p) {
 		if (m == null)
 			throw new NullPointerException();
 		machine = m;
@@ -69,7 +71,7 @@ final class DebugPanel extends JPanel {
 		g.weightx = 1;
 		g.weighty = 1;
 		g.fill = GridBagConstraints.BOTH;
-		tableModel = new MachineTableModel(this);
+		tableModel = new MachineTableModel(this, p);
 		JTable table = new JTable(tableModel);
 		table.setFont(monospacedFont);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);

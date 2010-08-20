@@ -20,8 +20,6 @@ final class MachineTableModel extends AbstractTableModel implements MachineListe
 	private final DebugMachine machine;
 	private final Controller controller;
 	
-	private int rowCount;
-	
 	private final Set<Integer> breakpoints;
 	
 	public Program program;
@@ -30,13 +28,13 @@ final class MachineTableModel extends AbstractTableModel implements MachineListe
 	
 	
 	
-	public MachineTableModel(DebugPanel parent) {
-		if (parent == null)
+	public MachineTableModel(DebugPanel parent, Program p) {
+		if (parent == null || p == null)
 			throw new NullPointerException();
 		machine = parent.machine;
 		controller = parent.controller;
+		program = p;
 		
-		rowCount = 0;
 		breakpoints = controller.getBreakpoints();
 		machine.addListener(this);
 	}
@@ -65,7 +63,7 @@ final class MachineTableModel extends AbstractTableModel implements MachineListe
 	
 	@Override
 	public int getRowCount() {
-		return rowCount;
+		return program.getImageSize();
 	}
 	
 	
@@ -146,24 +144,16 @@ final class MachineTableModel extends AbstractTableModel implements MachineListe
 	// Machine state change handlers
 	
 	@Override
-	public void programLoaded(Machine m, Program p) {
-		programCounterChanged(m);
-		program = p;
-		rowCount = p.getImageSize();
-	}
-	
-	
-	@Override
-	public void programCounterChanged(Machine m) {
-		fireTableDataChanged();
-	}
-	
-	
-	@Override
 	public void memoryChanged(Machine m, int addr) {
 		fireTableCellUpdated(addr, 2);
 	}
 	
+	
+	@Override
+	public void programLoaded(Machine m, Program p) {}
+	
+	@Override
+	public void programCounterChanged(Machine m) {}
 	
 	@Override
 	public void haltedChanged(Machine m) {}
