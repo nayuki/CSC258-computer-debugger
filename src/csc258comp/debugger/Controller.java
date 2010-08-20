@@ -21,7 +21,7 @@ final class Controller {
 	public Controller(Machine m) {
 		if (m == null)
 			throw new NullPointerException();
-		this.machine = m;
+		machine = m;
 		breakpoints = new HashSet<Integer>();
 		stepCount = 0;
 	}
