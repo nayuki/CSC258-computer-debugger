@@ -1,7 +1,9 @@
 package csc258comp.debugger;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Set;
 
+import javax.swing.SwingUtilities;
 import javax.swing.table.AbstractTableModel;
 
 import csc258comp.runner.Machine;
@@ -25,6 +27,8 @@ final class MachineTableModel extends AbstractTableModel implements MachineListe
 	public Program program;
 	
 	private int oldProgramCounter;
+	
+	private volatile Thread runThread;
 	
 	
 	
@@ -136,10 +140,29 @@ final class MachineTableModel extends AbstractTableModel implements MachineListe
 	
 	public void beginRun() {
 		machine.removeListener(this);
+		
+		runThread = new Thread() {
+			public void run() {
+				try {
+					while (runThread == Thread.currentThread()) {
+						SwingUtilities.invokeAndWait(new Runnable() {
+							public void run() {
+								updateView();
+							}
+						});
+						Thread.sleep(1000);
+					}
+				}
+				catch (InterruptedException e) {}
+				catch (InvocationTargetException e) {}
+			}
+		};
+		runThread.start();
 	}
 	
 	
 	public void endRun() {
+		runThread = null;
 		machine.addListener(this);
 		fireTableDataChanged();
 	}

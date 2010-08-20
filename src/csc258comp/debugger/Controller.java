@@ -16,6 +16,10 @@ final class Controller {
 	
 	private long stepCount;
 	
+	private boolean isRunning;
+	
+	private volatile boolean suspendRequested;
+	
 	
 	
 	public Controller(Machine m) {
@@ -24,6 +28,8 @@ final class Controller {
 		machine = m;
 		breakpoints = new HashSet<Integer>();
 		stepCount = 0;
+		isRunning = false;
+		suspendRequested = false;
 	}
 	
 	
@@ -53,6 +59,8 @@ final class Controller {
 	
 	
 	public synchronized void step() {
+		if (isRunning)
+			return;
 		if (!machine.isHalted()) {
 			Executor.step(machine);
 			stepCount++;
@@ -60,12 +68,39 @@ final class Controller {
 	}
 	
 	
-	public synchronized void run() {
-		while (!machine.isHalted()) {
-			step();
-			if (breakpoints.contains(machine.getProgramCounter()))
-				break;
+	public void run() {
+		synchronized (this) {
+			if (isRunning)
+				return;
+			isRunning = true;
 		}
+		
+		while (true) {
+			synchronized (this) {
+				if (machine.isHalted())
+					break;
+				isRunning = false;
+				step();
+				isRunning = true;
+				if (breakpoints.contains(machine.getProgramCounter()))
+					break;
+			}
+		}
+		
+		synchronized (this) {
+			isRunning = false;
+			suspendRequested = false;
+		}
+	}
+	
+	
+	public void suspend() {
+		suspendRequested = true;
+	}
+	
+	
+	public synchronized boolean isRunning() {
+		return isRunning;
 	}
 	
 }

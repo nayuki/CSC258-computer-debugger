@@ -3,9 +3,11 @@ package csc258comp.debugger;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import csc258comp.runner.MachineException;
 
@@ -13,25 +15,23 @@ import csc258comp.runner.MachineException;
 @SuppressWarnings("serial")
 final class ControlPanel extends JPanel {
 	
-	private final DebugPanel parent;
-	
-	
-	
 	public ControlPanel(final DebugPanel parent) {
 		super(new FlowLayout(FlowLayout.LEFT));
 		if (parent == null)
 			throw new NullPointerException();
-		this.parent = parent;
+		final Controller controller = parent.controller;
 		
 		JButton step = new JButton("Step");
 		step.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					parent.beginStep();
-					parent.controller.step();
-					parent.endStep();
-				} catch (MachineException ex) {
-					throw new RuntimeException(ex);
+				if (!controller.isRunning()) {
+					try {
+						parent.beginStep();
+						controller.step();
+						parent.endStep();
+					} catch (MachineException ex) {
+						throw new RuntimeException(ex);
+					}
 				}
 			}
 		});
@@ -40,13 +40,21 @@ final class ControlPanel extends JPanel {
 		JButton run = new JButton("Run");
 		run.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					parent.beginRun();
-					parent.controller.run();
-					parent.endRun();
-				} catch (MachineException ex) {
-					throw new RuntimeException(ex);
-				}
+				parent.beginRun();
+				new Thread() {
+					public void run() {
+						controller.run();
+						try {
+							SwingUtilities.invokeAndWait(new Runnable() {
+								public void run() {
+									parent.endRun();
+								}
+							});
+						}
+						catch (InvocationTargetException e) {}
+						catch (InterruptedException e) {}
+					}
+				}.start();
 			}
 		});
 		add(run);
