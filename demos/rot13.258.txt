@@ -7,11 +7,11 @@ i26: I 26
 
 
 main:
-inp: INP inp
+main_inp: INP main_inp
 	STA rot13_c
 	BSA rot13
 	LDA rot13_c
-out: OUT out
+main_out: OUT main_out
 	BUN main
 
 
