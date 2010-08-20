@@ -93,7 +93,7 @@ final class RegisterPanel extends JPanel implements MachineListener {
 		g.gridx = 4;
 		g.gridy = 0;
 		
-		DebugMachine m = parent.machineState;
+		DebugMachine m = parent.machine;
 		m.addListener(this);
 		programCounterChanged(m);
 		accumulatorChanged(m);

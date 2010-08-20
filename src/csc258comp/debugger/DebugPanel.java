@@ -20,7 +20,7 @@ final class DebugPanel extends JPanel {
 	static final Font monospacedFont = new Font("Monospaced", Font.PLAIN, 12);
 	
 	
-	DebugMachine machineState;
+	DebugMachine machine;
 	
 	Controller controller;
 	
@@ -34,7 +34,7 @@ final class DebugPanel extends JPanel {
 	public DebugPanel(final DebugMachine machineState) {
 		if (machineState == null)
 			throw new NullPointerException();
-		this.machineState = machineState;
+		this.machine = machineState;
 		controller = new Controller(machineState);
 		
 		setLayout(new GridBagLayout());

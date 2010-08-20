@@ -33,7 +33,7 @@ final class MachineTableModel extends AbstractTableModel implements MachineListe
 		this.parent = parent;
 		rowCount = 0;
 		breakpoints = parent.controller.getBreakpoints();
-		parent.machineState.addListener(this);
+		parent.machine.addListener(this);
 	}
 	
 	
@@ -69,10 +69,10 @@ final class MachineTableModel extends AbstractTableModel implements MachineListe
 				return breakpoints.contains(row);
 				
 			case 1:
-				return String.format("%08X%s", row, row == parent.machineState.getProgramCounter() ? " <=" : "");
+				return String.format("%08X%s", row, row == parent.machine.getProgramCounter() ? " <=" : "");
 				
 			case 2:
-				return String.format("%08X", parent.machineState.getMemoryAt(row));
+				return String.format("%08X", parent.machine.getMemoryAt(row));
 				
 			case 3:
 				if (program != null) {

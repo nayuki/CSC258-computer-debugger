@@ -38,7 +38,7 @@ final class ControlPanel extends JPanel {
 		
 		public void actionPerformed(ActionEvent e) {
 			try {
-				DebugMachine m = parent.machineState;
+				DebugMachine m = parent.machine;
 				int oldPc = m.getProgramCounter();
 				int oldAcc = m.getAccumulator();
 				boolean oldCond = m.getConditionCode();
@@ -62,25 +62,25 @@ final class ControlPanel extends JPanel {
 		
 		public void actionPerformed(ActionEvent e) {
 			try {
-				DebugMachine m = parent.machineState;
+				DebugMachine m = parent.machine;
 				RegisterPanel rp = parent.registerPanel;
 				MachineTableModel tm = parent.tableModel;
 				
-				int oldAcc = parent.machineState.getAccumulator();
-				boolean oldCond = parent.machineState.getConditionCode();
+				int oldAcc = parent.machine.getAccumulator();
+				boolean oldCond = parent.machine.getConditionCode();
 				
 				m.removeListener(rp);
 				m.removeListener(tm);
 				parent.controller.run();
-				rp.programCounterChanged(parent.machineState);
-				rp.accumulatorChanged(parent.machineState);
-				rp.conditionCodeChanged(parent.machineState);
+				rp.programCounterChanged(parent.machine);
+				rp.accumulatorChanged(parent.machine);
+				rp.conditionCodeChanged(parent.machine);
 				m.addListener(rp);
 				m.addListener(tm);
 				
 				rp.programCounter.setBackground(DebugPanel.unchangedColor);
-				rp.accumulator.setBackground(parent.machineState.getAccumulator() == oldAcc ? DebugPanel.unchangedColor : DebugPanel.changedColor);
-				rp.conditionCode.setBackground(parent.machineState.getConditionCode() == oldCond ? DebugPanel.unchangedColor : DebugPanel.changedColor);
+				rp.accumulator.setBackground(parent.machine.getAccumulator() == oldAcc ? DebugPanel.unchangedColor : DebugPanel.changedColor);
+				rp.conditionCode.setBackground(parent.machine.getConditionCode() == oldCond ? DebugPanel.unchangedColor : DebugPanel.changedColor);
 				rp.stepCountField.setText(Long.toString(parent.controller.getStepCount()));
 				tm.fireTableDataChanged();
 			} catch (MachineException ex) {
