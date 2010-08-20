@@ -1,7 +1,6 @@
 package csc258comp.debugger;
 
 import csc258comp.runner.Machine;
-import csc258comp.runner.Program;
 
 
 public interface MachineListener {
@@ -15,7 +14,5 @@ public interface MachineListener {
 	public void conditionCodeChanged(Machine m);
 	
 	public void memoryChanged(Machine m, int addr);
-	
-	public void programLoaded(Machine m, Program p);
 	
 }

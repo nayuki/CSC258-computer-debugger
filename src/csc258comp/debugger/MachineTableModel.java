@@ -150,9 +150,6 @@ final class MachineTableModel extends AbstractTableModel implements MachineListe
 	
 	
 	@Override
-	public void programLoaded(Machine m, Program p) {}
-	
-	@Override
 	public void programCounterChanged(Machine m) {}
 	
 	@Override

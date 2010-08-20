@@ -113,8 +113,6 @@ public final class DebugMachine implements Machine {
 		if (prog == null)
 			throw new NullPointerException();
 		Loader.load(this, prog);
-		for (MachineListener listener : listeners)
-			listener.programLoaded(this, prog);
 	}
 	
 	
