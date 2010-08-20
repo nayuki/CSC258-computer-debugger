@@ -1,5 +1,7 @@
 package csc258comp.debugger;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,10 +38,15 @@ public final class Csc258Debugger {
 		Program p = Csc258Linker.link(frags);
 		DebugMachine m = new DebugMachine(System.in, System.out);
 		m.loadProgram(p);
-		DebugPanel panel = new DebugPanel(m, p);
+		final DebugPanel panel = new DebugPanel(m, p);
 		
-		JFrame frame = new JFrame("CSC258 Computer Debugger");
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		final JFrame frame = new JFrame("CSC258 Computer Debugger");
+		frame.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				panel.controller.suspend();
+				frame.dispose();
+			}
+		});
 		frame.add(panel);
 		frame.pack();
 		frame.setVisible(true);
