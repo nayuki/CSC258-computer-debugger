@@ -17,50 +17,39 @@ final class ControlPanel extends JPanel {
 	
 	
 	
-	public ControlPanel(DebugPanel parent) {
+	public ControlPanel(final DebugPanel parent) {
 		super(new FlowLayout(FlowLayout.LEFT));
 		if (parent == null)
 			throw new NullPointerException();
 		this.parent = parent;
 		
 		JButton step = new JButton("Step");
-		step.addActionListener(new StepAction());
+		step.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					parent.beginStep();
+					parent.controller.step();
+					parent.endStep();
+				} catch (MachineException ex) {
+					throw new RuntimeException(ex);
+				}
+			}
+		});
 		add(step);
 		
 		JButton run = new JButton("Run");
-		run.addActionListener(new RunAction());
+		run.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					parent.beginRun();
+					parent.controller.run();
+					parent.endRun();
+				} catch (MachineException ex) {
+					throw new RuntimeException(ex);
+				}
+			}
+		});
 		add(run);
-	}
-	
-	
-	
-	private class StepAction implements ActionListener {
-		
-		public void actionPerformed(ActionEvent e) {
-			try {
-				parent.beginStep();
-				parent.controller.step();
-				parent.endStep();
-			} catch (MachineException ex) {
-				throw new RuntimeException(ex);
-			}
-		}
-		
-	}
-	
-	
-	private class RunAction implements ActionListener {
-		
-		public void actionPerformed(ActionEvent e) {
-			try {
-				parent.beginRun();
-				parent.controller.run();
-				parent.endRun();
-			} catch (MachineException ex) {
-				throw new RuntimeException(ex);
-			}
-		}
-		
 	}
 	
 }
