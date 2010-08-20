@@ -38,55 +38,35 @@ final class RegisterPanel extends JPanel implements MachineListener {
 		g.gridx = 0;
 		g.gridy = 0;
 		add(new JLabel("Step count"), g);
-		stepCountField = new JTextField("0");
-		stepCountField.setEditable(false);
-		stepCountField.setHorizontalAlignment(SwingConstants.RIGHT);
-		stepCountField.setBackground(DebugPanel.unchangedColor);
-		stepCountField.setFont(DebugPanel.monospacedFont);
+		stepCountField = newJTextField(SwingConstants.RIGHT);
 		g.gridy = 1;
 		add(stepCountField, g);
 		
 		g.gridx = 1;
 		g.gridy = 0;
 		add(new JLabel("Program counter"), g);
-		programCounter = new JTextField();
-		programCounter.setEditable(false);
-		programCounter.setHorizontalAlignment(SwingConstants.RIGHT);
-		programCounter.setBackground(DebugPanel.unchangedColor);
-		programCounter.setFont(DebugPanel.monospacedFont);
+		programCounter = newJTextField(SwingConstants.RIGHT);
 		g.gridy = 1;
 		add(programCounter, g);
 		
 		g.gridx = 2;
 		g.gridy = 0;
 		add(new JLabel("Accumulator"), g);
-		accumulator = new JTextField();
-		accumulator.setEditable(false);
-		accumulator.setHorizontalAlignment(SwingConstants.RIGHT);
-		accumulator.setBackground(DebugPanel.unchangedColor);
-		accumulator.setFont(DebugPanel.monospacedFont);
+		accumulator = newJTextField(SwingConstants.RIGHT);
 		g.gridy = 1;
 		add(accumulator, g);
 		
 		g.gridx = 3;
 		g.gridy = 0;
 		add(new JLabel("Condition code"), g);
-		conditionCode = new JTextField();
-		conditionCode.setEditable(false);
-		conditionCode.setHorizontalAlignment(SwingConstants.RIGHT);
-		conditionCode.setBackground(DebugPanel.unchangedColor);
-		conditionCode.setFont(DebugPanel.monospacedFont);
+		conditionCode = newJTextField(SwingConstants.RIGHT);
 		g.gridy = 1;
 		add(conditionCode, g);
 		
 		g.gridx = 4;
 		g.gridy = 0;
 		add(new JLabel("Next instruction"), g);
-		nextInstruction = new JTextField();
-		nextInstruction.setEditable(false);
-		nextInstruction.setHorizontalAlignment(SwingConstants.LEADING);
-		nextInstruction.setBackground(DebugPanel.unchangedColor);
-		nextInstruction.setFont(DebugPanel.monospacedFont);
+		nextInstruction = newJTextField(SwingConstants.LEADING);
 		g.gridy = 1;
 		add(nextInstruction, g);
 		
@@ -98,6 +78,16 @@ final class RegisterPanel extends JPanel implements MachineListener {
 		programCounterChanged(m);
 		accumulatorChanged(m);
 		conditionCodeChanged(m);
+	}
+	
+	
+	private static JTextField newJTextField(int horizAlign) {
+		JTextField result = new JTextField();
+		result.setEditable(false);
+		result.setHorizontalAlignment(horizAlign);
+		result.setBackground(DebugPanel.unchangedColor);
+		result.setFont(DebugPanel.monospacedFont);
+		return result;
 	}
 	
 	
