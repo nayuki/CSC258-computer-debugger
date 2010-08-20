@@ -41,7 +41,7 @@ final class ControlPanel extends JPanel {
 		run.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				parent.beginRun();
-				new Thread() {
+				new Thread("CSC258 debugger runner") {
 					public void run() {
 						controller.run();
 						try {
