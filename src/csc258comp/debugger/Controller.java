@@ -78,7 +78,7 @@ final class Controller {
 			suspendRequested = false;
 		}
 		
-		while (true) {
+		while (!suspendRequested) {
 			synchronized (this) {
 				synchronized (machine) {
 					if (machine.isHalted())
