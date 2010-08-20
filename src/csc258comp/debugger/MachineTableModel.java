@@ -162,7 +162,11 @@ final class MachineTableModel extends AbstractTableModel implements MachineListe
 	
 	
 	public void endRun() {
+		Thread temp = runThread;
 		runThread = null;
+		temp.interrupt();
+		join(temp);
+		
 		machine.addListener(this);
 		fireTableDataChanged();
 	}
@@ -188,5 +192,16 @@ final class MachineTableModel extends AbstractTableModel implements MachineListe
 	
 	@Override
 	public void conditionCodeChanged(Machine m) {}
+	
+	
+	
+	private static void join(Thread t) {
+		while (true) {
+			try {
+				t.join();
+				break;
+			} catch (InterruptedException e) {}
+		}
+	}
 	
 }

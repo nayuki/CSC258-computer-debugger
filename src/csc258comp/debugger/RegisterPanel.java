@@ -148,7 +148,11 @@ final class RegisterPanel extends JPanel {
 	
 	
 	public void endRun() {
+		Thread temp = runThread;
 		runThread = null;
+		temp.interrupt();
+		join(temp);
+		
 		programCounterChanged(false);
 		accumulatorChanged(true);
 		conditionCodeChanged(true);
@@ -211,6 +215,16 @@ final class RegisterPanel extends JPanel {
 			return DebugPanel.CHANGED_COLOR;
 		else
 			return DebugPanel.UNCHANGED_COLOR;
+	}
+	
+	
+	private static void join(Thread t) {
+		while (true) {
+			try {
+				t.join();
+				break;
+			} catch (InterruptedException e) {}
+		}
 	}
 	
 }
