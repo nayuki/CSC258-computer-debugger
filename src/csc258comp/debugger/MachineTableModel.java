@@ -43,6 +43,8 @@ final class MachineTableModel extends AbstractTableModel implements MachineListe
 	
 	
 	
+	// Table model methods
+	
 	@Override
 	public int getColumnCount() {
 		return columnNames.length;
@@ -106,6 +108,7 @@ final class MachineTableModel extends AbstractTableModel implements MachineListe
 			throw new AssertionError();
 		if (!(value instanceof Boolean))
 			throw new AssertionError();
+		
 		if (((Boolean)value).booleanValue())
 			controller.addBreakpoint(row);
 		else
@@ -113,6 +116,8 @@ final class MachineTableModel extends AbstractTableModel implements MachineListe
 	}
 	
 	
+	
+	// Execution handlers
 	
 	public void beginStep() {
 		oldProgramCounter = machine.getProgramCounter();
@@ -137,6 +142,8 @@ final class MachineTableModel extends AbstractTableModel implements MachineListe
 	}
 	
 	
+	
+	// Machine state change handlers
 	
 	@Override
 	public void programLoaded(Machine m, Program p) {

@@ -26,16 +26,15 @@ final class DebugPanel extends JPanel {
 	
 	public final RegisterPanel registerPanel;
 	
-	
 	public final MachineTableModel tableModel;
 	
 	
 	
-	public DebugPanel(final DebugMachine machineState) {
-		if (machineState == null)
+	public DebugPanel(final DebugMachine m) {
+		if (m == null)
 			throw new NullPointerException();
-		this.machine = machineState;
-		controller = new Controller(machineState);
+		machine = m;
+		controller = new Controller(m);
 		
 		setLayout(new GridBagLayout());
 		GridBagConstraints g = new GridBagConstraints();
@@ -83,6 +82,8 @@ final class DebugPanel extends JPanel {
 	}
 	
 	
+	
+	// Execution handlers
 	
 	public void beginStep() {
 		registerPanel.beginStep();

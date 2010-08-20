@@ -97,6 +97,8 @@ final class RegisterPanel extends JPanel implements MachineListener {
 	
 	
 	
+	// Execution handlers
+	
 	public void beginStep() {
 		oldProgramCounter = machine.getProgramCounter();
 		oldAccumulator = machine.getAccumulator();
@@ -137,6 +139,8 @@ final class RegisterPanel extends JPanel implements MachineListener {
 	}
 	
 	
+	
+	// Machine state change handlers
 	
 	@Override
 	public void programCounterChanged(Machine m) {
