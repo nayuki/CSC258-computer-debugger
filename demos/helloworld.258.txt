@@ -2,25 +2,26 @@ W 0  # Prints "Hello, world!\n". Standalone program with no dependencies.
 
 
 msgstr:
-	H 48
-	H 65
-	H 6C
-	H 6C
-	H 6F
-	H 2C
-	H 20
-	H 77
-	H 6F
-	H 72
-	H 6C
-	H 64
-	H 21
-	H 0A
-	H 00
+	C 'H'
+	C 'e'
+	C 'l'
+	C 'l'
+	C 'o'
+	C ','
+	C ' '
+	C 'w'
+	C 'o'
+	C 'r'
+	C 'l'
+	C 'd'
+	C '!'
+	C '\n'
+	C '\0'
 
 zero: I 0
 one:  I 1
 mask: H 00FFFFFF
+
 
 main:
 	load: LDA msgstr
@@ -33,4 +34,4 @@ main:
 	AND mask
 	STA load
 	
-	BUN load
+	BUN main
