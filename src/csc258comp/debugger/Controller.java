@@ -28,19 +28,19 @@ final class Controller {
 	
 	
 	
-	public long getStepCount() {
+	public synchronized long getStepCount() {
 		return stepCount;
 	}
 	
 	
-	public void addBreakpoint(int addr) {
+	public synchronized void addBreakpoint(int addr) {
 		if (addr < 0 || addr >= Machine.ADDRESS_SPACE_SIZE)
 			throw new IllegalArgumentException("Address out of bounds");
 		breakpoints.add(addr);
 	}
 	
 	
-	public void removeBreakpoint(int addr) {
+	public synchronized void removeBreakpoint(int addr) {
 		if (addr < 0 || addr >= Machine.ADDRESS_SPACE_SIZE)
 			throw new IllegalArgumentException("Address out of bounds");
 		breakpoints.remove(addr);
@@ -52,7 +52,7 @@ final class Controller {
 	}
 	
 	
-	public void step() {
+	public synchronized void step() {
 		if (!machine.isHalted()) {
 			Executor.step(machine);
 			stepCount++;
@@ -60,7 +60,7 @@ final class Controller {
 	}
 	
 	
-	public void run() {
+	public synchronized void run() {
 		while (!machine.isHalted()) {
 			step();
 			if (breakpoints.contains(machine.getProgramCounter()))
