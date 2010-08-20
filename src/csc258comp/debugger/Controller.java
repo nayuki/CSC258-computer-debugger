@@ -73,6 +73,7 @@ final class Controller {
 			if (isRunning)
 				return;
 			isRunning = true;
+			suspendRequested = false;
 		}
 		
 		while (true) {
