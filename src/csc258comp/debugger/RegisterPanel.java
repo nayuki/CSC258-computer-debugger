@@ -17,7 +17,7 @@ import csc258comp.runner.Program;
 @SuppressWarnings("serial")
 final class RegisterPanel extends JPanel implements MachineListener {
 	
-	public final JTextField stepCountField;
+	public final JTextField stepCount;
 	public final JTextField programCounter;
 	public final JTextField accumulator;
 	public final JTextField conditionCode;
@@ -48,8 +48,8 @@ final class RegisterPanel extends JPanel implements MachineListener {
 		g.gridy = 0;
 		add(new JLabel("Step count"), g);
 		g.gridy = 1;
-		stepCountField = newJTextField(SwingConstants.RIGHT);
-		add(stepCountField, g);
+		stepCount = newJTextField(SwingConstants.RIGHT);
+		add(stepCount, g);
 		
 		g.gridx = 1;
 		g.gridy = 0;
@@ -190,7 +190,7 @@ final class RegisterPanel extends JPanel implements MachineListener {
 	
 	
 	public void stepCountChanged() {
-		stepCountField.setText(Long.toString(controller.getStepCount()));
+		stepCount.setText(Long.toString(controller.getStepCount()));
 	}
 	
 }
