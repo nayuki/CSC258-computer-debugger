@@ -14,20 +14,20 @@ import javax.swing.JTable;
 @SuppressWarnings("serial")
 final class DebugPanel extends JPanel {
 	
-	static final Color unchangedColor = Color.WHITE;
-	static final Color changedColor = new Color(1.0f, 1.0f, 0.5f);
+	public static final Color unchangedColor = Color.WHITE;
+	public static final Color changedColor = new Color(1.0f, 1.0f, 0.5f);
 	
-	static final Font monospacedFont = new Font("Monospaced", Font.PLAIN, 12);
-	
-	
-	DebugMachine machine;
-	
-	Controller controller;
-	
-	RegisterPanel registerPanel;
+	public static final Font monospacedFont = new Font("Monospaced", Font.PLAIN, 12);
 	
 	
-	MachineTableModel tableModel;
+	public final DebugMachine machine;
+	
+	public final Controller controller;
+	
+	public final RegisterPanel registerPanel;
+	
+	
+	public final MachineTableModel tableModel;
 	
 	
 	

@@ -14,9 +14,9 @@ import csc258comp.runner.BasicMachine;
 
 public final class DebugMachine implements Machine {
 	
-	private Machine machine;
+	private final Machine machine;
 	
-	private Set<MachineListener> listeners;
+	private final Set<MachineListener> listeners;
 	
 	
 	

@@ -17,11 +17,11 @@ import csc258comp.runner.Program;
 @SuppressWarnings("serial")
 final class RegisterPanel extends JPanel implements MachineListener {
 	
-	public JTextField stepCountField;
-	public JTextField programCounter;
-	public JTextField accumulator;
-	public JTextField conditionCode;
-	public JTextField nextInstruction;
+	public final JTextField stepCountField;
+	public final JTextField programCounter;
+	public final JTextField accumulator;
+	public final JTextField conditionCode;
+	public final JTextField nextInstruction;
 	
 	
 	

@@ -17,11 +17,11 @@ final class MachineTableModel extends AbstractTableModel implements MachineListe
 	
 	
 	
-	private DebugPanel parent;
+	private final DebugPanel parent;
 	
 	private int rowCount;
 	
-	private Set<Integer> breakpoints;
+	private final Set<Integer> breakpoints;
 	
 	public Program program;
 	

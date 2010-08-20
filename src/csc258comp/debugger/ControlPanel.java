@@ -13,7 +13,7 @@ import csc258comp.runner.MachineException;
 @SuppressWarnings("serial")
 final class ControlPanel extends JPanel {
 	
-	private DebugPanel parent;
+	private final DebugPanel parent;
 	
 	
 	

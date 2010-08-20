@@ -12,7 +12,7 @@ final class Controller {
 	
 	private final Machine machine;
 	
-	private Set<Integer> breakpoints;
+	private final Set<Integer> breakpoints;
 	
 	private long stepCount;
 	
