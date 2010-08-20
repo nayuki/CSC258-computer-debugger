@@ -24,15 +24,16 @@ final class ControlPanel extends JPanel {
 		JButton step = new JButton("Step");
 		step.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (!controller.isRunning()) {
-					try {
-						parent.beginStep();
-						controller.step();
-						parent.endStep();
-					} catch (MachineException ex) {
-						throw new RuntimeException(ex);
-					}
+				if (controller.isRunning())
+					return;
+
+				parent.beginStep();
+				try {
+					controller.step();
+				} catch (MachineException ex) {
+					throw new RuntimeException(ex);
 				}
+				parent.endStep();
 			}
 		});
 		add(step);
@@ -40,8 +41,11 @@ final class ControlPanel extends JPanel {
 		JButton run = new JButton("Run");
 		run.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if (controller.isRunning())
+					return;
+				
 				parent.beginRun();
-				new Thread() {
+				new Thread("Runner") {
 					public void run() {
 						controller.run();
 						try {
