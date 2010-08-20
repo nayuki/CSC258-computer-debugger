@@ -21,8 +21,6 @@ public final class DebugMachine implements Machine {
 	
 	
 	public DebugMachine(InputStream in, OutputStream out) {
-		if (in == null || out == null)
-			throw new NullPointerException();
 		machine = new BasicMachine(in, out);
 		listeners = new HashSet<MachineListener>();
 	}
@@ -121,11 +119,14 @@ public final class DebugMachine implements Machine {
 	
 	
 	public void addListener(MachineListener listener) {
+		if (listener == null)
+			throw new NullPointerException();
 		listeners.add(listener);
 	}
 	
 	
-	public void removeListener(MachineListener listener) {
+	public void removeListener(MachineListener listener) {if (listener == null)
+		throw new NullPointerException();
 		listeners.remove(listener);
 	}
 	

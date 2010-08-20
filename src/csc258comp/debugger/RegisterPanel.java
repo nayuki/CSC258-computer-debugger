@@ -27,6 +27,9 @@ final class RegisterPanel extends JPanel implements MachineListener {
 	
 	public RegisterPanel(DebugPanel parent) {
 		super(new GridBagLayout());
+		if (parent == null)
+			throw new NullPointerException();
+		
 		GridBagConstraints g = new GridBagConstraints();
 		g.anchor = GridBagConstraints.FIRST_LINE_START;
 		g.insets = new Insets(4, 4, 4, 4);

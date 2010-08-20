@@ -19,6 +19,8 @@ final class ControlPanel extends JPanel {
 	
 	public ControlPanel(DebugPanel parent) {
 		super(new FlowLayout(FlowLayout.LEFT));
+		if (parent == null)
+			throw new NullPointerException();
 		this.parent = parent;
 		
 		JButton step = new JButton("Step");
