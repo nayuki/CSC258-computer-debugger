@@ -129,7 +129,7 @@ final class RegisterPanel extends JPanel {
 	public void beginRun() {
 		oldAccumulator = machine.getAccumulator();
 		oldConditionCode = machine.getConditionCode();
-		runThread = new Thread("Register updater") {
+		runThread = new Thread("CSC258 debugger UI register updater") {
 			public void run() {
 				try {
 					while (runThread == Thread.currentThread()) {

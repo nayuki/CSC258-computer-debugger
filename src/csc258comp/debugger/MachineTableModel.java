@@ -143,7 +143,7 @@ final class MachineTableModel extends AbstractTableModel implements MachineListe
 	public void beginRun() {
 		machine.removeListener(this);
 		
-		runThread = new Thread("Table updater") {
+		runThread = new Thread("CSC258 debugger UI table updater") {
 			public void run() {
 				try {
 					while (runThread == Thread.currentThread()) {
