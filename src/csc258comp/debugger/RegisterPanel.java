@@ -1,5 +1,6 @@
 package csc258comp.debugger;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -9,13 +10,13 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import csc258comp.runner.Executor;
 import csc258comp.runner.InstructionSet;
 import csc258comp.runner.Machine;
-import csc258comp.runner.Program;
 
 
 @SuppressWarnings("serial")
-final class RegisterPanel extends JPanel implements MachineListener {
+final class RegisterPanel extends JPanel {
 	
 	public final JTextField stepCount;
 	public final JTextField programCounter;
@@ -79,10 +80,9 @@ final class RegisterPanel extends JPanel implements MachineListener {
 		nextInstruction = newJTextField(SwingConstants.LEADING);
 		add(nextInstruction, g);
 		
-		machine.addListener(this);
-		programCounterChanged(machine);
-		accumulatorChanged(machine);
-		conditionCodeChanged(machine);
+		programCounterChanged(false);
+		accumulatorChanged(false);
+		conditionCodeChanged(false);
 		stepCountChanged();
 	}
 	
@@ -110,87 +110,80 @@ final class RegisterPanel extends JPanel implements MachineListener {
 	public void beginRun() {
 		oldAccumulator = machine.getAccumulator();
 		oldConditionCode = machine.getConditionCode();
-		machine.removeListener(this);
 	}
 	
 	
 	public void endStep() {
-		programCounterChanged(machine);
-		accumulatorChanged(machine);
-		conditionCodeChanged(machine);
+		programCounterChanged(true);
+		accumulatorChanged(true);
+		conditionCodeChanged(true);
 		stepCountChanged();
-		
-		programCounter.setBackground(machine.getProgramCounter() == ((oldProgramCounter + 1) & 0xFFFFFF) ? DebugPanel.unchangedColor : DebugPanel.changedColor);
-		accumulator.setBackground(machine.getAccumulator() == oldAccumulator ? DebugPanel.unchangedColor : DebugPanel.changedColor);
-		conditionCode.setBackground(machine.getConditionCode() == oldConditionCode ? DebugPanel.unchangedColor : DebugPanel.changedColor);
 	}
 	
 	
 	public void endRun() {
-		programCounterChanged(machine);
-		accumulatorChanged(machine);
-		conditionCodeChanged(machine);
+		programCounterChanged(false);
+		accumulatorChanged(true);
+		conditionCodeChanged(true);
 		stepCountChanged();
-		
-		programCounter.setBackground(DebugPanel.unchangedColor);
-		accumulator.setBackground(machine.getAccumulator() == oldAccumulator ? DebugPanel.unchangedColor : DebugPanel.changedColor);
-		conditionCode.setBackground(machine.getConditionCode() == oldConditionCode ? DebugPanel.unchangedColor : DebugPanel.changedColor);
-		
-		machine.addListener(this);
 	}
 	
 	
 	
 	// Machine state change handlers
 	
-	@Override
-	public void programCounterChanged(Machine m) {
-		int newProgramCounter = m.getProgramCounter();
+	public void programCounterChanged(boolean allowChangedBackground) {
+		int newProgramCounter = machine.getProgramCounter();
 		programCounter.setText(String.format("%06X", newProgramCounter));
+		setChanged(programCounter, allowChangedBackground && newProgramCounter != (oldProgramCounter + 1));
 		
-		int nextinst = m.getMemoryAt(newProgramCounter);
-		int opcode = nextinst >>> 24;
-		String mnemonic = InstructionSet.getOpcodeName(opcode);
-		if (mnemonic != null)
-			nextInstruction.setText(String.format("%s %06X", mnemonic, nextinst & 0xFFFFFF));
-		else {
-			nextInstruction.setText(String.format("Invalid (%02X)", opcode));
-			nextInstruction.setBackground(DebugPanel.changedColor);
+		String nextInstText;
+		if (newProgramCounter != Executor.OPSYS_ADDRESS) {
+			int instWord = machine.getMemoryAt(newProgramCounter);
+			int opcode = instWord >>> 24;
+			int memAddr = instWord & (Machine.ADDRESS_SPACE_SIZE - 1);
+			String mnemonic = InstructionSet.getOpcodeName(opcode);
+			if (mnemonic != null)
+				nextInstText = String.format("%s %06X", mnemonic, memAddr);
+			else
+				nextInstText = String.format("Invalid (%08X)", instWord);
+		} else {
+			nextInstText = "Halt";
 		}
+		nextInstruction.setText(nextInstText);
 	}
 	
 	
-	@Override
-	public void accumulatorChanged(Machine m) {
-		accumulator.setText(String.format("%08X", m.getAccumulator() & 0xFFFFFFFFL));
-		accumulator.setBackground(DebugPanel.changedColor);
+	public void accumulatorChanged(boolean allowChangedBackground) {
+		int newAccumulator = machine.getAccumulator();
+		accumulator.setText(String.format("%08X", newAccumulator & 0xFFFFFFFFL));
+		setChanged(accumulator, allowChangedBackground && newAccumulator != oldAccumulator);
 	}
 	
 	
-	@Override
-	public void conditionCodeChanged(Machine m) {
-		conditionCode.setText(m.getConditionCode() ? "1" : "0");
+	public void conditionCodeChanged(boolean allowChangedBackground) {
+		boolean newConditionCode = machine.getConditionCode();
+		conditionCode.setText(newConditionCode ? "1" : "0");
+		setChanged(conditionCode, allowChangedBackground && newConditionCode != oldConditionCode);
 	}
-	
-	
-	@Override
-	public void programLoaded(Machine m, Program p) {
-		programCounter.setBackground(DebugPanel.unchangedColor);
-		accumulator.setBackground(DebugPanel.unchangedColor);
-		conditionCode.setBackground(DebugPanel.unchangedColor);
-		nextInstruction.setBackground(DebugPanel.unchangedColor);
-	}
-	
-	
-	@Override
-	public void haltedChanged(Machine m) {}
-	
-	@Override
-	public void memoryChanged(Machine m, int addr) {}
 	
 	
 	public void stepCountChanged() {
 		stepCount.setText(Long.toString(controller.getStepCount()));
+	}
+	
+	
+	
+	private static void setChanged(JTextField field, boolean changed) {
+		field.setBackground(getColor(changed));
+	}
+	
+	
+	private static Color getColor(boolean changed) {
+		if (changed)
+			return DebugPanel.changedColor;
+		else
+			return DebugPanel.unchangedColor;
 	}
 	
 }
