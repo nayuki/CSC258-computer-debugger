@@ -166,13 +166,27 @@ public final class Csc258Compiler {
 				break;
 				
 			case 'A':
-				val = t.nextReference();
+				val = t.nextToken();
 				if (val == null) {
-					errorMessages.put(lineNum, "Reference expected");
+					errorMessages.put(lineNum, "Reference or number expected");
 					return;
 				}
-				references.put(image.length(), val);
-				appendWord(0, lineNum);
+				
+				if (val.matches("-?[0-9]+")) {  // Address reference
+					try {
+						int addr = Integer.parseInt(val);
+						if (addr >= 0 && addr < Machine.ADDRESS_SPACE_SIZE) {
+							appendWord(addr, lineNum);
+						} else {
+							errorMessages.put(lineNum, "Address out of range");
+						}
+					} catch (NumberFormatException e) {
+						errorMessages.put(lineNum, "Address out of range");
+					}
+				} else {  // Label reference
+					references.put(image.length(), val);
+					appendWord(0, lineNum);
+				}
 				break;
 				
 			case 'W':
