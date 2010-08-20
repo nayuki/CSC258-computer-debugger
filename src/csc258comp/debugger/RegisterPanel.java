@@ -38,40 +38,37 @@ final class RegisterPanel extends JPanel implements MachineListener {
 		g.gridx = 0;
 		g.gridy = 0;
 		add(new JLabel("Step count"), g);
-		stepCountField = newJTextField(SwingConstants.RIGHT);
 		g.gridy = 1;
+		stepCountField = newJTextField(SwingConstants.RIGHT);
 		add(stepCountField, g);
 		
 		g.gridx = 1;
 		g.gridy = 0;
 		add(new JLabel("Program counter"), g);
-		programCounter = newJTextField(SwingConstants.RIGHT);
 		g.gridy = 1;
+		programCounter = newJTextField(SwingConstants.RIGHT);
 		add(programCounter, g);
 		
 		g.gridx = 2;
 		g.gridy = 0;
 		add(new JLabel("Accumulator"), g);
-		accumulator = newJTextField(SwingConstants.RIGHT);
 		g.gridy = 1;
+		accumulator = newJTextField(SwingConstants.RIGHT);
 		add(accumulator, g);
 		
 		g.gridx = 3;
 		g.gridy = 0;
 		add(new JLabel("Condition code"), g);
-		conditionCode = newJTextField(SwingConstants.RIGHT);
 		g.gridy = 1;
+		conditionCode = newJTextField(SwingConstants.RIGHT);
 		add(conditionCode, g);
 		
 		g.gridx = 4;
 		g.gridy = 0;
 		add(new JLabel("Next instruction"), g);
-		nextInstruction = newJTextField(SwingConstants.LEADING);
 		g.gridy = 1;
+		nextInstruction = newJTextField(SwingConstants.LEADING);
 		add(nextInstruction, g);
-		
-		g.gridx = 4;
-		g.gridy = 0;
 		
 		DebugMachine m = parent.machine;
 		m.addListener(this);
