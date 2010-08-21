@@ -59,8 +59,6 @@ final class Controller {
 	
 	
 	public synchronized void step() {
-		if (isRunning)
-			return;
 		synchronized (machine) {
 			if (!machine.isHalted()) {
 				Executor.step(machine);
@@ -84,9 +82,7 @@ final class Controller {
 					if (machine.isHalted())
 						break;
 				}
-				isRunning = false;
 				step();
-				isRunning = true;
 				if (breakpoints.contains(machine.getProgramCounter()))
 					break;
 			}
