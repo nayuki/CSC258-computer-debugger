@@ -8,14 +8,14 @@ import csc258comp.runner.Machine;
 
 public final class Fragment {
 	
-	private int[] image;
+	private final int[] image;
 	
-	private Map<String,Integer> labels;
-	private Map<Integer,String> references;
+	private final Map<String,Integer> labels;
+	private final Map<Integer,String> references;
 	
-	private SourceCode sourceCode;
-	private Map<Integer,Integer> sourceLineToAddress;
-	private Map<Integer,Integer> addressToSourceLine;
+	private final SourceCode sourceCode;
+	private final Map<Integer,Integer> sourceLineToAddress;
+	private final Map<Integer,Integer> addressToSourceLine;
 	
 	
 	

@@ -7,12 +7,12 @@ import csc258comp.compiler.SourceLine;
 
 public final class Program {
 	
-	private int[] image;
+	private final int[] image;
 	
-	private int mainAddress;
+	private final int mainAddress;
 	
-	private Map<SourceLine,Integer> sourceLineToAddress;
-	private Map<Integer,SourceLine> addressToSourceLine;
+	private final Map<SourceLine,Integer> sourceLineToAddress;
+	private final Map<Integer,SourceLine> addressToSourceLine;
 	
 	
 	
