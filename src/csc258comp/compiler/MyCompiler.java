@@ -250,7 +250,7 @@ public final class MyCompiler {
 			}
 			if (count == 4)
 				throw new IllegalArgumentException(String.format("String '%s' too long", str));
-			result = result << 8 | c;
+			result |= c << (count * 8);
 			count++;
 		}
 		return result;
