@@ -63,6 +63,14 @@ final class ControlPanel extends JPanel {
 			}
 		});
 		add(run);
+		
+		JButton stop = new JButton("Stop");
+		stop.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.suspend();
+			}
+		});
+		add(stop);
 	}
 	
 }
