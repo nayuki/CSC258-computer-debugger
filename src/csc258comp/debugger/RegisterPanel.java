@@ -175,7 +175,7 @@ final class RegisterPanel extends JPanel {
 			int instWord = machine.getMemoryAt(newProgramCounter);
 			int opcode = instWord >>> 24;
 			int memAddr = instWord & (Machine.ADDRESS_SPACE_SIZE - 1);
-			String mnemonic = InstructionSet.getOpcodeName(opcode);
+			String mnemonic = InstructionSet.getMnemonic(opcode);
 			if (mnemonic != null)
 				nextInstText = String.format("%s %06X", mnemonic, memAddr);
 			else

@@ -57,7 +57,7 @@ public final class MyCompiler {
 			}
 			mnemonic = mnemonic.toUpperCase();
 			
-			if (InstructionSet.getOpcodeIndex(mnemonic) != -1)  // Instruction word
+			if (InstructionSet.getOpcode(mnemonic) != -1)  // Instruction word
 				processInstructionWord(t, mnemonic, i);
 			else if (mnemonic.length() == 1 && "IFCBHAW".indexOf(mnemonic) != -1)  // Data word
 				processDataWord(t, mnemonic.charAt(0), i);
@@ -96,7 +96,7 @@ public final class MyCompiler {
 		}
 		
 		references.put(image.length(), ref);
-		int word = InstructionSet.getOpcodeIndex(mnemonic) << 24;
+		int word = InstructionSet.getOpcode(mnemonic) << 24;
 		appendWord(word, lineNum);
 	}
 	

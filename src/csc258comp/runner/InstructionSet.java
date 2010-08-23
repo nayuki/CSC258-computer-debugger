@@ -27,7 +27,7 @@ public final class InstructionSet {
 	 * @param opcode the specified opcode to translate to an mnemonic
 	 * @return the mnemonic associated with the opcode, or {@code null} if none exist
 	 */
-	public static String getOpcodeName(int opcode) {
+	public static String getMnemonic(int opcode) {
 		if (opcode < 0)
 			throw new IllegalArgumentException();
 		if (opcode >= MNEMONICS.length)
@@ -41,7 +41,7 @@ public final class InstructionSet {
 	 * @param mnemonic the specified mnemonic to translate to an opcode
 	 * @return the opcode associated with the mnemonic, or {@code -1} if none exist
 	 */
-	public static int getOpcodeIndex(String mnemonic) {
+	public static int getOpcode(String mnemonic) {
 		if (mnemonic == null)
 			throw new NullPointerException();
 		// Uses linear search, which is good enough for parsing small programs
