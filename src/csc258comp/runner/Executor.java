@@ -119,7 +119,8 @@ public final class Executor {
 			}
 			
 		} else {  // Illegal
-			throw new IllegalOpcodeException("Illegal opcode");
+			m.setHalted(true);
+			throw new IllegalOpcodeException(String.format("Illegal opcode 0x%02X at 0x%06X", op, pc));
 		}
 		
 		// Set next program counter
