@@ -28,7 +28,7 @@ public final class Linker {
 	
 	
 	private Linker(Iterable<Fragment> frags) {
-		Map<Fragment,Integer> fragmentToOffset = layOutFragments(frags);
+		Map<Fragment,Integer> fragmentToOffset = layOutFragments(frags);  // Also, imageSize is set
 		Map<String,Integer> allLabels = unionLabels(fragmentToOffset, frags);
 		int[] image = resolveAndBuildImage(frags, fragmentToOffset, allLabels, imageSize);
 		
