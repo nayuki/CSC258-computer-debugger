@@ -2,12 +2,15 @@ package csc258comp.runner;
 
 
 /**
- * Contains information about the machine's instruction set.
+ * Contains information about the machine's instruction set and their mnemonics.
  * @see Executor
  */
 public final class InstructionSet {
 	
-	private static final String[] OPCODES = {
+	/**
+	 * The list of mnemonics. Their element indices are directly used as opcodes.
+	 */
+	private static final String[] MNEMONICS = {
 		"LDA", "STA",
 		"ADD", "SUB", "MUL", "DIV", "MOD",
 		"FLA", "FLS", "FLM", "FLD",
@@ -19,21 +22,31 @@ public final class InstructionSet {
 	
 	
 	
+	/**
+	 * Returns the mnemonic for the specified operation code, or {@code null} if the opcode does not map to a mnemonic.
+	 * @param opcode the specified opcode to translate to an mnemonic
+	 * @return the mnemonic associated with the opcode, or {@code null} if none exist
+	 */
 	public static String getOpcodeName(int opcode) {
 		if (opcode < 0)
 			throw new IllegalArgumentException();
-		if (opcode >= OPCODES.length)
+		if (opcode >= MNEMONICS.length)
 			return null;
-		return OPCODES[opcode];
+		return MNEMONICS[opcode];
 	}
 	
 	
-	public static int getOpcodeIndex(String opcode) {
-		if (opcode == null)
+	/**
+	 * Returns the specified operation code for the specified mnemonic, or {@code -1} if the mnemonic does not map to an opcode.
+	 * @param mnemonic the specified mnemonic to translate to an opcode
+	 * @return the opcode associated with the mnemonic, or {@code -1} if none exist
+	 */
+	public static int getOpcodeIndex(String mnemonic) {
+		if (mnemonic == null)
 			throw new NullPointerException();
 		// Uses linear search, which is good enough for parsing small programs
-		for (int i = 0; i < OPCODES.length; i++) {
-			if (opcode.equals(OPCODES[i]))
+		for (int i = 0; i < MNEMONICS.length; i++) {
+			if (mnemonic.equals(MNEMONICS[i]))
 				return i;
 		}
 		return -1;
