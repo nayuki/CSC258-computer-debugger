@@ -10,7 +10,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import csc258comp.runner.IllegalOpcodeException;
-import csc258comp.runner.MachineException;
 
 
 @SuppressWarnings("serial")
