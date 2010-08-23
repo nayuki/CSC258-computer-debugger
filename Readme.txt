@@ -15,8 +15,8 @@ in Java (version 1.5 or above).
 == Features ==
 
 User features:
- * Command-line runner (csc258comp.runner.Csc258Runner)
- * Graphical debugger (Swing UI) (csc258comp.debugger.Csc258Debugger)
+ * Command-line runner (csc258comp.runner.Runner)
+ * Graphical debugger (Swing UI) (csc258comp.debugger.Debugger)
    * State of registers
    * Execution step, run
    * Breakpoints
@@ -44,14 +44,14 @@ You must set the working directory or the class path to the appropriate root for
 Java class files. For example, if the runner is located at /the/package/
 csc258comp/runner/Csc258Runner.class, then you must do one of these:
  * cd /the/package
-   java csc258comp.runner.Csc258Runner [CSC258 files]
- * java -cp /the/package csc258comp.runner.Csc258Runner [CSC258 files]
+   java csc258comp.runner.Runner [CSC258 files]
+ * java -cp /the/package csc258comp.runner.Runner [CSC258 files]
  * export CLASSPATH=/the/package
-   java csc258comp.runner.Csc258Runner [CSC258 files]
+   java csc258comp.runner.Runner [CSC258 files]
 
 Examples:
- * java csc258comp.runner.Csc258Runner demos/helloworld.258.txt
- * java csc258comp.runner.Csc258Runner demos/primes.258.txt
+ * java csc258comp.runner.Runner demos/helloworld.258.txt
+ * java csc258comp.runner.Runner demos/primes.258.txt
        demos/lib/const.258.txt demos/lib/printInt.258.txt
 
 

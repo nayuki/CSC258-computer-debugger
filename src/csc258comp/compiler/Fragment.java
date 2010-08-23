@@ -10,8 +10,8 @@ import csc258comp.runner.Program;
 /**
  * Represents a machine code image, along with labels declared and references used. Line-address mapping information for debugging is optionally included. Immutable.
  * @see Program
- * @see Csc258Compiler
- * @see Csc258Linker
+ * @see MyCompiler
+ * @see Linker
  */
 public final class Fragment {
 	

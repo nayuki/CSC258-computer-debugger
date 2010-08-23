@@ -7,13 +7,13 @@ import java.util.List;
 import java.util.SortedMap;
 
 import csc258comp.compiler.CompilationException;
-import csc258comp.compiler.Csc258Compiler;
-import csc258comp.compiler.Csc258Linker;
+import csc258comp.compiler.MyCompiler;
+import csc258comp.compiler.Linker;
 import csc258comp.compiler.Fragment;
 import csc258comp.compiler.SourceCode;
 
 
-public final class Csc258Runner {
+public final class Runner {
 	
 	public static void main(String[] args) throws IOException {
 		List<Fragment> frags = new ArrayList<Fragment>();
@@ -23,7 +23,7 @@ public final class Csc258Runner {
 				SourceCode sc = SourceCode.readFile(file);
 				Fragment f;
 				try {
-					f = Csc258Compiler.compile(sc);
+					f = MyCompiler.compile(sc);
 				} catch (OutOfMemoryError e) {
 					System.err.println("Error: Out of memory during compilation");
 					System.exit(1);
@@ -39,7 +39,7 @@ public final class Csc258Runner {
 		
 		Program p;
 		try {
-			p = Csc258Linker.link(frags);
+			p = Linker.link(frags);
 		} catch (OutOfMemoryError e) {
 			System.err.println("Error: Out of memory during linking");
 			System.exit(1);

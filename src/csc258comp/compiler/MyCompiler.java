@@ -15,12 +15,12 @@ import csc258comp.util.IntBuffer;
 /**
  * Compiles a {@link SourceCode} object to a {@link Fragment} object.
  */
-public final class Csc258Compiler {
+public final class MyCompiler {
 	
 	public static Fragment compile(SourceCode source) throws CompilationException {
 		if (source == null)
 			throw new NullPointerException();
-		return new Csc258Compiler(source).result;
+		return new MyCompiler(source).result;
 	}
 	
 	
@@ -39,7 +39,7 @@ public final class Csc258Compiler {
 	
 	
 	
-	private Csc258Compiler(SourceCode source) throws CompilationException {
+	private MyCompiler(SourceCode source) throws CompilationException {
 		// Loop over source code lines
 		for (int i = 0; i < source.getLineCount(); i++) {
 			Tokenizer t = new Tokenizer(source.getLineAt(i));

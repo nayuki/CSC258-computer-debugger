@@ -11,12 +11,12 @@ import csc258comp.runner.Program;
 /**
  * Links some {@link Fragment} objects to create a {@link Program} object.
  */
-public final class Csc258Linker {
+public final class Linker {
 	
 	public static Program link(Iterable<Fragment> frags) {
 		if (frags == null)
 			throw new NullPointerException();
-		return new Csc258Linker(frags).result;
+		return new Linker(frags).result;
 	}
 	
 	
@@ -27,7 +27,7 @@ public final class Csc258Linker {
 	
 	
 	
-	private Csc258Linker(Iterable<Fragment> frags) {
+	private Linker(Iterable<Fragment> frags) {
 		Map<Fragment,Integer> fragmentToOffset = layOutFragments(frags);
 		Map<String,Integer> allLabels = unionLabels(fragmentToOffset, frags);
 		int[] image = resolveAndBuildImage(frags, fragmentToOffset, allLabels, imageSize);

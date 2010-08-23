@@ -16,7 +16,7 @@ final class DataTestUtils {
 			Collections.addAll(lines, code.split("\n"));
 			
 			SourceCode source = new SourceCode(lines);
-			Fragment f = Csc258Compiler.compile(source);
+			Fragment f = MyCompiler.compile(source);
 			
 			int addr = f.getLabels().get("d");
 			int word = f.getImage()[addr];
@@ -32,7 +32,7 @@ final class DataTestUtils {
 		Collections.addAll(lines, code.split("\n"));
 		
 		SourceCode source = new SourceCode(lines);
-		Csc258Compiler.compile(source);
+		MyCompiler.compile(source);
 	}
 	
 }

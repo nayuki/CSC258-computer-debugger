@@ -11,14 +11,14 @@ import java.util.SortedMap;
 import javax.swing.JFrame;
 
 import csc258comp.compiler.CompilationException;
-import csc258comp.compiler.Csc258Compiler;
-import csc258comp.compiler.Csc258Linker;
+import csc258comp.compiler.MyCompiler;
+import csc258comp.compiler.Linker;
 import csc258comp.compiler.Fragment;
 import csc258comp.compiler.SourceCode;
 import csc258comp.runner.Program;
 
 
-public final class Csc258Debugger {
+public final class Debugger {
 	
 	public static void main(String[] args) throws IOException {
 		List<Fragment> frags = new ArrayList<Fragment>();
@@ -26,7 +26,7 @@ public final class Csc258Debugger {
 			try {
 				File file = new File(arg);
 				SourceCode sc = SourceCode.readFile(file);
-				Fragment f = Csc258Compiler.compile(sc);
+				Fragment f = MyCompiler.compile(sc);
 				frags.add(f);
 			} catch (CompilationException e) {
 				printCompilerErrors(e.getErrorMessages(), e.getSourceCode());
@@ -35,7 +35,7 @@ public final class Csc258Debugger {
 			}
 		}
 		
-		Program p = Csc258Linker.link(frags);
+		Program p = Linker.link(frags);
 		DebugMachine m = new DebugMachine(System.in, System.out);
 		m.loadProgram(p);
 		final DebugPanel panel = new DebugPanel(m, p);

@@ -13,7 +13,7 @@ import csc258comp.util.Utf8Reader;
 
 /**
  * Represents a list of string lines, possibly associated with a file. Immutable.
- * @see Csc258Compiler
+ * @see MyCompiler
  */
 public final class SourceCode implements Iterable<String> {
 	
