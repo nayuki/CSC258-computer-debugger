@@ -2,7 +2,7 @@ package csc258comp.runner;
 
 
 @SuppressWarnings("serial")
-public final class MachineException extends RuntimeException {
+public class MachineException extends RuntimeException {
 	
 	public MachineException() {
 		super();

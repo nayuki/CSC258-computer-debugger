@@ -105,7 +105,7 @@ public final class Executor {
 				else
 					nextPc = memAddr;
 			} catch (IOException e) {
-				throw new MachineException("Input stream exception", e);
+				throw new MachineIoException("Input stream exception", e);
 			}
 			
 		} else if (op == 21) {  // OUT
@@ -115,11 +115,11 @@ public final class Executor {
 				else
 					nextPc = memAddr;
 			} catch (IOException e) {
-				throw new MachineException("Output stream exception", e);
+				throw new MachineIoException("Output stream exception", e);
 			}
 			
 		} else {  // Illegal
-			throw new MachineException("Illegal opcode");
+			throw new IllegalOpcodeException("Illegal opcode");
 		}
 		
 		// Set next program counter
