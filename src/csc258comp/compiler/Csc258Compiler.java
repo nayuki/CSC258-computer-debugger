@@ -12,6 +12,9 @@ import csc258comp.runner.Machine;
 import csc258comp.util.IntBuffer;
 
 
+/**
+ * Compiles a {@link SourceCode} object to a {@link Fragment} object.
+ */
 public final class Csc258Compiler {
 	
 	public static Fragment compile(SourceCode source) throws CompilationException {

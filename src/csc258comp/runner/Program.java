@@ -2,9 +2,17 @@ package csc258comp.runner;
 
 import java.util.Map;
 
+import csc258comp.compiler.Csc258Linker;
+import csc258comp.compiler.Fragment;
 import csc258comp.compiler.SourceLine;
 
 
+/**
+ * Represents a loadable, executable machine code image. The image contains no unresolved references. Line-address mapping information for debugging is optionally included. Immutable.
+ * @see Fragment
+ * @see Csc258Linker
+ * @see Loader
+ */
 public final class Program {
 	
 	private final int[] image;

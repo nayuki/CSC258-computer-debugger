@@ -1,6 +1,10 @@
 package csc258comp.runner;
 
 
+/**
+ * Contains information about the machine's instruction set.
+ * @see Executor
+ */
 public final class InstructionSet {
 	
 	private static final String[] OPCODES = {
@@ -37,6 +41,9 @@ public final class InstructionSet {
 	
 	
 	
+	/**
+	 * Not instantiable.
+	 */
 	private InstructionSet() {}
 	
 }

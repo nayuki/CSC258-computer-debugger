@@ -3,6 +3,9 @@ package csc258comp.runner;
 import java.io.IOException;
 
 
+/**
+ * Executes instructions on {@link Machine}s. This implements the behavior of instructions specified in {@link InstructionSet}.
+ */
 public final class Executor {
 	
 	public static final int OPSYS_ADDRESS = 0xFF0000;

@@ -8,6 +8,9 @@ import csc258comp.runner.Machine;
 import csc258comp.runner.Program;
 
 
+/**
+ * Links some {@link Fragment} objects to create a {@link Program} object.
+ */
 public final class Csc258Linker {
 	
 	public static Program link(Iterable<Fragment> frags) {

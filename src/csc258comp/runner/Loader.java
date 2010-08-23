@@ -1,6 +1,9 @@
 package csc258comp.runner;
 
 
+/**
+ * Loads a {@link Program} into a {@link Machine}.
+ */
 public final class Loader {
 	
 	public static void load(Machine m, Program p) {
@@ -18,6 +21,9 @@ public final class Loader {
 	
 	
 	
+	/**
+	 * Not instantiable.
+	 */
 	private Loader() {}
 	
 }

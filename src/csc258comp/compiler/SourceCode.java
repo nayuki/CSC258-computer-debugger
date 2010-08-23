@@ -11,6 +11,10 @@ import java.util.List;
 import csc258comp.util.Utf8Reader;
 
 
+/**
+ * Represents a list of string lines, possibly associated with a file. Immutable.
+ * @see Csc258Compiler
+ */
 public final class SourceCode implements Iterable<String> {
 	
 	public static SourceCode readFile(File file) throws IOException {
