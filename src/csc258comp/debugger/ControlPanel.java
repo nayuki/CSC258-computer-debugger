@@ -39,8 +39,8 @@ final class ControlPanel extends JPanel {
 		});
 		add(step);
 		
-		JButton run = new JButton("Run");
-		run.addActionListener(new ActionListener() {
+		JButton resume = new JButton("Resume");
+		resume.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (controller.isRunning())
 					return;
@@ -62,15 +62,15 @@ final class ControlPanel extends JPanel {
 				}.start();
 			}
 		});
-		add(run);
+		add(resume);
 		
-		JButton stop = new JButton("Stop");
-		stop.addActionListener(new ActionListener() {
+		JButton suspend = new JButton("Suspend");
+		suspend.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.suspend();
 			}
 		});
-		add(stop);
+		add(suspend);
 	}
 	
 }
