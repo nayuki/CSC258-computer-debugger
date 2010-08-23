@@ -5,6 +5,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.lang.reflect.InvocationTargetException;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -33,7 +35,8 @@ final class RegisterPanel extends JPanel {
 	private int oldAccumulator;
 	private boolean oldConditionCode;
 	
-	private volatile Thread runThread;
+	private Thread updateThread;
+	private final Semaphore threadStopRequest;
 	
 	
 	
@@ -85,6 +88,8 @@ final class RegisterPanel extends JPanel {
 		add(nextInstruction, g);
 		
 		updateView();
+		
+		threadStopRequest = new Semaphore(0);
 	}
 	
 	
@@ -129,31 +134,29 @@ final class RegisterPanel extends JPanel {
 	public void beginRun() {
 		oldAccumulator = machine.getAccumulator();
 		oldConditionCode = machine.getConditionCode();
-		runThread = new Thread("CSC258 debugger UI register updater") {
+		updateThread = new Thread("CSC258 debugger UI register updater") {
 			public void run() {
 				try {
-					while (runThread == Thread.currentThread()) {
+					do {
 						SwingUtilities.invokeAndWait(new Runnable() {
 							public void run() {
 								updateView();
 							}
 						});
-						Thread.sleep(100);
-					}
+					} while (!threadStopRequest.tryAcquire(1000, TimeUnit.MILLISECONDS));
 				}
 				catch (InterruptedException e) {}
 				catch (InvocationTargetException e) {}
 			}
 		};
-		runThread.start();
+		updateThread.start();
 	}
 	
 	
 	public void endRun() {
-		Thread temp = runThread;
-		runThread = null;
-		temp.interrupt();
-		join(temp);
+		threadStopRequest.release();
+		join(updateThread);
+		updateThread = null;
 		
 		programCounterChanged(false);
 		accumulatorChanged(false);

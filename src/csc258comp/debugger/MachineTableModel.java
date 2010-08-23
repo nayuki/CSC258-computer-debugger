@@ -2,6 +2,8 @@ package csc258comp.debugger;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Set;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.SwingUtilities;
 import javax.swing.table.AbstractTableModel;
@@ -28,7 +30,8 @@ final class MachineTableModel extends AbstractTableModel implements MachineListe
 	
 	private int oldProgramCounter;
 	
-	private volatile Thread runThread;
+	private Thread updateThread;
+	private final Semaphore threadStopRequest;
 	
 	
 	
@@ -38,6 +41,7 @@ final class MachineTableModel extends AbstractTableModel implements MachineListe
 		machine = parent.machine;
 		controller = parent.controller;
 		program = p;
+		threadStopRequest = new Semaphore(0);
 		
 		breakpoints = controller.getBreakpoints();
 		machine.addListener(this);
@@ -143,31 +147,29 @@ final class MachineTableModel extends AbstractTableModel implements MachineListe
 	public void beginRun() {
 		machine.removeListener(this);
 		
-		runThread = new Thread("CSC258 debugger UI table updater") {
+		updateThread = new Thread("CSC258 debugger UI table updater") {
 			public void run() {
 				try {
-					while (runThread == Thread.currentThread()) {
+					do {
 						SwingUtilities.invokeAndWait(new Runnable() {
 							public void run() {
 								updateView();
 							}
 						});
-						Thread.sleep(1000);
-					}
+					} while (!threadStopRequest.tryAcquire(1000, TimeUnit.MILLISECONDS));
 				}
 				catch (InterruptedException e) {}
 				catch (InvocationTargetException e) {}
 			}
 		};
-		runThread.start();
+		updateThread.start();
 	}
 	
 	
 	public void endRun() {
-		Thread temp = runThread;
-		runThread = null;
-		temp.interrupt();
-		join(temp);
+		threadStopRequest.release();
+		join(updateThread);
+		updateThread = null;
 		
 		machine.addListener(this);
 		fireTableDataChanged();
