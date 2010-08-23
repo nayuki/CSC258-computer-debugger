@@ -179,7 +179,7 @@ final class RegisterPanel extends JPanel {
 			if (mnemonic != null)
 				nextInstText = String.format("%s %06X", mnemonic, memAddr);
 			else
-				nextInstText = String.format("Invalid (%08X)", instWord);
+				nextInstText = String.format("Illegal (%02X) %06X", opcode, memAddr);
 		} else {
 			nextInstText = "Halt";
 		}
