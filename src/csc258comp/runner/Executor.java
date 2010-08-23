@@ -131,6 +131,9 @@ public final class Executor {
 	
 	
 	
+	/**
+	 * Not instantiable.
+	 */
 	private Executor() {}
 	
 }
