@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import csc258comp.runner.IllegalOpcodeException;
 import csc258comp.runner.MachineException;
 
 
@@ -31,9 +32,7 @@ final class ControlPanel extends JPanel {
 					parent.beginStep();
 					try {
 						controller.step();
-					} catch (MachineException ex) {
-						throw new RuntimeException(ex);
-					}
+					} catch (IllegalOpcodeException ex) {}
 					parent.endStep();
 				}
 			}
