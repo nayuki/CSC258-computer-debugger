@@ -16,13 +16,10 @@ public final class DebugMachine implements Machine {
 	
 	private final Machine machine;
 	
-	private final Set<MachineListener> listeners;
-	
 	
 	
 	public DebugMachine(InputStream in, OutputStream out) {
 		machine = new BasicMachine(in, out);
-		listeners = new HashSet<MachineListener>();
 	}
 	
 	
@@ -36,8 +33,6 @@ public final class DebugMachine implements Machine {
 	@Override
 	public void setHalted(boolean halted) {
 		machine.setHalted(halted);
-		for (MachineListener listener : listeners)
-			listener.haltedChanged(this);
 	}
 	
 	
@@ -50,8 +45,6 @@ public final class DebugMachine implements Machine {
 	@Override
 	public void setProgramCounter(int addr) {
 		machine.setProgramCounter(addr);
-		for (MachineListener listener : listeners)
-			listener.programCounterChanged(this);
 	}
 	
 	
@@ -64,8 +57,6 @@ public final class DebugMachine implements Machine {
 	@Override
 	public void setAccumulator(int val) {
 		machine.setAccumulator(val);
-		for (MachineListener listener : listeners)
-			listener.accumulatorChanged(this);
 	}
 	
 	
@@ -78,8 +69,6 @@ public final class DebugMachine implements Machine {
 	@Override
 	public void setConditionCode(boolean val) {
 		machine.setConditionCode(val);
-		for (MachineListener listener : listeners)
-			listener.conditionCodeChanged(this);
 	}
 	
 	
@@ -92,8 +81,6 @@ public final class DebugMachine implements Machine {
 	@Override
 	public void setMemoryAt(int addr, int val) {
 		machine.setMemoryAt(addr, val);
-		for (MachineListener listener : listeners)
-			listener.memoryChanged(this, addr);
 	}
 	
 	
@@ -113,19 +100,6 @@ public final class DebugMachine implements Machine {
 		if (prog == null)
 			throw new NullPointerException();
 		Loader.load(this, prog);
-	}
-	
-	
-	public void addListener(MachineListener listener) {
-		if (listener == null)
-			throw new NullPointerException();
-		listeners.add(listener);
-	}
-	
-	
-	public void removeListener(MachineListener listener) {if (listener == null)
-		throw new NullPointerException();
-		listeners.remove(listener);
 	}
 	
 }

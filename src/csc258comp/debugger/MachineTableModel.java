@@ -8,12 +8,11 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.SwingUtilities;
 import javax.swing.table.AbstractTableModel;
 
-import csc258comp.runner.Machine;
 import csc258comp.runner.Program;
 
 
 @SuppressWarnings("serial")
-final class MachineTableModel extends AbstractTableModel implements MachineListener {
+final class MachineTableModel extends AbstractTableModel {
 	
 	private static Class<?>[] columnClasses = {Boolean.class, String.class, String.class, String.class};
 	
@@ -27,8 +26,6 @@ final class MachineTableModel extends AbstractTableModel implements MachineListe
 	private final Set<Integer> breakpoints;
 	
 	public Program program;
-	
-	private int oldProgramCounter;
 	
 	private volatile Thread updateThread;
 	private final Semaphore threadStopRequest;
@@ -44,7 +41,6 @@ final class MachineTableModel extends AbstractTableModel implements MachineListe
 		threadStopRequest = new Semaphore(0);
 		
 		breakpoints = controller.getBreakpoints();
-		machine.addListener(this);
 	}
 	
 	
@@ -132,21 +128,15 @@ final class MachineTableModel extends AbstractTableModel implements MachineListe
 	}
 	
 	
-	public void beginStep() {
-		oldProgramCounter = machine.getProgramCounter();
-	}
+	public void beginStep() {}
 	
 	
 	public void endStep() {
-		int newProgramCounter = machine.getProgramCounter();
-		fireTableCellUpdated(oldProgramCounter, 1);
-		fireTableCellUpdated(newProgramCounter, 1);
+		fireTableDataChanged();
 	}
 	
 	
 	public void beginRun() {
-		machine.removeListener(this);
-		
 		updateThread = new Thread("CSC258 debugger UI table updater") {
 			public void run() {
 				try {
@@ -159,7 +149,6 @@ final class MachineTableModel extends AbstractTableModel implements MachineListe
 					} while (!threadStopRequest.tryAcquire(1000, TimeUnit.MILLISECONDS));
 					
 					updateThread = null;
-					machine.addListener(MachineTableModel.this);
 					fireTableDataChanged();
 					
 				} catch (InterruptedException e) {
@@ -176,27 +165,5 @@ final class MachineTableModel extends AbstractTableModel implements MachineListe
 	public void endRun() {
 		threadStopRequest.release();
 	}
-	
-	
-	
-	// Machine state change handlers
-	
-	@Override
-	public void memoryChanged(Machine m, int addr) {
-		fireTableCellUpdated(addr, 2);
-	}
-	
-	
-	@Override
-	public void programCounterChanged(Machine m) {}
-	
-	@Override
-	public void haltedChanged(Machine m) {}
-	
-	@Override
-	public void accumulatorChanged(Machine m) {}
-	
-	@Override
-	public void conditionCodeChanged(Machine m) {}
 	
 }
