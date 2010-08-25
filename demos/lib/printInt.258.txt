@@ -1,3 +1,24 @@
+W 0  # Function printInt
+W 0  # Input: printInt_val, the signed 32-bit number to be printed.
+W 0  # Side-effects: Prints the specified number string to the output in base 10. AC, E, and printInt_val are undefined on return.
+W 0  # Output: None.
+W 0  #
+W 0  # The implementation is based on this Java code (int means signed 32-bit integer):
+W 0  #   printInt(int val) {
+W 0  #     if (val >= 0) val = -val;
+W 0  #     else print('-');
+W 0  #     
+W 0  #     int divisor = 1;
+W 0  #     while (val / divisor + 9 < 0)
+W 0  #     divisor *= 10;
+W 0  #   
+W 0  #     do {
+W 0  #       print((char)('0' - x / div % 10));
+W 0  #       div /= 10;
+W 0  #     } while (div != 0);
+W 0  #   }
+
+
 printInt_cHyphenMinus: C '-'
 
 printInt_val: W 1
