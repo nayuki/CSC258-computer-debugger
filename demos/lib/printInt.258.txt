@@ -3,6 +3,12 @@ W 0  # Input: printInt_val, the signed 32-bit number to be printed.
 W 0  # Side-effects: Prints the specified number string to the output in base 10. AC, E, and printInt_val are undefined on return.
 W 0  # Output: None.
 W 0  #
+W 0  # Example:
+W 0  #   someNumber: I 2718
+W 0  #   LDA someNumber
+W 0  #   STA printInt_val
+W 0  #   BSA printInt
+W 0  #
 W 0  # The implementation is based on this Java code (int means signed 32-bit integer):
 W 0  #   printInt(int val) {
 W 0  #     if (val >= 0) val = -val;
