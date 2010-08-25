@@ -161,9 +161,12 @@ final class MachineTableModel extends AbstractTableModel implements MachineListe
 					updateThread = null;
 					machine.addListener(MachineTableModel.this);
 					fireTableDataChanged();
+					
+				} catch (InterruptedException e) {
+					throw new AssertionError(e);
+				} catch (InvocationTargetException e) {
+					throw new AssertionError(e);
 				}
-				catch (InterruptedException e) {}
-				catch (InvocationTargetException e) {}
 			}
 		};
 		updateThread.start();

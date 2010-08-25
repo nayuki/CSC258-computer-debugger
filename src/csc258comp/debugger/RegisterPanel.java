@@ -151,9 +151,12 @@ final class RegisterPanel extends JPanel {
 					accumulatorChanged(false);
 					conditionCodeChanged(false);
 					stepCountChanged();
+					
+				} catch (InterruptedException e) {
+					throw new AssertionError(e);
+				} catch (InvocationTargetException e) {
+					throw new AssertionError(e);
 				}
-				catch (InterruptedException e) {}
-				catch (InvocationTargetException e) {}
 			}
 		};
 		updateThread.start();
