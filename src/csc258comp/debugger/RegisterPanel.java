@@ -143,7 +143,7 @@ final class RegisterPanel extends JPanel {
 								updateView();
 							}
 						});
-					} while (!threadStopRequest.tryAcquire(1000, TimeUnit.MILLISECONDS));
+					} while (!threadStopRequest.tryAcquire(100, TimeUnit.MILLISECONDS));
 					
 					updateThread = null;
 					
