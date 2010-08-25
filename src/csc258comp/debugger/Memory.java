@@ -1,16 +1,24 @@
 package csc258comp.debugger;
 
+import java.util.Arrays;
+
 import csc258comp.runner.Machine;
 
 
-final class Memory {
+final class Memory implements Cloneable {
 	
-	private int[][][] values;
+	private int[][] values;
+	
+	private boolean[] readOnly;
 	
 	
 	
 	public Memory() {
-		values = new int[1 << 8][][];
+		values = new int[1 << 12][];
+		Arrays.fill(values, new int[1 << 12]);
+		
+		readOnly = new boolean[1 << 12];
+		Arrays.fill(readOnly, true);
 	}
 	
 	
@@ -19,19 +27,10 @@ final class Memory {
 		if (addr < 0 || addr >= Machine.ADDRESS_SPACE_SIZE)
 			throw new IllegalArgumentException("Address out of bounds");
 		
-		int a0 = (addr >>> 16) & ((1 << 8) - 1);
-		int a1 = (addr >>>  8) & ((1 << 8) - 1);
-		int a2 = (addr >>>  0) & ((1 << 8) - 1);
+		int a0 = (addr >>> 12) & ((1 << 12) - 1);
+		int a1 = (addr >>>  0) & ((1 << 12) - 1);
 		
-		int[][] v0 = values[a0];
-		if (v0 == null)
-			return 0;
-		
-		int[] v1 = v0[a1];
-		if (v1 == null)
-			return 0;
-			
-		return v1[a2];
+		return values[a0][a1];
 	}
 	
 	
@@ -39,19 +38,29 @@ final class Memory {
 		if (addr < 0 || addr >= Machine.ADDRESS_SPACE_SIZE)
 			throw new IllegalArgumentException("Address out of bounds");
 		
-		int a0 = (addr >>> 16) & ((1 << 8) - 1);
-		int a1 = (addr >>>  8) & ((1 << 8) - 1);
-		int a2 = (addr >>>  0) & ((1 << 8) - 1);
+		int a0 = (addr >>> 12) & ((1 << 12) - 1);
+		int a1 = (addr >>>  0) & ((1 << 12) - 1);
 		
-		int[][] v0 = values[a0];
-		if (v0 == null)
-			values[a0] = v0 = new int[1 << 8][];
+		if (readOnly[a0]) {
+			values[a0] = values[a0].clone();
+			readOnly[a0] = false;
+		}
 		
-		int[] v1 = v0[a1];
-		if (v1 == null)
-			v0[a1] = v1 = new int[1 << 8];
-		
-		v1[a2] = val;
+		values[a0][a1] = val;
+	}
+	
+	
+	public Memory clone() {
+		try {
+			Arrays.fill(readOnly, true);
+			
+			Memory copy = (Memory)super.clone();
+			copy.values = copy.values.clone();
+			copy.readOnly = copy.readOnly.clone();
+			return copy;
+		} catch (CloneNotSupportedException e) {
+			throw new AssertionError(e);
+		}
 	}
 	
 }
