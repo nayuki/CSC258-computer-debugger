@@ -1,33 +1,55 @@
+printInt_cHyphenMinus: C '-'
+
 printInt_val: W 1
 printInt_divisor: W 1
+printInt_temp: W 1
+
 printInt: W 1
+	LDA printInt_val
+	AND signBit
+	BZE printInt_positive
+	BUN printInt_negative
+printInt_negative:
+	LDA printInt_cHyphenMinus
+	printInt_out0: OUT printInt_out0
+	BUN printInt_findDivisor
+printInt_positive:
+	LDA zero
+	SUB printInt_val
+	STA printInt_val
+	BUN printInt_findDivisor
+	
+printInt_findDivisor:
 	LDA one
 	STA printInt_divisor
 printInt_divisorLoop:
 	LDA printInt_val
 	DIV printInt_divisor
-	SUB ten
+	ADD nine
 	AND signBit
-	BZE printInt_biggenDivisor
-	BUN printInt_printLoop
-printInt_biggenDivisor:
+	BZE printInt_printLoop
 	LDA printInt_divisor
 	MUL ten
 	STA printInt_divisor
 	BUN printInt_divisorLoop
+	
 printInt_printLoop:
 	LDA printInt_val
 	DIV printInt_divisor
 	MOD ten
-	ADD cZero
-	printInt_out0: OUT printInt_out0
+	STA printInt_temp
+	LDA cZero
+	SUB printInt_temp
+	printInt_out1: OUT printInt_out1
+	
 	LDA printInt_divisor
 	DIV ten
 	STA printInt_divisor
 	IOR zero
 	BZE printInt_ret
 	BUN printInt_printLoop
+	
 printInt_ret:
 	LDA cNewLine
-	printInt_out1: OUT printInt_out1
+	printInt_out2: OUT printInt_out2
 	BIN printInt
