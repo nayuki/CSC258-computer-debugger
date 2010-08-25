@@ -9,7 +9,7 @@ import csc258comp.runner.Machine;
 import csc258comp.runner.Program;
 
 
-public final class DebugMachine implements Machine {
+public final class DebugMachine implements Machine, Cloneable {
 	
 	private boolean isHalted;
 	
@@ -19,7 +19,7 @@ public final class DebugMachine implements Machine {
 	
 	private boolean conditionCode;
 	
-	private final Memory memory;
+	private Memory memory;
 	
 	private InputStream input;
 	
@@ -127,6 +127,17 @@ public final class DebugMachine implements Machine {
 		if (prog == null)
 			throw new NullPointerException();
 		Loader.load(this, prog);
+	}
+	
+	
+	public DebugMachine clone() {
+		try {
+			DebugMachine copy = (DebugMachine)super.clone();
+			copy.memory = copy.memory.clone();
+			return copy;
+		} catch (CloneNotSupportedException e) {
+			throw new AssertionError(e);
+		}
 	}
 	
 }
