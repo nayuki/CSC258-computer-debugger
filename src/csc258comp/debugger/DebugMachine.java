@@ -3,13 +3,11 @@ package csc258comp.debugger;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.HashSet;
-import java.util.Set;
 
+import csc258comp.runner.BasicMachine;
 import csc258comp.runner.Loader;
 import csc258comp.runner.Machine;
 import csc258comp.runner.Program;
-import csc258comp.runner.BasicMachine;
 
 
 public final class DebugMachine implements Machine {
