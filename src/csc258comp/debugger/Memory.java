@@ -25,11 +25,11 @@ final class Memory {
 		
 		int[][] v0 = values[a0];
 		if (v0 == null)
-			values[a0] = v0 = new int[1 << 8][];
+			return 0;
 		
 		int[] v1 = v0[a1];
 		if (v1 == null)
-			v0[a1] = v1 = new int[1 << 8];
+			return 0;
 			
 		return v1[a2];
 	}
