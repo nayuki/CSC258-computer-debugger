@@ -36,7 +36,7 @@ public final class Executor {
 		int instWord = m.getMemoryAt(pc);
 		int op = instWord >>> 24;
 		int memAddr = instWord & (Machine.ADDRESS_SPACE_SIZE - 1);  // The memory address embedded in the instruction word
-		int nextPc = -1;  // -1 is the default value that signifies that nextPc should be pc + 1
+		int nextPc = pc + 1;  // The default value is the address of the next word
 		
 		// Execute instruction
 		if (op == 0) {  // LDA
@@ -124,8 +124,6 @@ public final class Executor {
 		}
 		
 		// Set next program counter
-		if (nextPc == -1)
-			nextPc = pc + 1;
 		m.setProgramCounter(nextPc);
 	}
 	
