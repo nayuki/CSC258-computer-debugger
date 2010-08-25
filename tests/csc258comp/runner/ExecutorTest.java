@@ -2,6 +2,7 @@ package csc258comp.runner;
 
 import static org.junit.Assert.*;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -115,6 +116,13 @@ public final class ExecutorTest {
 		assertEquals(0x7FFFFFFF, m.getAccumulator());
 		assertTrue(m.getConditionCode());
 		assertFalse(m.isHalted());
+	}
+	
+	
+	
+	@After
+	public void tearDown() {
+		m = null;
 	}
 	
 }
