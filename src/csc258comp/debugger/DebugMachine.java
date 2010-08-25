@@ -14,10 +14,13 @@ public final class DebugMachine implements Machine {
 	
 	private final Machine machine;
 	
+	private final Memory memory;
+	
 	
 	
 	public DebugMachine(InputStream in, OutputStream out) {
 		machine = new BasicMachine(in, out);
+		memory = new Memory();
 	}
 	
 	
@@ -72,13 +75,13 @@ public final class DebugMachine implements Machine {
 	
 	@Override
 	public int getMemoryAt(int addr) {
-		return machine.getMemoryAt(addr);
+		return memory.get(addr);
 	}
 	
 	
 	@Override
 	public void setMemoryAt(int addr, int val) {
-		machine.setMemoryAt(addr, val);
+		memory.set(addr, val);
 	}
 	
 	
