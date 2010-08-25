@@ -26,16 +26,16 @@ public final class Executor {
 			return;
 		
 		// Check if halting
-		int pc = m.getProgramCounter();
+		final int pc = m.getProgramCounter();
 		if (pc == OPSYS_ADDRESS) {
 			m.setHalted(true);
 			return;
 		}
 		
 		// Fetch instruction
-		int instWord = m.getMemoryAt(pc);
-		int op = instWord >>> 24;
-		int memAddr = instWord & (Machine.ADDRESS_SPACE_SIZE - 1);  // The memory address embedded in the instruction word
+		final int instWord = m.getMemoryAt(pc);
+		final int op = instWord >>> 24;
+		final int memAddr = instWord & (Machine.ADDRESS_SPACE_SIZE - 1);  // The memory address embedded in the instruction word
 		int nextPc = pc + 1;  // The default value is the address of the next word
 		
 		// Execute instruction
