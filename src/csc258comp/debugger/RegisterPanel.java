@@ -35,7 +35,7 @@ final class RegisterPanel extends JPanel {
 	private int oldAccumulator;
 	private boolean oldConditionCode;
 	
-	private Thread updateThread;
+	private volatile Thread updateThread;
 	private final Semaphore threadStopRequest;
 	
 	
@@ -144,6 +144,13 @@ final class RegisterPanel extends JPanel {
 							}
 						});
 					} while (!threadStopRequest.tryAcquire(1000, TimeUnit.MILLISECONDS));
+					
+					updateThread = null;
+					
+					programCounterChanged(false);
+					accumulatorChanged(false);
+					conditionCodeChanged(false);
+					stepCountChanged();
 				}
 				catch (InterruptedException e) {}
 				catch (InvocationTargetException e) {}
@@ -155,13 +162,6 @@ final class RegisterPanel extends JPanel {
 	
 	public void endRun() {
 		threadStopRequest.release();
-		join(updateThread);
-		updateThread = null;
-		
-		programCounterChanged(false);
-		accumulatorChanged(false);
-		conditionCodeChanged(false);
-		stepCountChanged();
 	}
 	
 	
@@ -220,16 +220,6 @@ final class RegisterPanel extends JPanel {
 			return DebugPanel.CHANGED_COLOR;
 		else
 			return DebugPanel.UNCHANGED_COLOR;
-	}
-	
-	
-	private static void join(Thread t) {
-		while (true) {
-			try {
-				t.join();
-				break;
-			} catch (InterruptedException e) {}
-		}
 	}
 	
 }

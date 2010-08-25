@@ -30,7 +30,7 @@ final class MachineTableModel extends AbstractTableModel implements MachineListe
 	
 	private int oldProgramCounter;
 	
-	private Thread updateThread;
+	private volatile Thread updateThread;
 	private final Semaphore threadStopRequest;
 	
 	
@@ -157,6 +157,10 @@ final class MachineTableModel extends AbstractTableModel implements MachineListe
 							}
 						});
 					} while (!threadStopRequest.tryAcquire(1000, TimeUnit.MILLISECONDS));
+					
+					updateThread = null;
+					machine.addListener(MachineTableModel.this);
+					fireTableDataChanged();
 				}
 				catch (InterruptedException e) {}
 				catch (InvocationTargetException e) {}
@@ -168,11 +172,6 @@ final class MachineTableModel extends AbstractTableModel implements MachineListe
 	
 	public void endRun() {
 		threadStopRequest.release();
-		join(updateThread);
-		updateThread = null;
-		
-		machine.addListener(this);
-		fireTableDataChanged();
 	}
 	
 	
@@ -196,16 +195,5 @@ final class MachineTableModel extends AbstractTableModel implements MachineListe
 	
 	@Override
 	public void conditionCodeChanged(Machine m) {}
-	
-	
-	
-	private static void join(Thread t) {
-		while (true) {
-			try {
-				t.join();
-				break;
-			} catch (InterruptedException e) {}
-		}
-	}
 	
 }
