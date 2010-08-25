@@ -1,7 +1,19 @@
 W 0  # Function printStr
 W 0  # Input: printStr_str, the address of the leading character of the string to be printed. The string is null-terminated.
-W 0  # Side-effects: Prints the specified string to the output. AC and E are undefined on return.
+W 0  # Side-effects: Prints the specified string to the output. AC, E, and printStr_str are undefined on return.
 W 0  # Output: None.
+W 0  #
+W 0  # Example:
+W 0  #   strAddr: A str
+W 0  #   str:
+W 0  #     C 'H'
+W 0  #     C 'W'
+W 0  #     C '\0'
+W 0  #   LDA strAddr
+W 0  #   STA printStr_str
+W 0  #   BSA printStr
+
+
 printStr_str: W 1
 printStr: W 1
 	LDA ldaBlank
