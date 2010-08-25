@@ -91,7 +91,7 @@ public final class Executor {
 		} else if (op >= 16 && op <= 19) {  // BUN, BZE, BSA, BIN
 			switch (op) {
 				case 16:  nextPc = memAddr;  break;
-				case 17:  nextPc = (m.getConditionCode() ? pc + 1 : memAddr);  break;
+				case 17:  if (!m.getConditionCode()) nextPc = memAddr;  break;
 				case 18:  m.setMemoryAt(memAddr, pc + 1);  nextPc = memAddr + 1;  break;
 				case 19:  nextPc = m.getMemoryAt(memAddr);  break;
 				default:  throw new AssertionError();
