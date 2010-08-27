@@ -21,6 +21,23 @@ final class ControlPanel extends JPanel {
 			throw new NullPointerException();
 		final Controller controller = parent.controller;
 		
+		JButton back = new JButton("Back");
+		back.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				synchronized (controller) {
+					if (controller.isRunning())
+						return;
+					
+					parent.beginStep();
+					try {
+						controller.stepBack();
+					} catch (IllegalOpcodeException ex) {}
+					parent.endStep();
+				}
+			}
+		});
+		add(back);
+		
 		JButton step = new JButton("Step");
 		step.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

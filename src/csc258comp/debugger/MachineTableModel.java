@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.SwingUtilities;
 import javax.swing.table.AbstractTableModel;
 
+import csc258comp.runner.Machine;
 import csc258comp.runner.Program;
 
 
@@ -20,7 +21,6 @@ final class MachineTableModel extends AbstractTableModel {
 	
 	
 	
-	private final DebugMachine machine;
 	private final Controller controller;
 	
 	private final Set<Integer> breakpoints;
@@ -35,7 +35,6 @@ final class MachineTableModel extends AbstractTableModel {
 	public MachineTableModel(DebugPanel parent, Program p) {
 		if (parent == null || p == null)
 			throw new NullPointerException();
-		machine = parent.machine;
 		controller = parent.controller;
 		program = p;
 		threadStopRequest = new Semaphore(0);
@@ -73,15 +72,16 @@ final class MachineTableModel extends AbstractTableModel {
 	
 	@Override
 	public Object getValueAt(int row, int col) {
+		Machine m = controller.getMachine();
 		switch (col) {
 			case 0:
 				return breakpoints.contains(row);
 				
 			case 1:
-				return String.format("%08X%s", row, row == machine.getProgramCounter() ? " <=" : "");
+				return String.format("%08X%s", row, row == m.getProgramCounter() ? " <=" : "");
 				
 			case 2:
-				return String.format("%08X", machine.getMemoryAt(row));
+				return String.format("%08X", m.getMemoryAt(row));
 				
 			case 3:
 				if (program != null) {
@@ -122,7 +122,7 @@ final class MachineTableModel extends AbstractTableModel {
 	// Execution handlers
 	
 	public void updateView() {
-		synchronized (machine) {
+		synchronized (controller.getMachine()) {
 			fireTableDataChanged();
 		}
 	}

@@ -10,7 +10,9 @@ import csc258comp.runner.Machine;
 
 final class Controller {
 	
-	private final Machine machine;
+	private final DebugMachine initialMachine;
+	
+	private DebugMachine machine;
 	
 	private final Set<Integer> breakpoints;
 	
@@ -22,9 +24,10 @@ final class Controller {
 	
 	
 	
-	public Controller(Machine m) {
+	public Controller(DebugMachine m) {
 		if (m == null)
 			throw new NullPointerException();
+		initialMachine = m.clone();
 		machine = m;
 		breakpoints = new HashSet<Integer>();
 		stepCount = 0;
@@ -32,6 +35,11 @@ final class Controller {
 		suspendRequested = false;
 	}
 	
+	
+	
+	public Machine getMachine() {
+		return machine;
+	}
 	
 	
 	public synchronized long getStepCount() {
@@ -97,6 +105,18 @@ final class Controller {
 	
 	public void suspend() {
 		suspendRequested = true;
+	}
+	
+	
+	public synchronized void stepBack() {
+		if (stepCount == 0)
+			return;
+		
+		machine = initialMachine.clone();
+		long count = stepCount - 1;
+		stepCount = 0;
+		for (long i = 0; i < count; i++)
+			step();
 	}
 	
 	
