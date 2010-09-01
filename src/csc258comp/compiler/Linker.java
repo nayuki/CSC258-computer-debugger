@@ -2,6 +2,8 @@ package csc258comp.compiler;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import csc258comp.runner.Executor;
 import csc258comp.runner.Machine;
@@ -25,9 +27,13 @@ public final class Linker {
 	
 	private Program result;
 	
+	private SortedMap<SourceLine,String> errorMessages;
+	
 	
 	
 	private Linker(Iterable<Fragment> frags) {
+		errorMessages = new TreeMap<SourceLine,String>();
+		
 		Map<Fragment,Integer> fragmentToOffset = layOutFragments(frags);  // Also, imageSize is set
 		Map<String,Integer> allLabels = unionLabels(fragmentToOffset, frags);
 		int[] image = resolveAndBuildImage(frags, fragmentToOffset, allLabels, imageSize);
@@ -61,14 +67,14 @@ public final class Linker {
 			fragToOff.put(f, offset);
 			offset += f.getImageLength();
 			if (offset > Machine.ADDRESS_SPACE_SIZE)
-				throw new IllegalArgumentException("Images too large for address space");
+				throw new LinkerException("Images too large for address space");
 		}
 		imageSize = offset;
 		return fragToOff;
 	}
 	
 	
-	private static Map<String,Integer> unionLabels(Map<Fragment,Integer> fragToOff, Iterable<Fragment> frags) {
+	private Map<String,Integer> unionLabels(Map<Fragment,Integer> fragToOff, Iterable<Fragment> frags) {
 		Map<String,Integer> alllabels = new HashMap<String,Integer>();
 		alllabels.put("opsys", Executor.OPSYS_ADDRESS);
 		
@@ -76,9 +82,10 @@ public final class Linker {
 			int off = fragToOff.get(f);
 			Map<String,Integer> labels = f.getLabels();
 			for (String label : labels.keySet()) {
-				if (alllabels.containsKey(label))
-					throw new IllegalArgumentException(String.format("Duplicate label \"%s\"", label));
-				else
+				if (alllabels.containsKey(label)) {
+					SourceLine sl = new SourceLine(f.getSourceCode(), f.getSourceLineByAddressMap().get(labels.get(label)));
+					errorMessages.put(sl, String.format("Duplicate label \"%s\"", label));
+				} else
 					alllabels.put(label, labels.get(label) + off);  // Does relocation
 			}
 		}
@@ -87,7 +94,7 @@ public final class Linker {
 	}
 	
 	
-	private static int[] resolveAndBuildImage(Iterable<Fragment> frags, Map<Fragment,Integer> fragToOff, Map<String,Integer> allLabels, int imageSize) {
+	private int[] resolveAndBuildImage(Iterable<Fragment> frags, Map<Fragment,Integer> fragToOff, Map<String,Integer> allLabels, int imageSize) {
 		int[] allImage = new int[imageSize];
 		for (Fragment f : frags) {
 			int[] image = getImageAndResolveReferences(f, allLabels);
@@ -97,14 +104,17 @@ public final class Linker {
 	}
 	
 	
-	private static int[] getImageAndResolveReferences(Fragment f, Map<String,Integer> alllabels) {
+	private int[] getImageAndResolveReferences(Fragment f, Map<String,Integer> alllabels) {
 		int[] image = f.getImage();
 		Map<Integer,String> refs = f.getReferences();
 		for (int addr : refs.keySet()) {
 			String label = refs.get(addr);
-			if (!alllabels.containsKey(label))
-				throw new IllegalArgumentException(String.format("Label \"%s\" not defined", label));
-			image[addr] |= alllabels.get(label);  // Bottom 24 bits of instruction/data word are all zeros
+			if (!alllabels.containsKey(label)) {
+				SourceLine sl = new SourceLine(f.getSourceCode(), f.getSourceLineByAddressMap().get(addr));
+				errorMessages.put(sl, String.format("Label \"%s\" not defined", label));
+			}
+			else
+				image[addr] |= alllabels.get(label);  // Bottom 24 bits of instruction/data word are all zeros
 		}
 		return image;
 	}
