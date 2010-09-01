@@ -63,7 +63,12 @@ public final class Runner {
 	
 	
 	private static void printCompilerErrors(SortedMap<Integer,String> msgs, SourceCode sc) {
-		String filename = sc.getFile() != null ? sc.getFile().getName() : "(no file)";
+		String filename;
+		if (sc.getFile() != null)
+			filename = sc.getFile().getName();
+		else
+			filename = "(no file)";
+		
 		for (int line : msgs.keySet()) {
 			System.err.printf("%s:%d: %s%n", filename, line + 1, msgs.get(line));
 			System.err.println(sc.getLineAt(line));
