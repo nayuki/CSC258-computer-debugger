@@ -36,32 +36,32 @@ public final class IntegerTest {
 	}
 	
 	
-	@Test(expected=CompilationException.class)
-	public void testInvalid() throws CompilationException {
+	@Test(expected=CompilerException.class)
+	public void testInvalid() throws CompilerException {
 		DataTestUtils.testInvalid("I abcd");
 	}
 	
 	
-	@Test(expected=CompilationException.class)
-	public void testPlusSign() throws CompilationException {
+	@Test(expected=CompilerException.class)
+	public void testPlusSign() throws CompilerException {
 		DataTestUtils.testInvalid("I +0");
 	}
 	
 	
-	@Test(expected=CompilationException.class)
-	public void testPositiveOverflow() throws CompilationException {
+	@Test(expected=CompilerException.class)
+	public void testPositiveOverflow() throws CompilerException {
 		DataTestUtils.testInvalid("I 2147483648");
 	}
 	
 	
-	@Test(expected=CompilationException.class)
-	public void testNegativeOverflow() throws CompilationException {
+	@Test(expected=CompilerException.class)
+	public void testNegativeOverflow() throws CompilerException {
 		DataTestUtils.testInvalid("I -2147483649");
 	}
 	
 	
-	@Test(expected=CompilationException.class)
-	public void testBigPositiveOverflow() throws CompilationException {
+	@Test(expected=CompilerException.class)
+	public void testBigPositiveOverflow() throws CompilerException {
 		DataTestUtils.testInvalid("I 99999999999999999999999999999999999999999999999999");
 	}
 	

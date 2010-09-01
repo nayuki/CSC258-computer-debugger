@@ -21,13 +21,13 @@ final class DataTestUtils {
 			int addr = f.getLabels().get("d");
 			int word = f.getImage()[addr];
 			assertEquals(expectedWord, word);
-		} catch (CompilationException e) {
+		} catch (CompilerException e) {
 			fail("Compiler exception: " + e.getMessage());
 		}
 	}
 	
 	
-	public static void testInvalid(String code) throws CompilationException {
+	public static void testInvalid(String code) throws CompilerException {
 		List<String> lines = new ArrayList<String>();
 		Collections.addAll(lines, code.split("\n"));
 		

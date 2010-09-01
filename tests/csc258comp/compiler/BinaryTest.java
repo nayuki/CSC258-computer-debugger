@@ -25,38 +25,38 @@ public final class BinaryTest {
 	}
 	
 	
-	@Test(expected=CompilationException.class)
-	public void testInvalid() throws CompilationException {
+	@Test(expected=CompilerException.class)
+	public void testInvalid() throws CompilerException {
 		DataTestUtils.testInvalid("B 201");
 	}
 	
 	
-	@Test(expected=CompilationException.class)
-	public void testPlusSign() throws CompilationException {
+	@Test(expected=CompilerException.class)
+	public void testPlusSign() throws CompilerException {
 		DataTestUtils.testInvalid("B +0");
 	}
 	
 	
-	@Test(expected=CompilationException.class)
-	public void testNegativeZero() throws CompilationException {
+	@Test(expected=CompilerException.class)
+	public void testNegativeZero() throws CompilerException {
 		DataTestUtils.testInvalid("B -0");
 	}
 	
 	
-	@Test(expected=CompilationException.class)
-	public void testNegative() throws CompilationException {
+	@Test(expected=CompilerException.class)
+	public void testNegative() throws CompilerException {
 		DataTestUtils.testInvalid("B -1");
 	}
 	
 	
-	@Test(expected=CompilationException.class)
-	public void testOverflow() throws CompilationException {
+	@Test(expected=CompilerException.class)
+	public void testOverflow() throws CompilerException {
 		DataTestUtils.testInvalid("B 100000000000000000000000000000000");
 	}
 	
 	
-	@Test(expected=CompilationException.class)
-	public void testBigOverflow() throws CompilationException {
+	@Test(expected=CompilerException.class)
+	public void testBigOverflow() throws CompilerException {
 		DataTestUtils.testInvalid("B 11111111111111111111111111111111111111111111111111111111111111111111111111111111");
 	}
 	

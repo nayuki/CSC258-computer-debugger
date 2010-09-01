@@ -14,8 +14,8 @@ public final class FloatTest {
 	}
 	
 	
-	@Test(expected=CompilationException.class)
-	public void testInvalid() throws CompilationException {
+	@Test(expected=CompilerException.class)
+	public void testInvalid() throws CompilerException {
 		DataTestUtils.testInvalid("F abcd");
 	}
 	

@@ -4,7 +4,7 @@ import java.util.SortedMap;
 
 
 @SuppressWarnings("serial")
-public final class CompilationException extends Exception {
+public final class CompilerException extends RuntimeException {
 	
 	private SortedMap<Integer,String> errorMessages;
 	
@@ -12,17 +12,17 @@ public final class CompilationException extends Exception {
 	
 	
 	
-	public CompilationException() {
+	public CompilerException() {
 		super();
 	}
 	
 	
-	public CompilationException(String message) {
+	public CompilerException(String message) {
 		super(message);
 	}
 	
 	
-	public CompilationException(String message, SortedMap<Integer,String> errorMessages, SourceCode sourceCode) {
+	public CompilerException(String message, SortedMap<Integer,String> errorMessages, SourceCode sourceCode) {
 		super(message);
 		this.errorMessages = errorMessages;
 		this.sourceCode = sourceCode;
