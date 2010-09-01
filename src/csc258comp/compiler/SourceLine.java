@@ -25,6 +25,7 @@ public class SourceLine {
 	}
 	
 	
+	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof SourceLine) {
 			SourceLine other = (SourceLine)obj;
@@ -35,11 +36,13 @@ public class SourceLine {
 	}
 	
 	
+	@Override
 	public int hashCode() {
 		return sourceCode.hashCode() + lineNumber;
 	}
 	
 	
+	@Override
 	public String toString() {
 		if (sourceCode.getFile() != null)
 			return String.format("%s:%d", sourceCode.getFile().getPath(), lineNumber);

@@ -130,6 +130,7 @@ public final class DebugMachine implements Machine, Cloneable {
 	}
 	
 	
+	@Override
 	public DebugMachine clone() {
 		try {
 			DebugMachine copy = (DebugMachine)super.clone();

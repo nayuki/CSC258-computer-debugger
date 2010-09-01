@@ -50,6 +50,7 @@ final class Memory implements Cloneable {
 	}
 	
 	
+	@Override
 	public Memory clone() {
 		try {
 			Arrays.fill(readOnly, true);

@@ -64,6 +64,7 @@ public final class IntBuffer {
 	}
 	
 	
+	@Override
 	public String toString() {
 		return String.format("%s (length=%d)", super.toString(), length); 
 	}

@@ -73,11 +73,13 @@ public final class SourceCode implements Iterable<String> {
 	}
 	
 	
+	@Override
 	public Iterator<String> iterator() {
 		return lines.iterator();
 	}
 	
 	
+	@Override
 	public String toString() {
 		if (file != null)
 			return String.format("%s (%d lines)", file.getPath(), lines.size());

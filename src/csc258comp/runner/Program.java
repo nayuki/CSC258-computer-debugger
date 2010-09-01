@@ -64,6 +64,7 @@ public final class Program {
 	}
 	
 	
+	@Override
 	public String toString() {
 		return String.format("%s (%d words)", super.toString(), image.length);
 	}

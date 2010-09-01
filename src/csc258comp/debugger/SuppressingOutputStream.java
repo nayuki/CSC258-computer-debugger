@@ -42,6 +42,7 @@ class SuppressingOutputStream extends OutputStream implements Cloneable {
 	}
 	
 	
+	@Override
 	public SuppressingOutputStream clone() {
 		try {
 			return (SuppressingOutputStream)super.clone();
