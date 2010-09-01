@@ -21,7 +21,7 @@ public final class DebugMachine implements Machine, Cloneable {
 	
 	private Memory memory;
 	
-	private InputStream input;
+	private RememberingInputStream input;
 	
 	private SuppressingOutputStream output;
 	
@@ -35,7 +35,7 @@ public final class DebugMachine implements Machine, Cloneable {
 		accumulator = 0;
 		conditionCode = false;
 		memory = new Memory();
-		input = in;
+		input = new RememberingInputStream(in);
 		output = new SuppressingOutputStream(out);
 	}
 	
@@ -134,6 +134,7 @@ public final class DebugMachine implements Machine, Cloneable {
 		try {
 			DebugMachine copy = (DebugMachine)super.clone();
 			copy.memory = copy.memory.clone();
+			copy.input = copy.input.clone();
 			copy.output = copy.output.clone();
 			return copy;
 		} catch (CloneNotSupportedException e) {
