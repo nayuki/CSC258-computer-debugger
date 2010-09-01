@@ -87,7 +87,7 @@ final class MachineTableModel extends AbstractTableModel {
 				if (program != null) {
 					String source = program.getSourceLine(row);
 					if (source != null)
-						return source;
+						return source.replace("\t", "    ");
 					else
 						return "";
 				}
