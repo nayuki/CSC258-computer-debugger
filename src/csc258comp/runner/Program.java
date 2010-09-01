@@ -56,9 +56,8 @@ public final class Program {
 	
 	
 	public String getSourceLine(int addr) {
-		SourceLine sl = addressToSourceLine.get(addr);
-		if (sl != null)
-			return sl.getString();
+		if (addressToSourceLine.containsKey(addr))
+			return addressToSourceLine.get(addr).getString();
 		else
 			return null;
 	}
