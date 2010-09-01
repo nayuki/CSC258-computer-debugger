@@ -47,32 +47,32 @@ public final class StringTest {
 	}
 	
 	
-	@Test(expected=CompilationException.class)
-	public void testInvalidEscape0() throws CompilationException {
+	@Test(expected=CompilerException.class)
+	public void testInvalidEscape0() throws CompilerException {
 		DataTestUtils.testInvalid("C '\\a'");
 	}
 	
 	
-	@Test(expected=CompilationException.class)
-	public void testInvalidEscape1() throws CompilationException {
+	@Test(expected=CompilerException.class)
+	public void testInvalidEscape1() throws CompilerException {
 		DataTestUtils.testInvalid("C '\\f'");
 	}
 	
 	
-	@Test(expected=CompilationException.class)
-	public void testInvalidEscape2() throws CompilationException {
+	@Test(expected=CompilerException.class)
+	public void testInvalidEscape2() throws CompilerException {
 		DataTestUtils.testInvalid("C '\\v'");
 	}
 	
 	
-	@Test(expected=CompilationException.class)
-	public void testTooLong() throws CompilationException {
+	@Test(expected=CompilerException.class)
+	public void testTooLong() throws CompilerException {
 		DataTestUtils.testInvalid("C 'FIVER'");
 	}
 	
 	
-	@Test(expected=CompilationException.class)
-	public void testLongWithEscape() throws CompilationException {
+	@Test(expected=CompilerException.class)
+	public void testLongWithEscape() throws CompilerException {
 		DataTestUtils.testInvalid("C '\\0\\b\\n\\r\\t'");
 	}
 	

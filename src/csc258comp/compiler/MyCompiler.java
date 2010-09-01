@@ -17,7 +17,7 @@ import csc258comp.util.IntBuffer;
  */
 public final class MyCompiler {
 	
-	public static Fragment compile(SourceCode source) throws CompilationException {
+	public static Fragment compile(SourceCode source) throws CompilerException {
 		if (source == null)
 			throw new NullPointerException();
 		return new MyCompiler(source).result;
@@ -39,7 +39,7 @@ public final class MyCompiler {
 	
 	
 	
-	private MyCompiler(SourceCode source) throws CompilationException {
+	private MyCompiler(SourceCode source) throws CompilerException {
 		// Loop over source code lines
 		for (int i = 0; i < source.getLineCount(); i++) {
 			Tokenizer t = new Tokenizer(source.getLineAt(i));
@@ -68,7 +68,7 @@ public final class MyCompiler {
 		}
 		
 		if (errorMessages.size() > 0)
-			throw new CompilationException(String.format("%d compiler errors", errorMessages.size()), errorMessages, source);
+			throw new CompilerException(String.format("%d compiler errors", errorMessages.size()), errorMessages, source);
 		
 		result = new Fragment(image.toArray(), labels, references, source, srcLineToAddr, addrToSrcLine);
 	}

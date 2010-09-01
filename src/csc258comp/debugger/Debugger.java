@@ -11,7 +11,7 @@ import java.util.SortedMap;
 
 import javax.swing.JFrame;
 
-import csc258comp.compiler.CompilationException;
+import csc258comp.compiler.CompilerException;
 import csc258comp.compiler.LinkerException;
 import csc258comp.compiler.MyCompiler;
 import csc258comp.compiler.Linker;
@@ -38,7 +38,7 @@ public final class Debugger {
 					return;
 				}
 				frags.add(f);
-			} catch (CompilationException e) {
+			} catch (CompilerException e) {
 				printCompilerErrors(e.getErrorMessages(), e.getSourceCode());
 				System.exit(1);
 				return;

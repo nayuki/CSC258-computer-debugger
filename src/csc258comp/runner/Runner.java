@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 
-import csc258comp.compiler.CompilationException;
+import csc258comp.compiler.CompilerException;
 import csc258comp.compiler.Fragment;
 import csc258comp.compiler.Linker;
 import csc258comp.compiler.LinkerException;
@@ -33,7 +33,7 @@ public final class Runner {
 					return;
 				}
 				frags.add(f);
-			} catch (CompilationException e) {
+			} catch (CompilerException e) {
 				printCompilerErrors(e.getErrorMessages(), e.getSourceCode());
 				System.exit(1);
 				return;
