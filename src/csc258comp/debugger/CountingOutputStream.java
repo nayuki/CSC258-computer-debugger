@@ -27,6 +27,12 @@ class CountingOutputStream extends OutputStream {
 	
 	
 	@Override
+	public void flush() throws IOException {
+		output.flush();
+	}
+	
+	
+	@Override
 	public void close() throws IOException {
 		output.close();
 	}
