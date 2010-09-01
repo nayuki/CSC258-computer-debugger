@@ -4,7 +4,7 @@ import java.util.SortedMap;
 
 
 @SuppressWarnings("serial")
-public final class CompilerException extends Exception {
+public final class CompilerException extends RuntimeException {
 	
 	private SortedMap<Integer,String> errorMessages;
 	
