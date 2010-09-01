@@ -2,8 +2,6 @@ package csc258comp.compiler;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
 
 import csc258comp.runner.Executor;
 import csc258comp.runner.Machine;
@@ -27,12 +25,12 @@ public final class Linker {
 	
 	private Program result;
 	
-	private SortedMap<SourceLine,String> errorMessages;
+	private Map<SourceLine,String> errorMessages;
 	
 	
 	
 	private Linker(Iterable<Fragment> frags) {
-		errorMessages = new TreeMap<SourceLine,String>();
+		errorMessages = new HashMap<SourceLine,String>();
 		
 		Map<Fragment,Integer> fragmentToOffset = layOutFragments(frags);  // Also, imageSize is set
 		Map<String,Integer> allLabels = unionLabels(fragmentToOffset, frags);
@@ -56,6 +54,11 @@ public final class Linker {
 			}
 		}
 		
+		if (errorMessages.size() > 0)
+			throw new LinkerException(String.format("%d linker errors", errorMessages.size()), errorMessages);
+		
+		if (!allLabels.containsKey("main"))
+			throw new LinkerException("Label \"main\" not defined");
 		result = new Program(image, allLabels.get("main"), srcLineToAddr, addrToSrcLine);
 	}
 	

@@ -1,12 +1,12 @@
 package csc258comp.compiler;
 
-import java.util.SortedMap;
+import java.util.Map;
 
 
 @SuppressWarnings("serial")
 public class LinkerException extends RuntimeException {
 	
-	private SortedMap<SourceLine,String> errorMessages;
+	private Map<SourceLine,String> errorMessages;
 	
 	
 	
@@ -20,14 +20,14 @@ public class LinkerException extends RuntimeException {
 	}
 	
 	
-	public LinkerException(String message, SortedMap<SourceLine,String> errorMessages) {
+	public LinkerException(String message, Map<SourceLine,String> errorMessages) {
 		super(message);
 		this.errorMessages = errorMessages;
 	}
 	
 	
 	
-	public SortedMap<SourceLine,String> getErrorMessages() {
+	public Map<SourceLine,String> getErrorMessages() {
 		return errorMessages;
 	}
 	
