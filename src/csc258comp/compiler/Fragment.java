@@ -78,12 +78,12 @@ public final class Fragment {
 	}
 	
 	
-	public Map<Integer,Integer> getAddressBySourceLineMap() {
+	public Map<Integer,Integer> getSourceLineToAddressMap() {
 		return sourceLineToAddress;
 	}
 	
 	
-	public Map<Integer,Integer> getSourceLineByAddressMap() {
+	public Map<Integer,Integer> getAddressToSourceLineMap() {
 		return addressToSourceLine;
 	}
 	

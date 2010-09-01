@@ -43,12 +43,12 @@ public final class Linker {
 			SourceCode src = f.getSourceCode();
 			int off = fragmentToOffset.get(f);
 			
-			Map<Integer,Integer> aBySl = f.getAddressBySourceLineMap();
+			Map<Integer,Integer> aBySl = f.getSourceLineToAddressMap();
 			for (int l : aBySl.keySet()) {
 				srcLineToAddr.put(new SourceLine(src, l), aBySl.get(l) + off);
 			}
 			
-			Map<Integer,Integer> slByA = f.getSourceLineByAddressMap();
+			Map<Integer,Integer> slByA = f.getAddressToSourceLineMap();
 			for (int a : slByA.keySet()) {
 				addrToSrcLine.put(a + off, new SourceLine(src, slByA.get(a)));
 			}
@@ -86,7 +86,7 @@ public final class Linker {
 			Map<String,Integer> labels = f.getLabels();
 			for (String label : labels.keySet()) {
 				if (alllabels.containsKey(label)) {
-					SourceLine sl = new SourceLine(f.getSourceCode(), f.getSourceLineByAddressMap().get(labels.get(label)));
+					SourceLine sl = new SourceLine(f.getSourceCode(), f.getAddressToSourceLineMap().get(labels.get(label)));
 					errorMessages.put(sl, String.format("Duplicate label \"%s\"", label));
 				} else
 					alllabels.put(label, labels.get(label) + off);  // Does relocation
@@ -113,7 +113,7 @@ public final class Linker {
 		for (int addr : refs.keySet()) {
 			String label = refs.get(addr);
 			if (!alllabels.containsKey(label)) {
-				SourceLine sl = new SourceLine(f.getSourceCode(), f.getSourceLineByAddressMap().get(addr));
+				SourceLine sl = new SourceLine(f.getSourceCode(), f.getAddressToSourceLineMap().get(addr));
 				errorMessages.put(sl, String.format("Label \"%s\" not defined", label));
 			}
 			else
