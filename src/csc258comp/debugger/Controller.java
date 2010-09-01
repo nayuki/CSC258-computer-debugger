@@ -10,7 +10,7 @@ import csc258comp.runner.Machine;
 
 final class Controller {
 	
-	private final DebugMachine initialMachine;
+	private final MachineSnapshot initialSnapshot;
 	
 	private DebugMachine machine;
 	
@@ -27,7 +27,7 @@ final class Controller {
 	public Controller(DebugMachine m) {
 		if (m == null)
 			throw new NullPointerException();
-		initialMachine = m.clone();
+		initialSnapshot = new MachineSnapshot(m, 0);
 		machine = m;
 		breakpoints = new HashSet<Integer>();
 		stepCount = 0;
@@ -112,7 +112,7 @@ final class Controller {
 		if (stepCount == 0)
 			return;
 		
-		machine = initialMachine.clone();
+		machine = initialSnapshot.machine.clone();
 		long count = stepCount - 1;
 		stepCount = 0;
 		for (long i = 0; i < count; i++)
