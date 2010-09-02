@@ -17,6 +17,13 @@ public final class StringTest {
 	}
 	
 	
+	// Catches naive tokenizers that split the source code by white spaces
+	@Test
+	public void testSpace() {
+		DataTestUtils.test("d: C ' '", 0x00000020);
+	}
+	
+	
 	@Test
 	public void testEscapes() {
 		DataTestUtils.test("d: C '\\''", 0x00000027);
@@ -50,6 +57,18 @@ public final class StringTest {
 	@Test(expected=CompilerException.class)
 	public void testNoString() throws CompilerException {
 		DataTestUtils.testInvalid("C\nC 'Test'");
+	}
+	
+	
+	@Test(expected=CompilerException.class)
+	public void testUnclosed0() throws CompilerException {
+		DataTestUtils.testInvalid("C '");
+	}
+	
+	
+	@Test(expected=CompilerException.class)
+	public void testUnclosed1() throws CompilerException {
+		DataTestUtils.testInvalid("C '0");
 	}
 	
 	
