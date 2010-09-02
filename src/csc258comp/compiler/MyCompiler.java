@@ -95,9 +95,8 @@ public final class MyCompiler {
 		
 		// Check for dangling labels
 		if (savedLabels.size() > 0) {
-			for (String label : savedLabels.keySet()) {
+			for (String label : savedLabels.keySet())
 				errorMessages.put(savedLabels.get(label), String.format("Dangling label \"%s\"", label));
-			}
 		}
 		
 		// If there are error messages, then throw an exception and don't return a fragment
