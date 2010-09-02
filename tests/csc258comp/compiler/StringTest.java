@@ -31,19 +31,19 @@ public final class StringTest {
 	
 	@Test
 	public void testTwo() {
-		DataTestUtils.test("d: C '01'", 0x00003031);
+		DataTestUtils.test("d: C '01'", 0x00003130);
 	}
 	
 	
 	@Test
 	public void testThree() {
-		DataTestUtils.test("d: C 'bar'", 0x00626172);
+		DataTestUtils.test("d: C 'bar'", 0x00726162);
 	}
 	
 	
 	@Test
 	public void testFour() {
-		DataTestUtils.test("d: C 'FOUR'", 0x464F5552);
+		DataTestUtils.test("d: C 'FOUR'", 0x52554F46);
 	}
 	
 	
