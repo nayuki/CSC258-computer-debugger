@@ -39,3 +39,6 @@ A 16777217  # Address out of range
 W abc  # Invalid size
 W -1  # Negative size
 W 16777217  # Size exceeds address space
+
+W 0  # Dangling label
+dangling:
