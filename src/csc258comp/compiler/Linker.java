@@ -85,11 +85,12 @@ public final class Linker {
 			int off = fragToOff.get(f);
 			Map<String,Integer> labels = f.getLabels();
 			for (String label : labels.keySet()) {
-				if (alllabels.containsKey(label)) {
+				if (!alllabels.containsKey(label))
+					alllabels.put(label, labels.get(label) + off);  // Relocation happens here
+				else {
 					SourceLine sl = new SourceLine(f.getSourceCode(), f.getAddressToSourceLineMap().get(labels.get(label)));
 					errorMessages.put(sl, String.format("Duplicate label \"%s\"", label));
-				} else
-					alllabels.put(label, labels.get(label) + off);  // Does relocation
+				}
 			}
 		}
 		
@@ -112,12 +113,12 @@ public final class Linker {
 		Map<Integer,String> refs = f.getReferences();
 		for (int addr : refs.keySet()) {
 			String label = refs.get(addr);
-			if (!alllabels.containsKey(label)) {
+			if (alllabels.containsKey(label))
+				image[addr] |= alllabels.get(label);  // Bottom 24 bits of instruction/data word are all zeros
+			else {
 				SourceLine sl = new SourceLine(f.getSourceCode(), f.getAddressToSourceLineMap().get(addr));
 				errorMessages.put(sl, String.format("Label \"%s\" not defined", label));
 			}
-			else
-				image[addr] |= alllabels.get(label);  // Bottom 24 bits of instruction/data word are all zeros
 		}
 		return image;
 	}
