@@ -9,7 +9,7 @@ specified.
 This package contains a rich set of software tools and sample programs for the
 CSC258 computer. It was developed from scratch by Nayuki Minase in 2010, and is
 licensed under the MIT License (see below) (open source). The tools are written
-in Java (version 1.5 or above).
+in Java (version 1.6 or above).
 
 
 == Features ==
