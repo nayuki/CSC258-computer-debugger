@@ -3,6 +3,7 @@ package csc258comp.debugger;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,12 +24,12 @@ import csc258comp.runner.Program;
 
 public final class Debugger {
 	
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
 		// Compile a fragment for each file argument
 		List<Fragment> frags = new ArrayList<Fragment>();
 		for (String arg : args) {
+			File file = new File(arg);
 			try {
-				File file = new File(arg);
 				SourceCode sc = SourceCode.readFile(file);
 				Fragment f;
 				try {
@@ -41,6 +42,14 @@ public final class Debugger {
 				frags.add(f);
 			} catch (CompilerException e) {
 				printCompilerErrors(e.getErrorMessages(), e.getSourceCode());
+				System.exit(1);
+				return;
+			} catch (FileNotFoundException e) {
+				System.err.printf("File not found: %s%n", file);
+				System.exit(1);
+				return;
+			} catch (IOException e) {
+				System.err.println(e.getMessage());
 				System.exit(1);
 				return;
 			}
