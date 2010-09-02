@@ -1,7 +1,9 @@
 package csc258comp.compiler;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
@@ -40,16 +42,31 @@ public final class MyCompiler {
 	
 	
 	private MyCompiler(SourceCode source) throws CompilerException {
+		Map<String,Integer> savedLabels = new HashMap<String,Integer>();
+		
 		// Loop over source code lines
 		for (int i = 0; i < source.getLineCount(); i++) {
 			Tokenizer t = new Tokenizer(source.getLineAt(i));
 			
 			// Consume labels
-			processLabels(t, i);
+			Set<String> linelabels = processLabels(t);
+			for (String label : linelabels)
+				savedLabels.put(label, i);
 			
+			// Skip if remainder of line is empty
 			if (t.isEmpty())
 				continue;
 			
+			// Process saved labels
+			for (String label : savedLabels.keySet()) {
+				if (!labels.containsKey(label))
+					labels.put(label, image.length());
+				else
+					errorMessages.put(savedLabels.get(label), String.format("Duplicate label \"%s\"", label));
+			}
+			savedLabels.clear();
+			
+			// Get mnemonic
 			String mnemonic = t.nextMnemonic();
 			if (mnemonic == null) {
 				errorMessages.put(i, "Invalid character");
@@ -64,7 +81,13 @@ public final class MyCompiler {
 			else  // Invalid mnemonic
 				errorMessages.put(i, String.format("Invalid mnemonic \"%s\"", mnemonic));
 			
-			// Ignore the rest of the line, which is treated as a comment
+			// Ignore rest of line, which is treated as comments
+		}
+		
+		if (savedLabels.size() > 0) {
+			for (String label : savedLabels.keySet()) {
+				errorMessages.put(savedLabels.get(label), String.format("Dangling label \"%s\"", label));
+			}
 		}
 		
 		if (errorMessages.size() > 0)
@@ -74,17 +97,15 @@ public final class MyCompiler {
 	}
 
 
-	private void processLabels(Tokenizer t, int lineNum) {
+	private static Set<String> processLabels(Tokenizer t) {
+		Set<String> result = new HashSet<String>();
 		while (true) {
 			String label = t.nextLabel();
 			if (label == null)
 				break;
-			
-			if (!labels.containsKey(label))
-				labels.put(label, image.length());
-			else
-				errorMessages.put(lineNum, String.format("Duplicate label \"%s\"", label));
+			result.add(label);
 		}
+		return result;
 	}
 	
 	
