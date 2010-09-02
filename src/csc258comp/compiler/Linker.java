@@ -4,15 +4,25 @@ import java.util.HashMap;
 import java.util.Map;
 
 import csc258comp.runner.Executor;
+import csc258comp.runner.Loader;
 import csc258comp.runner.Machine;
 import csc258comp.runner.Program;
 
 
 /**
- * Links some {@link Fragment} objects to create a {@link Program} object.
+ * Links some {@link Fragment} objects to create a {@link Program} object. This class contains just a static method, and is not instantiable.
+ * @see Compiler
+ * @see Loader
  */
 public final class Linker {
 	
+	/**
+	 * Returns a program created from linking the specified fragments.
+	 * @param frags the fragments to link
+	 * @return a program from linking the fragments
+	 * @throws NullPointerException if {@code frags} is {@code null} or if any of its elements are {@code null}
+	 * @throws LinkerException if the linkage cannot be completed
+	 */
 	public static Program link(Iterable<Fragment> frags) {
 		if (frags == null)
 			throw new NullPointerException();

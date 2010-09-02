@@ -15,10 +15,18 @@ import csc258comp.util.IntBuffer;
 
 
 /**
- * Compiles a {@link SourceCode} object to a {@link Fragment} object.
+ * Compiles a {@link SourceCode} object to a {@link Fragment} object. This class contains just a static method, and is not instantiable.
+ * @see Linker
  */
 public final class MyCompiler {
 	
+	/**
+	 * Returns a fragment from compiling the specified source code.
+	 * @param source the source code to compile
+	 * @return a fragment from compiling the source code
+	 * @throws NullPointerException if the {@code source} is {@code null}
+	 * @throws CompilerException if the compilation cannot be completed
+	 */
 	public static Fragment compile(SourceCode source) throws CompilerException {
 		if (source == null)
 			throw new NullPointerException();
