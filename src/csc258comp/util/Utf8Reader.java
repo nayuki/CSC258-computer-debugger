@@ -46,6 +46,7 @@ public final class Utf8Reader extends BufferedReader {
 	
 	
 	
+	@Override
 	public String readLine() throws IOException {
 		String line = super.readLine();
 		if (initialLine && line != null && line.length() >= 1 && line.charAt(0) == '\uFEFF')
@@ -55,11 +56,13 @@ public final class Utf8Reader extends BufferedReader {
 	}
 	
 	
+	@Override
 	public void close() throws IOException {
 		super.close();
 	}
 	
 	
+	@Override
 	public String toString() {
 		if (file != null)
 			return super.toString() + ": " + file.getPath();

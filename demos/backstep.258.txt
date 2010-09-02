@@ -1,0 +1,12 @@
+one: I 1
+x: I 0
+y: I 0
+
+main:
+	LDA y
+	ADD x
+	STA y
+	LDA x
+	ADD one
+	STA x
+	BUN main

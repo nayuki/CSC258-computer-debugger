@@ -10,7 +10,11 @@ import csc258comp.runner.Machine;
 
 final class Controller {
 	
-	private final Machine machine;
+	private final MachineSnapshot initialSnapshot;
+	
+	private MachineSnapshot recentSnapshot;
+	
+	private DebugMachine machine;
 	
 	private final Set<Integer> breakpoints;
 	
@@ -22,9 +26,11 @@ final class Controller {
 	
 	
 	
-	public Controller(Machine m) {
+	public Controller(DebugMachine m) {
 		if (m == null)
 			throw new NullPointerException();
+		initialSnapshot = new MachineSnapshot(m, 0);
+		recentSnapshot = null;
 		machine = m;
 		breakpoints = new HashSet<Integer>();
 		stepCount = 0;
@@ -32,6 +38,11 @@ final class Controller {
 		suspendRequested = false;
 	}
 	
+	
+	
+	public Machine getMachine() {
+		return machine;
+	}
 	
 	
 	public synchronized long getStepCount() {
@@ -63,6 +74,9 @@ final class Controller {
 			if (!machine.isHalted()) {
 				Executor.step(machine);
 				stepCount++;
+				
+				if (stepCount % 30000 == 0)
+					recentSnapshot = new MachineSnapshot(machine, stepCount);
 			}
 		}
 	}
@@ -97,6 +111,24 @@ final class Controller {
 	
 	public void suspend() {
 		suspendRequested = true;
+	}
+	
+	
+	public synchronized void stepBack() {
+		if (stepCount == 0)
+			return;
+		
+		MachineSnapshot snap;
+		if (recentSnapshot != null && recentSnapshot.stepCount <= stepCount - 1)
+			snap = recentSnapshot;
+		else
+			snap = initialSnapshot;
+		
+		machine = snap.machine.clone();
+		long count = stepCount - 1 - snap.stepCount;
+		stepCount = snap.stepCount;
+		for (long i = 0; i < count; i++)
+			step();
 	}
 	
 	

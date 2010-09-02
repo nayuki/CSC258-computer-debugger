@@ -28,7 +28,6 @@ final class RegisterPanel extends JPanel {
 	public final JTextField conditionCode;
 	public final JTextField nextInstruction;
 	
-	private final DebugMachine machine;
 	private final Controller controller;
 	
 	private int oldProgramCounter;
@@ -45,7 +44,6 @@ final class RegisterPanel extends JPanel {
 		if (parent == null)
 			throw new NullPointerException();
 		controller = parent.controller;
-		machine = parent.machine;
 		
 		GridBagConstraints g = new GridBagConstraints();
 		g.anchor = GridBagConstraints.FIRST_LINE_START;
@@ -107,33 +105,37 @@ final class RegisterPanel extends JPanel {
 	// Execution handlers
 	
 	public void updateView() {
-		synchronized (machine) {
-			programCounterChanged(false);
-			accumulatorChanged(false);
-			conditionCodeChanged(false);
+		Machine m = controller.getMachine();
+		synchronized (m) {
+			programCounterChanged(m, false);
+			accumulatorChanged(m, false);
+			conditionCodeChanged(m, false);
 		}
 		stepCountChanged();
 	}
 	
 	
 	public void beginStep() {
-		oldProgramCounter = machine.getProgramCounter();
-		oldAccumulator = machine.getAccumulator();
-		oldConditionCode = machine.getConditionCode();
+		Machine m = controller.getMachine();
+		oldProgramCounter = m.getProgramCounter();
+		oldAccumulator = m.getAccumulator();
+		oldConditionCode = m.getConditionCode();
 	}
 	
 	
 	public void endStep() {
-		programCounterChanged(true);
-		accumulatorChanged(true);
-		conditionCodeChanged(true);
+		Machine m = controller.getMachine();
+		programCounterChanged(m, true);
+		accumulatorChanged(m, true);
+		conditionCodeChanged(m, true);
 		stepCountChanged();
 	}
 	
 	
 	public void beginRun() {
-		oldAccumulator = machine.getAccumulator();
-		oldConditionCode = machine.getConditionCode();
+		Machine m = controller.getMachine();
+		oldAccumulator = m.getAccumulator();
+		oldConditionCode = m.getConditionCode();
 		updateThread = new Thread("CSC258 debugger UI register updater") {
 			public void run() {
 				try {
@@ -147,9 +149,10 @@ final class RegisterPanel extends JPanel {
 					
 					updateThread = null;
 					
-					programCounterChanged(false);
-					accumulatorChanged(false);
-					conditionCodeChanged(false);
+					Machine m = controller.getMachine();
+					programCounterChanged(m, false);
+					accumulatorChanged(m, false);
+					conditionCodeChanged(m, false);
 					stepCountChanged();
 					
 				} catch (InterruptedException e) {
@@ -171,14 +174,14 @@ final class RegisterPanel extends JPanel {
 	
 	// Machine state change handlers
 	
-	public void programCounterChanged(boolean allowChangedBackground) {
-		int newProgramCounter = machine.getProgramCounter();
+	public void programCounterChanged(Machine m, boolean allowChangedBackground) {
+		int newProgramCounter = m.getProgramCounter();
 		programCounter.setText(String.format("%06X", newProgramCounter));
 		setChanged(programCounter, allowChangedBackground && newProgramCounter != (oldProgramCounter + 1));
 		
 		String nextInstText;
 		if (newProgramCounter != Executor.OPSYS_ADDRESS) {
-			int instWord = machine.getMemoryAt(newProgramCounter);
+			int instWord = m.getMemoryAt(newProgramCounter);
 			int opcode = instWord >>> 24;
 			int memAddr = instWord & (Machine.ADDRESS_SPACE_SIZE - 1);
 			String mnemonic = InstructionSet.getMnemonic(opcode);
@@ -193,15 +196,15 @@ final class RegisterPanel extends JPanel {
 	}
 	
 	
-	public void accumulatorChanged(boolean allowChangedBackground) {
-		int newAccumulator = machine.getAccumulator();
+	public void accumulatorChanged(Machine m, boolean allowChangedBackground) {
+		int newAccumulator = m.getAccumulator();
 		accumulator.setText(String.format("%08X", newAccumulator & 0xFFFFFFFFL));
 		setChanged(accumulator, allowChangedBackground && newAccumulator != oldAccumulator);
 	}
 	
 	
-	public void conditionCodeChanged(boolean allowChangedBackground) {
-		boolean newConditionCode = machine.getConditionCode();
+	public void conditionCodeChanged(Machine m, boolean allowChangedBackground) {
+		boolean newConditionCode = m.getConditionCode();
 		conditionCode.setText(newConditionCode ? "1" : "0");
 		setChanged(conditionCode, allowChangedBackground && newConditionCode != oldConditionCode);
 	}

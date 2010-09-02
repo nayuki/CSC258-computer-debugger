@@ -3,23 +3,23 @@ package csc258comp.util;
 import java.util.Arrays;
 
 
-public final class IntBuffer {
+public final class ByteBuffer {
 	
-	private int[] values;
+	private byte[] values;
 	
 	private int length;
 	
 	
 	
-	public IntBuffer() {
+	public ByteBuffer() {
 		this(1);
 	}
 	
 	
-	public IntBuffer(int initCapacity) {
+	public ByteBuffer(int initCapacity) {
 		if (initCapacity <= 0)
 			throw new IllegalArgumentException("Initial capacity must be positive");
-		values = new int[initCapacity];
+		values = new byte[initCapacity];
 	}
 	
 	
@@ -36,21 +36,21 @@ public final class IntBuffer {
 	}
 	
 	
-	public int set(int index, int val) {
+	public int set(int index, byte val) {
 		if (index < 0 || index >= length)
 			throw new IndexOutOfBoundsException();
 		return values[index] = val;
 	}
 	
 	
-	public void append(int val) {
+	public void append(byte val) {
 		ensureCapacity(length + 1);
 		values[length] = val;
 		length++;
 	}
 	
 	
-	public void append(int[] vals) {
+	public void append(byte[] vals) {
 		if (vals == null)
 			throw new NullPointerException();
 		ensureCapacity(length + vals.length);
@@ -59,7 +59,7 @@ public final class IntBuffer {
 	}
 	
 	
-	public int[] toArray() {
+	public byte[] toArray() {
 		return Arrays.copyOf(values, length);
 	}
 	

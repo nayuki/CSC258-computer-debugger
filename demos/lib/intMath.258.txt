@@ -1,0 +1,40 @@
+complement: W 1
+	XOR allBits
+	BIN complement
+
+
+shiftRight1_h40000000: H 40000000
+shiftRight1_temp: W 1
+shiftRight1: W 1
+	STA shiftRight1_temp
+	AND signBit
+	LDA shiftRight1_temp
+	BZE shiftRight1_positive
+	BUN shiftRight1_negative
+shiftRight1_positive:
+	DIV two
+	BIN shiftRight1
+shiftRight1_negative:
+	XOR signBit
+	DIV two
+	IOR shiftRight1_h40000000
+	BIN shiftRight1
+
+
+negate_temp: W 1
+negate: W 1
+	STA negate_temp
+	LDA zero
+	SUB negate_temp
+	BIN negate
+
+
+abs_temp: W 1
+abs: W 1
+	STA abs_temp
+	AND signBit
+	LDA abs_temp
+	BZE abs_ret
+	BSA negate  # Do this iff negative
+abs_ret:
+	BIN abs
