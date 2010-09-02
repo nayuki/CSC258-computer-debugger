@@ -1,4 +1,4 @@
-W 0  # Demonstrates compiler and linker errors. This program is invalid.
+W 0  # Demonstrates compiler and linker errors. This program is invalid and cannot be run.
 
 
 dummy: UND dummy  # Invalid mnemonic

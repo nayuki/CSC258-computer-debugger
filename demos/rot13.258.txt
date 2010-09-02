@@ -1,4 +1,6 @@
 W 0  # Copies the input to the output with ROT-13 encryption applied.
+W 0  # This is a slightly more complicated I/O program.
+W 0  # 
 W 0  # Uses: const
 
 

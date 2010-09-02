@@ -1,4 +1,5 @@
 W 0  # Demonstrates the execution of an illegal opcode.
+W 0  # This demonstrates how the machine implementation behaves in this situation.
 
 
 one: I 1
