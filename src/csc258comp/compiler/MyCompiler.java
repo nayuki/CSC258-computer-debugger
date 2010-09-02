@@ -85,15 +85,18 @@ public final class MyCompiler {
 			// Ignore rest of line, which is treated as comments
 		}
 		
+		// Check for dangling labels
 		if (savedLabels.size() > 0) {
 			for (String label : savedLabels.keySet()) {
 				errorMessages.put(savedLabels.get(label), String.format("Dangling label \"%s\"", label));
 			}
 		}
 		
+		// If there are error messages, then throw an exception and don't return a fragment
 		if (errorMessages.size() > 0)
 			throw new CompilerException(String.format("%d compiler errors", errorMessages.size()), errorMessages, source);
 		
+		// Construct the fragment
 		result = new Fragment(image.toArray(), labels, references, source, srcLineToAddr, addrToSrcLine);
 	}
 
@@ -197,7 +200,7 @@ public final class MyCompiler {
 					return;
 				}
 				
-				if (val.matches("-?[0-9]+")) {  // Address reference
+				if (val.matches("-?[0-9]+")) {  // Numerical address
 					try {
 						int addr = Integer.parseInt(val);
 						if (addr >= 0 && addr < Machine.ADDRESS_SPACE_SIZE) {
