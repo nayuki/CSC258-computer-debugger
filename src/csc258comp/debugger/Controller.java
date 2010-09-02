@@ -117,23 +117,41 @@ final class Controller {
 	public synchronized void stepBack() {
 		if (stepCount == 0)
 			return;
-		
-		MachineSnapshot snap;
-		if (recentSnapshot != null && recentSnapshot.stepCount <= stepCount - 1)
-			snap = recentSnapshot;
 		else
-			snap = initialSnapshot;
-		
-		machine = snap.machine.clone();
-		long count = stepCount - 1 - snap.stepCount;
-		stepCount = snap.stepCount;
-		for (long i = 0; i < count; i++)
-			step();
+			stepTo(stepCount - 1);
 	}
 	
 	
 	public synchronized boolean isRunning() {
 		return isRunning;
+	}
+	
+	
+	private void stepTo(long steps) {
+		if (steps < stepCount) {
+			MachineSnapshot snap = findSnapshot(steps);
+			long count = steps - snap.stepCount;
+			restoreSnapshot(snap);
+			for (long i = 0; i < count; i++)
+				step();
+		} else {
+			while (steps < stepCount)
+				step();
+		}
+	}
+	
+	
+	private MachineSnapshot findSnapshot(long steps) {
+		if (recentSnapshot != null && recentSnapshot.stepCount <= steps)
+			return recentSnapshot;
+		else
+			return initialSnapshot;
+	}
+	
+	
+	private void restoreSnapshot(MachineSnapshot snap) {
+		machine = snap.machine.clone();
+		stepCount = snap.stepCount;
 	}
 	
 }
