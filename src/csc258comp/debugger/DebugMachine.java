@@ -9,7 +9,7 @@ import csc258comp.runner.Machine;
 import csc258comp.runner.Program;
 
 
-public final class DebugMachine implements Machine, Cloneable {
+final class DebugMachine implements Machine, Cloneable {
 	
 	private boolean isHalted;
 	
