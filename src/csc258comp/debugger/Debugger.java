@@ -27,32 +27,31 @@ public final class Debugger {
 	public static void main(String[] args) {
 		// Compile a fragment for each file argument
 		List<Fragment> frags = new ArrayList<Fragment>();
-		for (String arg : args) {
-			File file = new File(arg);
-			try {
-				SourceCode sc = SourceCode.readFile(file);
-				Fragment f;
+		try {
+			for (String arg : args) {
+				File file = new File(arg);
 				try {
-					f = MyCompiler.compile(sc);
-				} catch (OutOfMemoryError e) {
-					System.err.println("Error: Out of memory during compilation");
+					SourceCode sc = SourceCode.readFile(file);
+					Fragment f = MyCompiler.compile(sc);
+					frags.add(f);
+				} catch (FileNotFoundException e) {
+					System.err.printf("File not found: %s%n", file.getPath());
 					System.exit(1);
 					return;
 				}
-				frags.add(f);
-			} catch (CompilerException e) {
-				printCompilerErrors(e.getErrorMessages(), e.getSourceCode());
-				System.exit(1);
-				return;
-			} catch (FileNotFoundException e) {
-				System.err.printf("File not found: %s%n", file);
-				System.exit(1);
-				return;
-			} catch (IOException e) {
-				System.err.println(e.getMessage());
-				System.exit(1);
-				return;
 			}
+		} catch (OutOfMemoryError e) {
+			System.err.println("Error: Out of memory during compilation");
+			System.exit(1);
+			return;
+		} catch (CompilerException e) {
+			printCompilerErrors(e.getErrorMessages(), e.getSourceCode());
+			System.exit(1);
+			return;
+		} catch (IOException e) {
+			System.err.println(e.getMessage());
+			System.exit(1);
+			return;
 		}
 		
 		// Link the fragments together to make a program
