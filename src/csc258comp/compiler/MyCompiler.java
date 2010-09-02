@@ -35,17 +35,17 @@ public final class MyCompiler {
 	
 	
 	
-	private IntBuffer image = new IntBuffer();
+	private final IntBuffer image = new IntBuffer();
 	
-	private Map<String,Integer> labels = new HashMap<String,Integer>();
-	private Map<Integer,String> references = new HashMap<Integer,String>();
+	private final Map<String,Integer> labels = new HashMap<String,Integer>();
+	private final Map<Integer,String> references = new HashMap<Integer,String>();
 	
-	private Map<Integer,Integer> srcLineToAddr = new HashMap<Integer,Integer>();
-	private Map<Integer,Integer> addrToSrcLine = new HashMap<Integer,Integer>();
+	private final Map<Integer,Integer> srcLineToAddr = new HashMap<Integer,Integer>();
+	private final Map<Integer,Integer> addrToSrcLine = new HashMap<Integer,Integer>();
 	
-	private SortedMap<Integer,String> errorMessages = new TreeMap<Integer,String>();
+	private final SortedMap<Integer,String> errorMessages = new TreeMap<Integer,String>();
 	
-	private Fragment result;
+	private final Fragment result;
 	
 	
 	
