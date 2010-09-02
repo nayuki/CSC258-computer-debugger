@@ -13,10 +13,10 @@ import java.util.SortedMap;
 import javax.swing.JFrame;
 
 import csc258comp.compiler.CompilerException;
+import csc258comp.compiler.Fragment;
+import csc258comp.compiler.Linker;
 import csc258comp.compiler.LinkerException;
 import csc258comp.compiler.MyCompiler;
-import csc258comp.compiler.Linker;
-import csc258comp.compiler.Fragment;
 import csc258comp.compiler.SourceCode;
 import csc258comp.compiler.SourceLine;
 import csc258comp.runner.Program;

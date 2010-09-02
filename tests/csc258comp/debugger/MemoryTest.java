@@ -1,6 +1,6 @@
 package csc258comp.debugger;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 import java.util.Map;

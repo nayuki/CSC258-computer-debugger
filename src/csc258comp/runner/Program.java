@@ -2,8 +2,8 @@ package csc258comp.runner;
 
 import java.util.Map;
 
-import csc258comp.compiler.Linker;
 import csc258comp.compiler.Fragment;
+import csc258comp.compiler.Linker;
 import csc258comp.compiler.SourceLine;
 
 
