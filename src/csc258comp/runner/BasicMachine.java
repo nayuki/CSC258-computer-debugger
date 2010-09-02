@@ -121,6 +121,8 @@ public final class BasicMachine implements Machine {
 	
 	@Override
 	public boolean output(int b) throws IOException {
+		if ((b & 0xFF) != b)
+			throw new IllegalArgumentException("Byte value out of range");
 		output.write(b);
 		output.flush();
 		return true;
