@@ -46,7 +46,7 @@ public final class MyCompiler {
 		
 		// Loop over source code lines
 		for (int i = 0; i < source.getLineCount(); i++) {
-			Tokenizer t = new Tokenizer(source.getLineAt(i));
+			LineTokenizer t = new LineTokenizer(source.getLineAt(i));
 			
 			// Consume labels
 			Set<String> linelabels = processLabels(t);
@@ -101,7 +101,7 @@ public final class MyCompiler {
 	}
 
 
-	private static Set<String> processLabels(Tokenizer t) {
+	private static Set<String> processLabels(LineTokenizer t) {
 		Set<String> result = new HashSet<String>();
 		while (true) {
 			String label = t.nextLabel();
@@ -113,7 +113,7 @@ public final class MyCompiler {
 	}
 	
 	
-	private void processInstructionWord(Tokenizer t, String mnemonic, int lineNum) {
+	private void processInstructionWord(LineTokenizer t, String mnemonic, int lineNum) {
 		String ref = t.nextReference();
 		if (ref == null) {
 			errorMessages.put(lineNum, "Reference expected");
@@ -126,7 +126,7 @@ public final class MyCompiler {
 	}
 	
 	
-	private void processDataWord(Tokenizer t, char mnemonic, int lineNum) {
+	private void processDataWord(LineTokenizer t, char mnemonic, int lineNum) {
 		String val = null;
 		if ("IFBHW".indexOf(mnemonic) != -1) {
 			val = t.nextToken();
@@ -283,7 +283,7 @@ public final class MyCompiler {
 	
 	
 	
-	private static class Tokenizer {
+	private static class LineTokenizer {
 		
 		private static Pattern WHITESPACE = Pattern.compile("^[ \t]*");
 		private static Pattern LABEL = Pattern.compile("^([A-Za-z0-9_]+):[ \t]*");
@@ -296,7 +296,7 @@ public final class MyCompiler {
 		private String line;
 		
 		
-		public Tokenizer(String line) {
+		public LineTokenizer(String line) {
 			// Trim leading white space
 			Matcher m = WHITESPACE.matcher(line);
 			if (!m.find())
