@@ -42,11 +42,16 @@ public final class Linker {
 	private Linker(Iterable<Fragment> frags) {
 		errorMessages = new HashMap<SourceLine,String>();
 		
+		// Lay out the fragments in the address space
 		Map<Fragment,Integer> fragmentToOffset = layOutFragments(frags);  // Also, imageSize is set
+		
+		// Gather all the label definitions
 		Map<String,Integer> allLabels = unionLabels(fragmentToOffset, frags);
+		
+		// Build the program image
 		int[] image = resolveAndBuildImage(frags, fragmentToOffset, allLabels, imageSize);
 		
-		// Process debugging info
+		// Generate debugging info
 		Map<SourceLine,Integer> srcLineToAddr = new HashMap<SourceLine,Integer>();
 		Map<Integer,SourceLine> addrToSrcLine = new HashMap<Integer,SourceLine>();
 		for (Fragment f : frags) {
@@ -64,15 +69,20 @@ public final class Linker {
 			}
 		}
 		
+		// If there are error messages, then throw an exception and don't return a program
 		if (errorMessages.size() > 0)
 			throw new LinkerException(String.format("%d linker errors", errorMessages.size()), errorMessages);
 		
+		// Check for label "main"
 		if (!allLabels.containsKey("main"))
 			throw new LinkerException("Label \"main\" not defined");
+		
+		// Construct the program
 		result = new Program(image, allLabels.get("main"), srcLineToAddr, addrToSrcLine);
 	}
 	
 	
+	// Almost pure function - pure except that imageSize is set
 	private Map<Fragment,Integer> layOutFragments(Iterable<Fragment> frags) {
 		Map<Fragment,Integer> fragToOff = new HashMap<Fragment,Integer>();
 		int offset = 0;
@@ -87,6 +97,7 @@ public final class Linker {
 	}
 	
 	
+	// Pure function
 	private Map<String,Integer> unionLabels(Map<Fragment,Integer> fragToOff, Iterable<Fragment> frags) {
 		Map<String,Integer> alllabels = new HashMap<String,Integer>();
 		alllabels.put("opsys", Executor.OPSYS_ADDRESS);
@@ -108,6 +119,7 @@ public final class Linker {
 	}
 	
 	
+	// Pure function
 	private int[] resolveAndBuildImage(Iterable<Fragment> frags, Map<Fragment,Integer> fragToOff, Map<String,Integer> allLabels, int imageSize) {
 		int[] allImage = new int[imageSize];
 		for (Fragment f : frags) {
@@ -118,6 +130,7 @@ public final class Linker {
 	}
 	
 	
+	// Pure function
 	private int[] getImageAndResolveReferences(Fragment f, Map<String,Integer> alllabels) {
 		int[] image = f.getImage();
 		Map<Integer,String> refs = f.getReferences();
