@@ -41,4 +41,6 @@ W -1  # Negative size
 W 16777217  # Size exceeds address space
 
 W 0  # Dangling label
-dangling:
+dangling: thisToo:
+
+dangling_again:
