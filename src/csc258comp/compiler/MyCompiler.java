@@ -27,7 +27,7 @@ public final class MyCompiler {
 	 * @throws NullPointerException if the {@code source} is {@code null}
 	 * @throws CompilerException if the compilation cannot be completed
 	 */
-	public static Fragment compile(SourceCode source) throws CompilerException {
+	public static Fragment compile(SourceCode source) {
 		if (source == null)
 			throw new NullPointerException();
 		return new MyCompiler(source).result;
@@ -49,7 +49,7 @@ public final class MyCompiler {
 	
 	
 	
-	private MyCompiler(SourceCode source) throws CompilerException {
+	private MyCompiler(SourceCode source) {
 		Map<String,Integer> savedLabels = new HashMap<String,Integer>();
 		
 		// Loop over source code lines
