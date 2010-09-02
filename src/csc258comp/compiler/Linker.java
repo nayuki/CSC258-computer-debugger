@@ -31,17 +31,15 @@ public final class Linker {
 	
 	
 	
-	private int imageSize;
+	private int imageSize;  // Set only once, by layOutFragments()
 	
-	private Program result;
+	private final Program result;
 	
-	private Map<SourceLine,String> errorMessages;
+	private final Map<SourceLine,String> errorMessages = new HashMap<SourceLine,String>();
 	
 	
 	
 	private Linker(Iterable<Fragment> frags) {
-		errorMessages = new HashMap<SourceLine,String>();
-		
 		// Lay out the fragments in the address space
 		Map<Fragment,Integer> fragmentToOffset = layOutFragments(frags);  // Also, imageSize is set
 		
