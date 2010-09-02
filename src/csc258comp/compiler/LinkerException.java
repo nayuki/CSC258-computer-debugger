@@ -4,7 +4,7 @@ import java.util.Map;
 
 
 @SuppressWarnings("serial")
-public class LinkerException extends RuntimeException {
+public final class LinkerException extends RuntimeException {
 	
 	private Map<SourceLine,String> errorMessages;
 	

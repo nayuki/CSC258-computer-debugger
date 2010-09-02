@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 
-class SuppressingOutputStream extends OutputStream implements Cloneable {
+final class SuppressingOutputStream extends OutputStream implements Cloneable {
 	
 	private final CountingOutputStream output;
 	

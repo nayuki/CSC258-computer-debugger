@@ -1,7 +1,7 @@
 package csc258comp.compiler;
 
 
-public class SourceLine {
+public final class SourceLine {
 	
 	public final SourceCode sourceCode;
 	
