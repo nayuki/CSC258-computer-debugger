@@ -49,18 +49,20 @@ public final class Executor {
 			int x = m.getAccumulator();
 			int y = m.getMemoryAt(memAddr);
 			int result;
+			boolean cc;
 			switch (op) {
-				case  2:  result = x + y;  m.setConditionCode(result != (long)x + y);  break;
-				case  3:  result = x - y;  m.setConditionCode(result != (long)x - y);  break;
-				case  4:  result = x * y;  m.setConditionCode(result != (long)x * y);  break;
-				case  5:  result = (y != 0 ? x / y : x);  m.setConditionCode(y == 0);  break;
-				case  6:  result = (y != 0 ? x % y : x);  m.setConditionCode(y == 0);  break;
-				case 13:  result = x & y;  m.setConditionCode(result != 0);  break;
-				case 14:  result = x | y;  m.setConditionCode(result != 0);  break;
-				case 15:  result = x ^ y;  m.setConditionCode(result != 0);  break;
+				case  2:  result = x + y;  cc = result != (long)x + y;  break;
+				case  3:  result = x - y;  cc = result != (long)x - y;  break;
+				case  4:  result = x * y;  cc = result != (long)x * y;  break;
+				case  5:  result = (y != 0 ? x / y : x);  cc = y == 0;  break;
+				case  6:  result = (y != 0 ? x % y : x);  cc = y == 0;  break;
+				case 13:  result = x & y;  cc = result != 0;  break;
+				case 14:  result = x | y;  cc = result != 0;  break;
+				case 15:  result = x ^ y;  cc = result != 0;  break;
 				default:  throw new AssertionError();
 			}
 			m.setAccumulator(result);
+			m.setConditionCode(cc);
 			
 		} else if (op >= 7 && op <= 10) {  // FLA, FLS, FLM, FLD
 			float x = Float.intBitsToFloat(m.getAccumulator());
