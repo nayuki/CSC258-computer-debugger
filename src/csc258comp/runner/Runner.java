@@ -19,6 +19,7 @@ import csc258comp.compiler.SourceLine;
 public final class Runner {
 	
 	public static void main(String[] args) throws IOException {
+		// Compile a fragment for each file argument
 		List<Fragment> frags = new ArrayList<Fragment>();
 		for (String arg : args) {
 			try {
@@ -40,6 +41,7 @@ public final class Runner {
 			}
 		}
 		
+		// Link the fragments together to make a program
 		Program p;
 		try {
 			p = Linker.link(frags);
@@ -56,9 +58,11 @@ public final class Runner {
 			return;
 		}
 		
+		// Make the machine and load the program
 		Machine m = new BasicMachine(System.in, System.out);
 		Loader.load(m, p);
 		
+		// Make the machine execute
 		try {
 			while (!m.isHalted()) {
 				Executor.step(m);
@@ -72,7 +76,7 @@ public final class Runner {
 		}
 	}
 	
-
+	
 	private static void printCompilerErrors(SortedMap<Integer,String> msgs, SourceCode sc) {
 		String filename = formatFileName(sc.getFile());
 		for (int line : msgs.keySet()) {

@@ -24,6 +24,7 @@ import csc258comp.runner.Program;
 public final class Debugger {
 	
 	public static void main(String[] args) throws IOException {
+		// Compile a fragment for each file argument
 		List<Fragment> frags = new ArrayList<Fragment>();
 		for (String arg : args) {
 			try {
@@ -45,6 +46,7 @@ public final class Debugger {
 			}
 		}
 		
+		// Link the fragments together to make a program
 		Program p;
 		try {
 			p = Linker.link(frags);
@@ -61,10 +63,12 @@ public final class Debugger {
 			return;
 		}
 		
+		// Make the machine and load the program
 		DebugMachine m = new DebugMachine(System.in, System.out);
 		m.loadProgram(p);
-		final DebugPanel panel = new DebugPanel(m, p);
 		
+		// Build GUI
+		final DebugPanel panel = new DebugPanel(m, p);
 		final JFrame frame = new JFrame("CSC258 Computer Debugger");
 		frame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
