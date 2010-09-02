@@ -75,12 +75,17 @@ public final class Runner {
 			while (!m.isHalted()) {
 				Executor.step(m);
 			}
-		} catch (MachineException e) {
-			System.err.println(e.getMessage());
-			Throwable cause = e.getCause();
-			if (cause != null)
-				cause.printStackTrace();
+		} catch (IllegalOpcodeException e) {
+			System.err.println("Illegal opcode");
 			System.exit(1);
+			return;
+		} catch (MachineIoException e) {
+			System.err.println(e.getMessage());
+			e.getCause().printStackTrace();
+			System.exit(1);
+			return;
+		} catch (MachineException e) {
+			e.printStackTrace();
 		}
 	}
 	
