@@ -92,7 +92,7 @@ public final class BasicMachine implements Machine {
 		if (addr < 0 || addr >= Machine.ADDRESS_SPACE_SIZE)
 			throw new IllegalArgumentException("Address out of bounds");
 		if (addr >= memory.length)
-			throw new RuntimeException("Full memory space currently not supported");
+			throw new UnsupportedOperationException("Full memory space currently not supported");
 		return memory[addr];
 	}
 	
@@ -102,7 +102,7 @@ public final class BasicMachine implements Machine {
 		if (addr < 0 || addr >= Machine.ADDRESS_SPACE_SIZE)
 			throw new IllegalArgumentException("Address out of bounds");
 		if (addr >= memory.length)
-			throw new RuntimeException("Full memory space currently not supported");
+			throw new UnsupportedOperationException("Full memory space currently not supported");
 		memory[addr] = val;
 	}
 	
