@@ -108,6 +108,7 @@ public final class Executor {
 				else
 					nextPc = memAddr;
 			} catch (IOException e) {
+				m.setHalted(true);
 				throw new MachineIoException("Input stream exception", e);
 			}
 			
@@ -118,6 +119,7 @@ public final class Executor {
 				else
 					nextPc = memAddr;
 			} catch (IOException e) {
+				m.setHalted(true);
 				throw new MachineIoException("Output stream exception", e);
 			}
 			
