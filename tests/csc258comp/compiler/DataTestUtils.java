@@ -10,13 +10,18 @@ import java.util.List;
 
 final class DataTestUtils {
 	
+	public static Fragment compile(String code) {
+		List<String> lines = new ArrayList<String>();
+		Collections.addAll(lines, code.split("\n"));
+		
+		SourceCode source = new SourceCode(lines);
+		return MyCompiler.compile(source);
+	}
+	
+	
 	public static void test(String code, int expectedWord) {
 		try {
-			List<String> lines = new ArrayList<String>();
-			Collections.addAll(lines, code.split("\n"));
-			
-			SourceCode source = new SourceCode(lines);
-			Fragment f = MyCompiler.compile(source);
+			Fragment f = compile(code);
 			
 			int addr = f.getLabels().get("d");
 			int word = f.getImage()[addr];

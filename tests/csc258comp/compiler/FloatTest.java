@@ -15,6 +15,12 @@ public final class FloatTest {
 	
 	
 	@Test(expected=CompilerException.class)
+	public void testNoNumber() throws CompilerException {
+		DataTestUtils.testInvalid("F\nF 0");
+	}
+	
+	
+	@Test(expected=CompilerException.class)
 	public void testInvalid() throws CompilerException {
 		DataTestUtils.testInvalid("F abcd");
 	}

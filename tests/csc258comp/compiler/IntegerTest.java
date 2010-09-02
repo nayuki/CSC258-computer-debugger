@@ -37,6 +37,12 @@ public final class IntegerTest {
 	
 	
 	@Test(expected=CompilerException.class)
+	public void testNoNumber() throws CompilerException {
+		DataTestUtils.testInvalid("I\nI 0");
+	}
+	
+	
+	@Test(expected=CompilerException.class)
 	public void testInvalid() throws CompilerException {
 		DataTestUtils.testInvalid("I abcd");
 	}

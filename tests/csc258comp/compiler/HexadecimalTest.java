@@ -27,6 +27,12 @@ public final class HexadecimalTest {
 	
 	
 	@Test(expected=CompilerException.class)
+	public void testNoNumber() throws CompilerException {
+		DataTestUtils.testInvalid("H\nH 0");
+	}
+	
+	
+	@Test(expected=CompilerException.class)
 	public void testInvalid() throws CompilerException {
 		DataTestUtils.testInvalid("H foobar");
 	}

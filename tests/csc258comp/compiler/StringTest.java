@@ -48,6 +48,12 @@ public final class StringTest {
 	
 	
 	@Test(expected=CompilerException.class)
+	public void testNoString() throws CompilerException {
+		DataTestUtils.testInvalid("C\nC 'Test'");
+	}
+	
+	
+	@Test(expected=CompilerException.class)
 	public void testInvalidEscape0() throws CompilerException {
 		DataTestUtils.testInvalid("C '\\a'");
 	}

@@ -26,6 +26,12 @@ public final class BinaryTest {
 	
 	
 	@Test(expected=CompilerException.class)
+	public void testNoNumber() throws CompilerException {
+		DataTestUtils.testInvalid("B\nB 0");
+	}
+	
+	
+	@Test(expected=CompilerException.class)
 	public void testInvalid() throws CompilerException {
 		DataTestUtils.testInvalid("B 201");
 	}
