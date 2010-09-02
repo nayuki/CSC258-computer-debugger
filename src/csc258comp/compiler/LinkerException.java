@@ -10,11 +10,6 @@ public class LinkerException extends RuntimeException {
 	
 	
 	
-	public LinkerException() {
-		super();
-	}
-	
-	
 	public LinkerException(String msg) {
 		super(msg);
 		if (msg == null)

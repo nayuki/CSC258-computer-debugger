@@ -12,11 +12,6 @@ public final class CompilerException extends RuntimeException {
 	
 	
 	
-	public CompilerException() {
-		super();
-	}
-	
-	
 	public CompilerException(String msg) {
 		super(msg);
 		if (msg == null)
