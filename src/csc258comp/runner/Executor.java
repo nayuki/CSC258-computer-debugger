@@ -15,7 +15,9 @@ public final class Executor {
 	/**
 	 * Executes one instruction on the specified machine.
 	 * @param m the machine to execute on
-	 * @throws MachineException if an invalid opcode is encountered or if an I/O exception occurs
+	 * @throws IllegalOpcodeException if an illegal opcode is about to be executed
+	 * @throws MachineIoException if an I/O exception occurs
+	 * @throws NullPointerException if {@code m} is {@code null}
 	 */
 	public static void step(Machine m) {
 		if (m == null)
