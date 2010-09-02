@@ -90,14 +90,19 @@ public final class Executor {
 			int ival = Math.round(fval);
 			m.setAccumulator(ival);
 			
-		} else if (op >= 16 && op <= 19) {  // BUN, BZE, BSA, BIN
-			switch (op) {
-				case 16:  nextPc = memAddr;  break;
-				case 17:  if (!m.getConditionCode()) nextPc = memAddr;  break;
-				case 18:  m.setMemoryAt(memAddr, pc + 1);  nextPc = memAddr + 1;  break;
-				case 19:  nextPc = m.getMemoryAt(memAddr);  break;
-				default:  throw new AssertionError();
-			}
+		} else if (op == 16) {  // BUN
+			nextPc = memAddr;
+			
+		} else if (op == 17) {  // BZE
+			if (!m.getConditionCode())
+				nextPc = memAddr;
+			
+		} else if (op == 18) {  // BSA
+			m.setMemoryAt(memAddr, pc + 1);
+			nextPc = memAddr + 1;
+			
+		} else if (op == 19) {  // BIN
+			nextPc = m.getMemoryAt(memAddr);
 			
 		} else if (op == 20) {  // INP
 			try {
