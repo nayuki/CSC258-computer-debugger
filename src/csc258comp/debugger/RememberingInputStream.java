@@ -6,7 +6,7 @@ import java.io.InputStream;
 import csc258comp.util.ByteBuffer;
 
 
-public final class RememberingInputStream extends InputStream implements Cloneable {
+final class RememberingInputStream extends InputStream implements Cloneable {
 	
 	private InputStream input;
 	
