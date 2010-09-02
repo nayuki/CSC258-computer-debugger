@@ -27,14 +27,8 @@ public final class Executor {
 		if (m.isHalted())
 			return;
 		
-		// Check if halting
-		final int pc = m.getProgramCounter();
-		if (pc == OPSYS_ADDRESS) {
-			m.setHalted(true);
-			return;
-		}
-		
 		// Fetch instruction
+		final int pc = m.getProgramCounter();
 		final int instWord = m.getMemoryAt(pc);
 		final int op = instWord >>> 24;
 		final int memAddr = instWord & (Machine.ADDRESS_SPACE_SIZE - 1);  // The memory address embedded in the instruction word
@@ -134,6 +128,12 @@ public final class Executor {
 		
 		// Set next program counter
 		m.setProgramCounter(nextPc);
+		
+		// Check if halting
+		if (nextPc == OPSYS_ADDRESS) {
+			m.setHalted(true);
+			return;
+		}
 	}
 	
 	
