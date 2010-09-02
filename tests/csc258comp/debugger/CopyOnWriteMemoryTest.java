@@ -13,15 +13,15 @@ import org.junit.Test;
 import csc258comp.runner.Machine;
 
 
-public final class MemoryTest {
+public final class CopyOnWriteMemoryTest {
 	
-	private Memory m;
+	private CopyOnWriteMemory m;
 	
 	
 	
 	@Before
 	public void setUp() {
-		m = new Memory();
+		m = new CopyOnWriteMemory();
 	}
 	
 	

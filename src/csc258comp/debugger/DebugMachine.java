@@ -19,7 +19,7 @@ final class DebugMachine implements Machine, Cloneable {
 	
 	private boolean conditionCode;
 	
-	private Memory memory;
+	private CopyOnWriteMemory memory;
 	
 	private RememberingInputStream input;
 	
@@ -34,7 +34,7 @@ final class DebugMachine implements Machine, Cloneable {
 		programCounter = 0;
 		accumulator = 0;
 		conditionCode = false;
-		memory = new Memory();
+		memory = new CopyOnWriteMemory();
 		input = new RememberingInputStream(in);
 		output = new SuppressingOutputStream(out);
 	}

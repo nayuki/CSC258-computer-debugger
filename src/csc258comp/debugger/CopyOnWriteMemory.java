@@ -5,7 +5,7 @@ import java.util.Arrays;
 import csc258comp.runner.Machine;
 
 
-final class Memory implements Cloneable {
+final class CopyOnWriteMemory implements Cloneable {
 	
 	private int[][] values;
 	
@@ -13,7 +13,7 @@ final class Memory implements Cloneable {
 	
 	
 	
-	public Memory() {
+	public CopyOnWriteMemory() {
 		values = new int[1 << 12][];
 		Arrays.fill(values, new int[1 << 12]);
 		
@@ -51,11 +51,11 @@ final class Memory implements Cloneable {
 	
 	
 	@Override
-	public Memory clone() {
+	public CopyOnWriteMemory clone() {
 		try {
 			Arrays.fill(readOnly, true);
 			
-			Memory copy = (Memory)super.clone();
+			CopyOnWriteMemory copy = (CopyOnWriteMemory)super.clone();
 			copy.values = copy.values.clone();
 			copy.readOnly = copy.readOnly.clone();
 			return copy;
