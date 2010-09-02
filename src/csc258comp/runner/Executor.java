@@ -4,10 +4,13 @@ import java.io.IOException;
 
 
 /**
- * Executes instructions on {@link Machine}s. This implements the behavior of instructions specified in {@link InstructionSet}.
+ * Executes instructions on {@link Machine}s. This implements the behavior of instructions specified in {@link InstructionSet}. This class contains just a static method, and is not instantiable.
  */
 public final class Executor {
 	
+	/**
+	 * The address of {@code opsys}. When a machine reaches this address, the executor halts the machine. This address can be customized as long as program code is not stored near the address.
+	 */
 	public static final int OPSYS_ADDRESS = 0xFF0000;
 	
 	
