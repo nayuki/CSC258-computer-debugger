@@ -105,13 +105,7 @@ public final class DebugMachine implements Machine, Cloneable {
 	
 	@Override
 	public int input() throws IOException {
-		if (input.available() == 0) {
-			try {
-				Thread.sleep(0, 100000);
-			} catch (InterruptedException e) {}
-			return -1;
-		} else
-			return input.read();
+		return input.read();
 	}
 	
 	
