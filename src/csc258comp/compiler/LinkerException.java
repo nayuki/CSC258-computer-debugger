@@ -15,13 +15,17 @@ public class LinkerException extends RuntimeException {
 	}
 	
 	
-	public LinkerException(String message) {
-		super(message);
+	public LinkerException(String msg) {
+		super(msg);
+		if (msg == null)
+			throw new NullPointerException();
 	}
 	
 	
-	public LinkerException(String message, Map<SourceLine,String> errorMessages) {
-		super(message);
+	public LinkerException(String msg, Map<SourceLine,String> errorMessages) {
+		super(msg);
+		if (msg == null || errorMessages == null)
+			throw new NullPointerException();
 		this.errorMessages = errorMessages;
 	}
 	

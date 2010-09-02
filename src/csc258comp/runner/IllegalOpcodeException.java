@@ -11,11 +11,8 @@ public final class IllegalOpcodeException extends MachineException {
 	
 	public IllegalOpcodeException(String msg) {
 		super(msg);
-	}
-	
-	
-	public IllegalOpcodeException(String msg, Throwable cause) {
-		super(msg, cause);
+		if (msg == null)
+			throw new NullPointerException();
 	}
 	
 }

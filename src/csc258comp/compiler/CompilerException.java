@@ -17,13 +17,17 @@ public final class CompilerException extends RuntimeException {
 	}
 	
 	
-	public CompilerException(String message) {
-		super(message);
+	public CompilerException(String msg) {
+		super(msg);
+		if (msg == null)
+			throw new NullPointerException();
 	}
 	
 	
-	public CompilerException(String message, SortedMap<Integer,String> errorMessages, SourceCode sourceCode) {
-		super(message);
+	public CompilerException(String msg, SortedMap<Integer,String> errorMessages, SourceCode sourceCode) {
+		super(msg);
+		if (msg == null || errorMessages == null || sourceCode == null)
+			throw new NullPointerException();
 		this.errorMessages = errorMessages;
 		this.sourceCode = sourceCode;
 	}
