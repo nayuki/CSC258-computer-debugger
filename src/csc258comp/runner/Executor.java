@@ -135,10 +135,8 @@ public final class Executor {
 		m.setProgramCounter(nextPc);
 		
 		// Check if halting
-		if (nextPc == OPSYS_ADDRESS) {
+		if (nextPc == OPSYS_ADDRESS)
 			m.setHalted(true);
-			return;
-		}
 	}
 	
 	
