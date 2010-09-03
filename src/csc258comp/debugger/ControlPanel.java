@@ -42,7 +42,7 @@ final class ControlPanel extends JPanel {
 		step.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				synchronized (controller) {
-					if (controller.isRunning() || parent.machine.isHalted())
+					if (controller.isRunning() || controller.getMachine().isHalted())
 						return;
 					
 					parent.beginStep();
