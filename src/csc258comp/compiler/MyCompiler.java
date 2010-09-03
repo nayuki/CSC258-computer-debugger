@@ -80,8 +80,6 @@ public final class MyCompiler {
 				errorMessages.put(i, "Invalid character");
 				continue;
 			}
-			if (mnemonic.equals(mnemonic.toLowerCase()))  // If mnemonic is all-lowercase, then change it to uppercase
-				mnemonic = mnemonic.toUpperCase();
 			
 			if (InstructionSet.getOpcode(mnemonic) != -1)  // Instruction word
 				processInstructionWord(t, mnemonic, i);
