@@ -25,14 +25,9 @@ public final class StringTest {
 	
 	
 	@Test
-	public void testEscapes() {
-		DataTestUtils.test("d: C '\\''", 0x00000027);
-		DataTestUtils.test("d: C '\\\\'", 0x0000005C);
-		DataTestUtils.test("d: C '\\0'", 0x00000000);
-		DataTestUtils.test("d: C '\\b'", 0x00000008);
-		DataTestUtils.test("d: C '\\n'", 0x0000000A);
-		DataTestUtils.test("d: C '\\r'", 0x0000000D);
-		DataTestUtils.test("d: C '\\t'", 0x00000009);
+	public void testNoEscapes() {
+		DataTestUtils.test("d: C '\\'", 0x0000005C);
+		DataTestUtils.test("d: C '\\\\'", 0x00005C5C);
 	}
 	
 	
@@ -69,24 +64,6 @@ public final class StringTest {
 	@Test(expected=CompilerException.class)
 	public void testUnclosed1() throws CompilerException {
 		DataTestUtils.testInvalid("C '0");
-	}
-	
-	
-	@Test(expected=CompilerException.class)
-	public void testInvalidEscape0() throws CompilerException {
-		DataTestUtils.testInvalid("C '\\a'");
-	}
-	
-	
-	@Test(expected=CompilerException.class)
-	public void testInvalidEscape1() throws CompilerException {
-		DataTestUtils.testInvalid("C '\\f'");
-	}
-	
-	
-	@Test(expected=CompilerException.class)
-	public void testInvalidEscape2() throws CompilerException {
-		DataTestUtils.testInvalid("C '\\v'");
 	}
 	
 	
