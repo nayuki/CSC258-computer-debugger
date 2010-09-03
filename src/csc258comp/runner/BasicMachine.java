@@ -7,6 +7,15 @@ import java.io.OutputStream;
 
 public final class BasicMachine implements Machine {
 	
+	/**
+	 * The amount of memory (in 32-bit words) that is allocated to a machine.
+	 * This number can be defined as anything from 0 (inclusive) (pretty useless) to 2<sup>24</sup> (inclusive) (64 MiB).
+	 * If memory outside of [0, {@code MEMORY_SIZE}) is read from or written to, then an {@link UnsupportedOperationException} is thrown.
+	 */
+	private static final int MEMORY_SIZE = 1 << 16;
+	
+	
+	
 	private boolean isHalted;
 	
 	private int programCounter;
@@ -30,7 +39,7 @@ public final class BasicMachine implements Machine {
 		programCounter = 0;
 		accumulator = 0;
 		conditionCode = false;
-		memory = new int[1 << 16];
+		memory = new int[MEMORY_SIZE];
 		input = in;
 		output = out;
 	}
