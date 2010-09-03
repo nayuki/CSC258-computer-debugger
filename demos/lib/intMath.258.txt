@@ -11,11 +11,9 @@ shiftRight1: W 1
 	LDA shiftRight1_temp
 	BZE shiftRight1_positive
 	BUN shiftRight1_negative
-shiftRight1_positive:
-	DIV two
+shiftRight1_positive: DIV two
 	BIN shiftRight1
-shiftRight1_negative:
-	XOR signBit
+shiftRight1_negative: XOR signBit
 	DIV two
 	IOR shiftRight1_h40000000
 	BIN shiftRight1
@@ -36,5 +34,4 @@ abs: W 1
 	LDA abs_temp
 	BZE abs_ret
 	BSA negate  # Do this iff negative
-abs_ret:
-	BIN abs
+abs_ret: BIN abs

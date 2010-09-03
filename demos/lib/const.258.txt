@@ -22,7 +22,7 @@ byteMask: H 000000FF
 allBits:  H FFFFFFFF  # Same as negOne
 
 W 0  # Character constants
-cNewLine: C '\n'
+cNewLine: H 0A
 cSpace:   C ' '
 cZero:    C '0'
 cUpperA:  C 'A'

@@ -5,20 +5,18 @@ W 0  # Uses: const, printInt, printStr
 
 
 main_strAddr: A main_str 
-main_str:
-	C 'T'
+main_str: C 'T'
 	C 'e'
 	C 's'
 	C 't'
 	C '1'
 	C '2'
 	C '3'
-	C '\n'
-	C '\0'
+	H 0A
+	H 00
 
 
-main:
-	W 0  # Print a string
+main: W 0  # Print a string
 	LDA main_strAddr
 	STA printStr_str
 	BSA printStr

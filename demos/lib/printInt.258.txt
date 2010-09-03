@@ -36,21 +36,17 @@ printInt: W 1
 	AND signBit
 	BZE printInt_positive
 	BUN printInt_negative
-printInt_negative:
-	LDA printInt_cHyphenMinus
+printInt_negative: LDA printInt_cHyphenMinus
 	printInt_out0: OUT printInt_out0
 	BUN printInt_findDivisor
-printInt_positive:
-	LDA zero
+printInt_positive: LDA zero
 	SUB printInt_val
 	STA printInt_val
 	BUN printInt_findDivisor
 	
-printInt_findDivisor:
-	LDA one
+printInt_findDivisor: LDA one
 	STA printInt_divisor
-printInt_divisorLoop:
-	LDA printInt_val
+printInt_divisorLoop: LDA printInt_val
 	DIV printInt_divisor
 	ADD nine
 	AND signBit
@@ -60,8 +56,7 @@ printInt_divisorLoop:
 	STA printInt_divisor
 	BUN printInt_divisorLoop
 	
-printInt_printLoop:
-	LDA printInt_val
+printInt_printLoop: LDA printInt_val
 	DIV printInt_divisor
 	MOD ten
 	STA printInt_temp
@@ -76,7 +71,6 @@ printInt_printLoop:
 	BZE printInt_ret
 	BUN printInt_printLoop
 	
-printInt_ret:
-	LDA cNewLine
+printInt_ret: LDA cNewLine
 	printInt_out2: OUT printInt_out2
 	BIN printInt

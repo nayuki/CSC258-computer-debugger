@@ -25,8 +25,7 @@ F jkl  # Not a floating-point number
 
 C ''  # OK
 C 'abcde'  # String too long
-C '\'\'\'\'\''  # String too long
-C '\a'  # Invalid escape
+C '\\\\\\'  # String too long
 
 
 W 0 # Reference expected:
@@ -40,7 +39,8 @@ W abc  # Invalid size
 W -1  # Negative size
 W 16777217  # Size exceeds address space
 
-W 0  # Dangling label
+W 0  # Dangling labels
 dangling: thisToo:
+W 0
 
 dangling_again:

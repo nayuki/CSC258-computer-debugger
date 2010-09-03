@@ -2,8 +2,7 @@ W 0  # Prints "Hello, world!\n". Standalone program with no dependencies.
 W 0  # This is a simple, short-running, output-only program.
 
 
-msgstr:
-	C 'H'
+msgstr: C 'H'
 	C 'e'
 	C 'l'
 	C 'l'
@@ -16,16 +15,15 @@ msgstr:
 	C 'l'
 	C 'd'
 	C '!'
-	C '\n'
-	C '\0'
+	H 0A
+	H 00
 
 zero: I 0
 one:  I 1
 mask: H 00FFFFFF
 
 
-main:
-	load: LDA msgstr
+main: load: LDA msgstr
 	IOR zero
 	BZE opsys
 	out: OUT out
