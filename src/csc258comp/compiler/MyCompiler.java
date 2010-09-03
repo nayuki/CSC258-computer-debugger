@@ -70,7 +70,7 @@ public final class MyCompiler {
 			// Get mnemonic
 			String mnemonic = t.nextMnemonic();
 			if (mnemonic == null) {
-				errorMessages.put(i, "Invalid character");
+				errorMessages.put(i, "Mnemonic expected");
 				continue;
 			}
 			
