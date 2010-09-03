@@ -293,7 +293,7 @@ public final class MyCompiler {
 	private static class LineTokenizer {
 		
 		private static Pattern WHITESPACE = Pattern.compile("^[ \t]*");
-		private static Pattern LABEL = Pattern.compile("^([A-Za-z0-9_]+):[ \t]*");
+		private static Pattern LABEL = Pattern.compile("^([A-Za-z0-9_]+)[ \t]*:[ \t]*");
 		private static Pattern MNEMONIC = Pattern.compile("^([A-Za-z0-9]+)[ \t]*");
 		private static Pattern REFERENCE = Pattern.compile("^([A-Za-z0-9_]+)");
 		private static Pattern TOKEN = Pattern.compile("^([^ \t]+)[ \t]*");
