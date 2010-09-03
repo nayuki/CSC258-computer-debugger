@@ -190,7 +190,7 @@ final class RegisterPanel extends JPanel {
 			else
 				nextInstText = String.format("Illegal (%02X) %06X", opcode, memAddr);
 		} else {
-			nextInstText = "Halt";
+			nextInstText = "Halted";
 		}
 		nextInstruction.setText(nextInstText);
 	}
