@@ -50,29 +50,22 @@ public final class MyCompiler {
 	
 	
 	private MyCompiler(SourceCode source) {
-		Map<String,Integer> savedLabels = new HashMap<String,Integer>();
-		
 		// Loop over source code lines
 		for (int i = 0; i < source.getLineCount(); i++) {
 			LineTokenizer t = new LineTokenizer(source.getLineAt(i));
-			
-			// Consume labels
-			Set<String> linelabels = processLabels(t);
-			for (String label : linelabels)
-				savedLabels.put(label, i);
 			
 			// Skip if remainder of line is empty
 			if (t.isEmpty())
 				continue;
 			
-			// Process saved labels
-			for (String label : savedLabels.keySet()) {
+			// Process labels
+			Set<String> linelabels = processLabels(t);
+			for (String label : linelabels) {
 				if (!labels.containsKey(label))
 					labels.put(label, image.length());
 				else
-					errorMessages.put(savedLabels.get(label), String.format("Duplicate label \"%s\"", label));
+					errorMessages.put(i, String.format("Duplicate label \"%s\"", label));
 			}
-			savedLabels.clear();
 			
 			// Get mnemonic
 			String mnemonic = t.nextMnemonic();
@@ -89,12 +82,6 @@ public final class MyCompiler {
 				errorMessages.put(i, String.format("Invalid mnemonic \"%s\"", mnemonic));
 			
 			// Ignore rest of line, which is treated as comments
-		}
-		
-		// Check for dangling labels
-		if (savedLabels.size() > 0) {
-			for (String label : savedLabels.keySet())
-				errorMessages.put(savedLabels.get(label), String.format("Dangling label \"%s\"", label));
 		}
 		
 		// If there are error messages, then throw an exception and don't return a fragment
