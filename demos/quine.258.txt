@@ -7,7 +7,7 @@ ten: I 10
 sixteen: I 16
 newLine: H 0A
 char0: C '0'
-upperA: C 'A'
+char7: C '7'
 signBit: H 80000000
 blankLda: H 00000000
 
@@ -198,18 +198,17 @@ header: W 0
 	H 30
 	H 27
 	H 0A
-	H 75
-	H 70
-	H 70
-	H 65
+	H 63
+	H 68
+	H 61
 	H 72
-	H 41
+	H 37
 	H 3A
 	H 20
 	H 43
 	H 20
 	H 27
-	H 41
+	H 37
 	H 27
 	H 0A
 	H 73
@@ -1086,6 +1085,21 @@ footer: W 0
 	H 31
 	H 0A
 	H 70
+	H 41
+	H 44
+	H 5F
+	H 64
+	H 69
+	H 67
+	H 69
+	H 74
+	H 3A
+	H 20
+	H 57
+	H 20
+	H 31
+	H 0A
+	H 70
 	H 72
 	H 69
 	H 6E
@@ -1305,6 +1319,297 @@ footer: W 0
 	H 6E
 	H 0A
 	H 09
+	H 42
+	H 53
+	H 41
+	H 20
+	H 70
+	H 72
+	H 69
+	H 6E
+	H 74
+	H 48
+	H 65
+	H 78
+	H 44
+	H 69
+	H 67
+	H 69
+	H 74
+	H 0A
+	H 09
+	H 4C
+	H 44
+	H 41
+	H 20
+	H 70
+	H 41
+	H 44
+	H 5F
+	H 63
+	H 68
+	H 61
+	H 72
+	H 0A
+	H 09
+	H 4D
+	H 4F
+	H 44
+	H 20
+	H 73
+	H 69
+	H 78
+	H 74
+	H 65
+	H 65
+	H 6E
+	H 0A
+	H 09
+	H 42
+	H 53
+	H 41
+	H 20
+	H 70
+	H 72
+	H 69
+	H 6E
+	H 74
+	H 48
+	H 65
+	H 78
+	H 44
+	H 69
+	H 67
+	H 69
+	H 74
+	H 0A
+	H 09
+	H 4C
+	H 44
+	H 41
+	H 20
+	H 70
+	H 41
+	H 44
+	H 5F
+	H 6C
+	H 64
+	H 61
+	H 0A
+	H 09
+	H 41
+	H 44
+	H 44
+	H 20
+	H 6F
+	H 6E
+	H 65
+	H 0A
+	H 09
+	H 53
+	H 54
+	H 41
+	H 20
+	H 70
+	H 41
+	H 44
+	H 5F
+	H 6C
+	H 64
+	H 61
+	H 0A
+	H 09
+	H 4C
+	H 44
+	H 41
+	H 20
+	H 73
+	H 74
+	H 72
+	H 44
+	H 65
+	H 63
+	H 6C
+	H 4E
+	H 65
+	H 78
+	H 74
+	H 41
+	H 64
+	H 64
+	H 72
+	H 0A
+	H 09
+	H 53
+	H 54
+	H 41
+	H 20
+	H 70
+	H 72
+	H 69
+	H 6E
+	H 74
+	H 5F
+	H 73
+	H 74
+	H 72
+	H 0A
+	H 09
+	H 42
+	H 53
+	H 41
+	H 20
+	H 70
+	H 72
+	H 69
+	H 6E
+	H 74
+	H 0A
+	H 09
+	H 42
+	H 55
+	H 4E
+	H 20
+	H 70
+	H 41
+	H 44
+	H 5F
+	H 6C
+	H 64
+	H 61
+	H 0A
+	H 70
+	H 41
+	H 44
+	H 5F
+	H 65
+	H 6E
+	H 64
+	H 4C
+	H 6F
+	H 6F
+	H 70
+	H 3A
+	H 20
+	H 4C
+	H 44
+	H 41
+	H 20
+	H 73
+	H 74
+	H 72
+	H 44
+	H 65
+	H 63
+	H 6C
+	H 45
+	H 6E
+	H 64
+	H 41
+	H 64
+	H 64
+	H 72
+	H 0A
+	H 09
+	H 53
+	H 54
+	H 41
+	H 20
+	H 70
+	H 72
+	H 69
+	H 6E
+	H 74
+	H 5F
+	H 73
+	H 74
+	H 72
+	H 0A
+	H 09
+	H 42
+	H 53
+	H 41
+	H 20
+	H 70
+	H 72
+	H 69
+	H 6E
+	H 74
+	H 0A
+	H 09
+	H 42
+	H 49
+	H 4E
+	H 20
+	H 70
+	H 72
+	H 69
+	H 6E
+	H 74
+	H 41
+	H 73
+	H 44
+	H 65
+	H 63
+	H 6C
+	H 61
+	H 72
+	H 61
+	H 74
+	H 69
+	H 6F
+	H 6E
+	H 0A
+	H 0A
+	H 0A
+	H 70
+	H 48
+	H 44
+	H 5F
+	H 74
+	H 65
+	H 6D
+	H 70
+	H 3A
+	H 20
+	H 57
+	H 20
+	H 31
+	H 0A
+	H 70
+	H 72
+	H 69
+	H 6E
+	H 74
+	H 48
+	H 65
+	H 78
+	H 44
+	H 69
+	H 67
+	H 69
+	H 74
+	H 3A
+	H 20
+	H 57
+	H 20
+	H 31
+	H 0A
+	H 09
+	H 53
+	H 54
+	H 41
+	H 20
+	H 70
+	H 48
+	H 44
+	H 5F
+	H 74
+	H 65
+	H 6D
+	H 70
+	H 0A
+	H 09
 	H 53
 	H 55
 	H 42
@@ -1327,12 +1632,26 @@ footer: W 0
 	H 74
 	H 0A
 	H 09
+	H 4C
+	H 44
+	H 41
+	H 20
+	H 70
+	H 48
+	H 44
+	H 5F
+	H 74
+	H 65
+	H 6D
+	H 70
+	H 0A
+	H 09
 	H 42
 	H 5A
 	H 45
 	H 20
 	H 70
-	H 41
+	H 48
 	H 44
 	H 5F
 	H 6C
@@ -1341,34 +1660,6 @@ footer: W 0
 	H 74
 	H 65
 	H 72
-	H 30
-	H 0A
-	H 09
-	H 4C
-	H 44
-	H 41
-	H 20
-	H 70
-	H 41
-	H 44
-	H 5F
-	H 63
-	H 68
-	H 61
-	H 72
-	H 0A
-	H 09
-	H 44
-	H 49
-	H 56
-	H 20
-	H 73
-	H 69
-	H 78
-	H 74
-	H 65
-	H 65
-	H 6E
 	H 0A
 	H 09
 	H 41
@@ -1387,16 +1678,15 @@ footer: W 0
 	H 4E
 	H 20
 	H 70
-	H 41
+	H 48
 	H 44
 	H 5F
 	H 6F
 	H 75
 	H 74
-	H 30
 	H 0A
 	H 70
-	H 41
+	H 48
 	H 44
 	H 5F
 	H 6C
@@ -1405,64 +1695,25 @@ footer: W 0
 	H 74
 	H 65
 	H 72
-	H 30
 	H 3A
 	H 20
-	H 4C
-	H 44
 	H 41
+	H 44
+	H 44
 	H 20
-	H 70
-	H 41
-	H 44
-	H 5F
 	H 63
 	H 68
 	H 61
 	H 72
-	H 0A
-	H 09
-	H 44
-	H 49
-	H 56
-	H 20
-	H 73
-	H 69
-	H 78
-	H 74
-	H 65
-	H 65
-	H 6E
-	H 0A
-	H 09
-	H 53
-	H 55
-	H 42
-	H 20
-	H 74
-	H 65
-	H 6E
-	H 0A
-	H 09
-	H 41
-	H 44
-	H 44
-	H 20
-	H 75
-	H 70
-	H 70
-	H 65
-	H 72
-	H 41
+	H 37
 	H 0A
 	H 70
-	H 41
+	H 48
 	H 44
 	H 5F
 	H 6F
 	H 75
 	H 74
-	H 30
 	H 3A
 	H 20
 	H 4F
@@ -1470,391 +1721,31 @@ footer: W 0
 	H 54
 	H 20
 	H 70
-	H 41
+	H 48
 	H 44
 	H 5F
 	H 6F
 	H 75
 	H 74
-	H 30
 	H 0A
 	H 09
-	H 4C
-	H 44
-	H 41
+	H 42
+	H 49
+	H 4E
 	H 20
 	H 70
-	H 41
-	H 44
-	H 5F
-	H 63
-	H 68
-	H 61
 	H 72
-	H 0A
-	H 09
-	H 4D
-	H 4F
-	H 44
-	H 20
-	H 73
 	H 69
+	H 6E
+	H 74
+	H 48
+	H 65
 	H 78
-	H 74
-	H 65
-	H 65
-	H 6E
-	H 0A
-	H 09
-	H 53
-	H 55
-	H 42
-	H 20
-	H 74
-	H 65
-	H 6E
-	H 0A
-	H 09
-	H 41
-	H 4E
 	H 44
-	H 20
-	H 73
 	H 69
 	H 67
-	H 6E
-	H 42
 	H 69
 	H 74
-	H 0A
-	H 09
-	H 42
-	H 5A
-	H 45
-	H 20
-	H 70
-	H 41
-	H 44
-	H 5F
-	H 6C
-	H 65
-	H 74
-	H 74
-	H 65
-	H 72
-	H 31
-	H 0A
-	H 09
-	H 4C
-	H 44
-	H 41
-	H 20
-	H 70
-	H 41
-	H 44
-	H 5F
-	H 63
-	H 68
-	H 61
-	H 72
-	H 0A
-	H 09
-	H 4D
-	H 4F
-	H 44
-	H 20
-	H 73
-	H 69
-	H 78
-	H 74
-	H 65
-	H 65
-	H 6E
-	H 0A
-	H 09
-	H 41
-	H 44
-	H 44
-	H 20
-	H 63
-	H 68
-	H 61
-	H 72
-	H 30
-	H 0A
-	H 09
-	H 42
-	H 55
-	H 4E
-	H 20
-	H 70
-	H 41
-	H 44
-	H 5F
-	H 6F
-	H 75
-	H 74
-	H 31
-	H 0A
-	H 70
-	H 41
-	H 44
-	H 5F
-	H 6C
-	H 65
-	H 74
-	H 74
-	H 65
-	H 72
-	H 31
-	H 3A
-	H 20
-	H 4C
-	H 44
-	H 41
-	H 20
-	H 70
-	H 41
-	H 44
-	H 5F
-	H 63
-	H 68
-	H 61
-	H 72
-	H 0A
-	H 09
-	H 4D
-	H 4F
-	H 44
-	H 20
-	H 73
-	H 69
-	H 78
-	H 74
-	H 65
-	H 65
-	H 6E
-	H 0A
-	H 09
-	H 53
-	H 55
-	H 42
-	H 20
-	H 74
-	H 65
-	H 6E
-	H 0A
-	H 09
-	H 41
-	H 44
-	H 44
-	H 20
-	H 75
-	H 70
-	H 70
-	H 65
-	H 72
-	H 41
-	H 0A
-	H 70
-	H 41
-	H 44
-	H 5F
-	H 6F
-	H 75
-	H 74
-	H 31
-	H 3A
-	H 20
-	H 4F
-	H 55
-	H 54
-	H 20
-	H 70
-	H 41
-	H 44
-	H 5F
-	H 6F
-	H 75
-	H 74
-	H 31
-	H 0A
-	H 09
-	H 4C
-	H 44
-	H 41
-	H 20
-	H 70
-	H 41
-	H 44
-	H 5F
-	H 6C
-	H 64
-	H 61
-	H 0A
-	H 09
-	H 41
-	H 44
-	H 44
-	H 20
-	H 6F
-	H 6E
-	H 65
-	H 0A
-	H 09
-	H 53
-	H 54
-	H 41
-	H 20
-	H 70
-	H 41
-	H 44
-	H 5F
-	H 6C
-	H 64
-	H 61
-	H 0A
-	H 09
-	H 4C
-	H 44
-	H 41
-	H 20
-	H 73
-	H 74
-	H 72
-	H 44
-	H 65
-	H 63
-	H 6C
-	H 4E
-	H 65
-	H 78
-	H 74
-	H 41
-	H 64
-	H 64
-	H 72
-	H 0A
-	H 09
-	H 53
-	H 54
-	H 41
-	H 20
-	H 70
-	H 72
-	H 69
-	H 6E
-	H 74
-	H 5F
-	H 73
-	H 74
-	H 72
-	H 0A
-	H 09
-	H 42
-	H 53
-	H 41
-	H 20
-	H 70
-	H 72
-	H 69
-	H 6E
-	H 74
-	H 0A
-	H 09
-	H 42
-	H 55
-	H 4E
-	H 20
-	H 70
-	H 41
-	H 44
-	H 5F
-	H 6C
-	H 64
-	H 61
-	H 0A
-	H 70
-	H 41
-	H 44
-	H 5F
-	H 65
-	H 6E
-	H 64
-	H 4C
-	H 6F
-	H 6F
-	H 70
-	H 3A
-	H 20
-	H 4C
-	H 44
-	H 41
-	H 20
-	H 73
-	H 74
-	H 72
-	H 44
-	H 65
-	H 63
-	H 6C
-	H 45
-	H 6E
-	H 64
-	H 41
-	H 64
-	H 64
-	H 72
-	H 0A
-	H 09
-	H 53
-	H 54
-	H 41
-	H 20
-	H 70
-	H 72
-	H 69
-	H 6E
-	H 74
-	H 5F
-	H 73
-	H 74
-	H 72
-	H 0A
-	H 09
-	H 42
-	H 53
-	H 41
-	H 20
-	H 70
-	H 72
-	H 69
-	H 6E
-	H 74
-	H 0A
-	H 09
-	H 42
-	H 49
-	H 4E
-	H 20
-	H 70
-	H 72
-	H 69
-	H 6E
-	H 74
-	H 41
-	H 73
-	H 44
-	H 65
-	H 63
-	H 6C
-	H 61
-	H 72
-	H 61
-	H 74
-	H 69
-	H 6F
-	H 6E
 	H 0A
 	H 0A
 	H 0A
@@ -2093,6 +1984,7 @@ main_out: OUT main_out
 pAD_name: W 1
 pAD_str: W 1
 pAD_char: W 1
+pAD_digit: W 1
 printAsDeclaration: W 1
 	LDA pAD_name
 	STA print_str
@@ -2108,32 +2000,10 @@ pAD_lda: W 1
 	BZE pAD_endLoop
 	STA pAD_char
 	DIV sixteen
-	SUB ten
-	AND signBit
-	BZE pAD_letter0
-	LDA pAD_char
-	DIV sixteen
-	ADD char0
-	BUN pAD_out0
-pAD_letter0: LDA pAD_char
-	DIV sixteen
-	SUB ten
-	ADD upperA
-pAD_out0: OUT pAD_out0
+	BSA printHexDigit
 	LDA pAD_char
 	MOD sixteen
-	SUB ten
-	AND signBit
-	BZE pAD_letter1
-	LDA pAD_char
-	MOD sixteen
-	ADD char0
-	BUN pAD_out1
-pAD_letter1: LDA pAD_char
-	MOD sixteen
-	SUB ten
-	ADD upperA
-pAD_out1: OUT pAD_out1
+	BSA printHexDigit
 	LDA pAD_lda
 	ADD one
 	STA pAD_lda
@@ -2145,6 +2015,20 @@ pAD_endLoop: LDA strDeclEndAddr
 	STA print_str
 	BSA print
 	BIN printAsDeclaration
+
+
+pHD_temp: W 1
+printHexDigit: W 1
+	STA pHD_temp
+	SUB ten
+	AND signBit
+	LDA pHD_temp
+	BZE pHD_letter
+	ADD char0
+	BUN pHD_out
+pHD_letter: ADD char7
+pHD_out: OUT pHD_out
+	BIN printHexDigit
 
 
 print_str: W 1
