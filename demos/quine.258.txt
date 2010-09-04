@@ -5,12 +5,9 @@ zero: I 0
 one: I 1
 ten: I 10
 sixteen: I 16
-tab: H 09
 newLine: H 0A
-space: C ' '
 char0: C '0'
 upperA: C 'A'
-upperH: C 'H'
 signBit: H 80000000
 blankLda: H 00000000
 
@@ -174,16 +171,6 @@ header: W 0
 	H 31
 	H 36
 	H 0A
-	H 74
-	H 61
-	H 62
-	H 3A
-	H 20
-	H 48
-	H 20
-	H 30
-	H 39
-	H 0A
 	H 6E
 	H 65
 	H 77
@@ -197,19 +184,6 @@ header: W 0
 	H 20
 	H 30
 	H 41
-	H 0A
-	H 73
-	H 70
-	H 61
-	H 63
-	H 65
-	H 3A
-	H 20
-	H 43
-	H 20
-	H 27
-	H 20
-	H 27
 	H 0A
 	H 63
 	H 68
@@ -236,20 +210,6 @@ header: W 0
 	H 20
 	H 27
 	H 41
-	H 27
-	H 0A
-	H 75
-	H 70
-	H 70
-	H 65
-	H 72
-	H 48
-	H 3A
-	H 20
-	H 43
-	H 20
-	H 27
-	H 48
 	H 27
 	H 0A
 	H 73
