@@ -51,8 +51,8 @@ public final class MyCompiler {
 	
 	private MyCompiler(SourceCode source) {
 		// Loop over source code lines
-		for (int i = 0; i < source.getLineCount(); i++) {
-			LineTokenizer t = new LineTokenizer(source.getLineAt(i));
+		for (int lineNum = 0; lineNum < source.getLineCount(); lineNum++) {
+			LineTokenizer t = new LineTokenizer(source.getLineAt(lineNum));
 			
 			// Skip if remainder of line is empty
 			if (t.isEmpty())
@@ -64,22 +64,22 @@ public final class MyCompiler {
 				if (!labels.containsKey(label))
 					labels.put(label, image.length());
 				else
-					errorMessages.put(i, String.format("Duplicate label \"%s\"", label));
+					errorMessages.put(lineNum, String.format("Duplicate label \"%s\"", label));
 			}
 			
 			// Get mnemonic
 			String mnemonic = t.nextMnemonic();
 			if (mnemonic == null) {
-				errorMessages.put(i, "Mnemonic expected");
+				errorMessages.put(lineNum, "Mnemonic expected");
 				continue;
 			}
 			
 			if (InstructionSet.getOpcode(mnemonic) != -1)  // Instruction word
-				processInstructionWord(t, mnemonic, i);
+				processInstructionWord(t, mnemonic, lineNum);
 			else if (mnemonic.length() == 1 && "IFCBHAW".indexOf(mnemonic) != -1)  // Data word
-				processDataWord(t, mnemonic.charAt(0), i);
+				processDataWord(t, mnemonic.charAt(0), lineNum);
 			else  // Invalid mnemonic
-				errorMessages.put(i, String.format("Invalid mnemonic \"%s\"", mnemonic));
+				errorMessages.put(lineNum, String.format("Invalid mnemonic \"%s\"", mnemonic));
 			
 			// Ignore rest of line, which is treated as comments
 		}
