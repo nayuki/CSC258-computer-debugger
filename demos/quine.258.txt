@@ -1,11 +1,24 @@
 W 0  # A quine, which is a program that prints its own source code.
 W 0  # The structure of the code is like this:
-W 0  #   HEADER_CODE (ending with "print(header)")
-W 0  #     header = "HEADER_CODE"
-W 0  #     footer = "FOOTER_CODE"
-W 0  #     printAsDeclaration("header", header)
-W 0  #     printAsDeclaration("footer", footer)
-W 0  #   FOOTER_CODE (starting with "print(footer)") (defining print() and printAsDeclaration())
+W 0  #   HEADER_CODE {
+W 0  #     define constants
+W 0  #     main:
+W 0  #       print(header)
+W 0  #       goto main_continue
+W 0  #   }
+W 0  #   
+W 0  #   header = "HEADER_CODE"
+W 0  #   footer = "FOOTER_CODE"
+W 0  #   
+W 0  #   FOOTER_CODE {
+W 0  #     main_continue:
+W 0  #       printAsDeclaration("header", header)
+W 0  #       printAsDeclaration("footer", footer)
+W 0  #       print(footer)
+W 0  #       halt
+W 0  #     printAsDeclaration(name, str) { ... }
+W 0  #     print(str) { ... }
+W 0  #   }
 
 
 zero: I 0
@@ -201,20 +214,66 @@ header: W 0
 	H 44
 	H 45
 	H 20
-	H 28
-	H 65
-	H 6E
+	H 7B
+	H 0A
+	H 57
+	H 20
+	H 30
+	H 20
+	H 20
+	H 23
+	H 20
+	H 20
+	H 20
+	H 20
+	H 20
 	H 64
+	H 65
+	H 66
 	H 69
 	H 6E
-	H 67
+	H 65
 	H 20
-	H 77
-	H 69
+	H 63
+	H 6F
+	H 6E
+	H 73
 	H 74
-	H 68
+	H 61
+	H 6E
+	H 74
+	H 73
+	H 0A
+	H 57
 	H 20
-	H 22
+	H 30
+	H 20
+	H 20
+	H 23
+	H 20
+	H 20
+	H 20
+	H 20
+	H 20
+	H 6D
+	H 61
+	H 69
+	H 6E
+	H 3A
+	H 0A
+	H 57
+	H 20
+	H 30
+	H 20
+	H 20
+	H 23
+	H 20
+	H 20
+	H 20
+	H 20
+	H 20
+	H 20
+	H 20
 	H 70
 	H 72
 	H 69
@@ -228,8 +287,6 @@ header: W 0
 	H 65
 	H 72
 	H 29
-	H 22
-	H 29
 	H 0A
 	H 57
 	H 20
@@ -239,6 +296,57 @@ header: W 0
 	H 23
 	H 20
 	H 20
+	H 20
+	H 20
+	H 20
+	H 20
+	H 20
+	H 67
+	H 6F
+	H 74
+	H 6F
+	H 20
+	H 6D
+	H 61
+	H 69
+	H 6E
+	H 5F
+	H 63
+	H 6F
+	H 6E
+	H 74
+	H 69
+	H 6E
+	H 75
+	H 65
+	H 0A
+	H 57
+	H 20
+	H 30
+	H 20
+	H 20
+	H 23
+	H 20
+	H 20
+	H 20
+	H 7D
+	H 0A
+	H 57
+	H 20
+	H 30
+	H 20
+	H 20
+	H 23
+	H 20
+	H 20
+	H 20
+	H 0A
+	H 57
+	H 20
+	H 30
+	H 20
+	H 20
+	H 23
 	H 20
 	H 20
 	H 20
@@ -274,8 +382,6 @@ header: W 0
 	H 20
 	H 20
 	H 20
-	H 20
-	H 20
 	H 66
 	H 6F
 	H 6F
@@ -308,92 +414,6 @@ header: W 0
 	H 20
 	H 20
 	H 20
-	H 20
-	H 20
-	H 70
-	H 72
-	H 69
-	H 6E
-	H 74
-	H 41
-	H 73
-	H 44
-	H 65
-	H 63
-	H 6C
-	H 61
-	H 72
-	H 61
-	H 74
-	H 69
-	H 6F
-	H 6E
-	H 28
-	H 22
-	H 68
-	H 65
-	H 61
-	H 64
-	H 65
-	H 72
-	H 22
-	H 2C
-	H 20
-	H 68
-	H 65
-	H 61
-	H 64
-	H 65
-	H 72
-	H 29
-	H 0A
-	H 57
-	H 20
-	H 30
-	H 20
-	H 20
-	H 23
-	H 20
-	H 20
-	H 20
-	H 20
-	H 20
-	H 70
-	H 72
-	H 69
-	H 6E
-	H 74
-	H 41
-	H 73
-	H 44
-	H 65
-	H 63
-	H 6C
-	H 61
-	H 72
-	H 61
-	H 74
-	H 69
-	H 6F
-	H 6E
-	H 28
-	H 22
-	H 66
-	H 6F
-	H 6F
-	H 74
-	H 65
-	H 72
-	H 22
-	H 2C
-	H 20
-	H 66
-	H 6F
-	H 6F
-	H 74
-	H 65
-	H 72
-	H 29
 	H 0A
 	H 57
 	H 20
@@ -416,59 +436,46 @@ header: W 0
 	H 44
 	H 45
 	H 20
-	H 28
-	H 73
-	H 74
+	H 7B
+	H 0A
+	H 57
+	H 20
+	H 30
+	H 20
+	H 20
+	H 23
+	H 20
+	H 20
+	H 20
+	H 20
+	H 20
+	H 6D
 	H 61
-	H 72
-	H 74
 	H 69
 	H 6E
-	H 67
-	H 20
-	H 77
-	H 69
-	H 74
-	H 68
-	H 20
-	H 22
-	H 70
-	H 72
-	H 69
-	H 6E
-	H 74
-	H 28
-	H 66
+	H 5F
+	H 63
 	H 6F
-	H 6F
-	H 74
-	H 65
-	H 72
-	H 29
-	H 22
-	H 29
-	H 20
-	H 28
-	H 64
-	H 65
-	H 66
-	H 69
-	H 6E
-	H 69
-	H 6E
-	H 67
-	H 20
-	H 70
-	H 72
-	H 69
 	H 6E
 	H 74
-	H 28
-	H 29
-	H 20
-	H 61
+	H 69
 	H 6E
-	H 64
+	H 75
+	H 65
+	H 3A
+	H 0A
+	H 57
+	H 20
+	H 30
+	H 20
+	H 20
+	H 23
+	H 20
+	H 20
+	H 20
+	H 20
+	H 20
+	H 20
 	H 20
 	H 70
 	H 72
@@ -489,8 +496,208 @@ header: W 0
 	H 6F
 	H 6E
 	H 28
+	H 22
+	H 68
+	H 65
+	H 61
+	H 64
+	H 65
+	H 72
+	H 22
+	H 2C
+	H 20
+	H 68
+	H 65
+	H 61
+	H 64
+	H 65
+	H 72
 	H 29
+	H 0A
+	H 57
+	H 20
+	H 30
+	H 20
+	H 20
+	H 23
+	H 20
+	H 20
+	H 20
+	H 20
+	H 20
+	H 20
+	H 20
+	H 70
+	H 72
+	H 69
+	H 6E
+	H 74
+	H 41
+	H 73
+	H 44
+	H 65
+	H 63
+	H 6C
+	H 61
+	H 72
+	H 61
+	H 74
+	H 69
+	H 6F
+	H 6E
+	H 28
+	H 22
+	H 66
+	H 6F
+	H 6F
+	H 74
+	H 65
+	H 72
+	H 22
+	H 2C
+	H 20
+	H 66
+	H 6F
+	H 6F
+	H 74
+	H 65
+	H 72
 	H 29
+	H 0A
+	H 57
+	H 20
+	H 30
+	H 20
+	H 20
+	H 23
+	H 20
+	H 20
+	H 20
+	H 20
+	H 20
+	H 20
+	H 20
+	H 70
+	H 72
+	H 69
+	H 6E
+	H 74
+	H 28
+	H 66
+	H 6F
+	H 6F
+	H 74
+	H 65
+	H 72
+	H 29
+	H 0A
+	H 57
+	H 20
+	H 30
+	H 20
+	H 20
+	H 23
+	H 20
+	H 20
+	H 20
+	H 20
+	H 20
+	H 20
+	H 20
+	H 68
+	H 61
+	H 6C
+	H 74
+	H 0A
+	H 57
+	H 20
+	H 30
+	H 20
+	H 20
+	H 23
+	H 20
+	H 20
+	H 20
+	H 20
+	H 20
+	H 70
+	H 72
+	H 69
+	H 6E
+	H 74
+	H 41
+	H 73
+	H 44
+	H 65
+	H 63
+	H 6C
+	H 61
+	H 72
+	H 61
+	H 74
+	H 69
+	H 6F
+	H 6E
+	H 28
+	H 6E
+	H 61
+	H 6D
+	H 65
+	H 2C
+	H 20
+	H 73
+	H 74
+	H 72
+	H 29
+	H 20
+	H 7B
+	H 20
+	H 2E
+	H 2E
+	H 2E
+	H 20
+	H 7D
+	H 0A
+	H 57
+	H 20
+	H 30
+	H 20
+	H 20
+	H 23
+	H 20
+	H 20
+	H 20
+	H 20
+	H 20
+	H 70
+	H 72
+	H 69
+	H 6E
+	H 74
+	H 28
+	H 73
+	H 74
+	H 72
+	H 29
+	H 20
+	H 7B
+	H 20
+	H 2E
+	H 2E
+	H 2E
+	H 20
+	H 7D
+	H 0A
+	H 57
+	H 20
+	H 30
+	H 20
+	H 20
+	H 23
+	H 20
+	H 20
+	H 20
+	H 7D
 	H 0A
 	H 0A
 	H 0A
