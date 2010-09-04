@@ -53,13 +53,13 @@ public final class MyCompiler {
 		Map<String,Integer> savedLabels = new HashMap<String,Integer>();
 		
 		// Loop over source code lines
-		for (int i = 0; i < source.getLineCount(); i++) {
-			LineTokenizer t = new LineTokenizer(source.getLineAt(i));
+		for (int lineNum = 0; lineNum < source.getLineCount(); lineNum++) {
+			LineTokenizer t = new LineTokenizer(source.getLineAt(lineNum));
 			
 			// Consume labels
 			Set<String> linelabels = processLabels(t);
 			for (String label : linelabels)
-				savedLabels.put(label, i);
+				savedLabels.put(label, lineNum);
 			
 			// Skip if remainder of line is empty
 			if (t.isEmpty())
@@ -77,18 +77,18 @@ public final class MyCompiler {
 			// Get mnemonic
 			String mnemonic = t.nextMnemonic();
 			if (mnemonic == null) {
-				errorMessages.put(i, "Invalid character");
+				errorMessages.put(lineNum, "Invalid character");
 				continue;
 			}
 			if (mnemonic.equals(mnemonic.toLowerCase()))  // If mnemonic is all-lowercase, then change it to uppercase
 				mnemonic = mnemonic.toUpperCase();
 			
 			if (InstructionSet.getOpcode(mnemonic) != -1)  // Instruction word
-				processInstructionWord(t, mnemonic, i);
+				processInstructionWord(t, mnemonic, lineNum);
 			else if (mnemonic.length() == 1 && "IFCBHAW".indexOf(mnemonic) != -1)  // Data word
-				processDataWord(t, mnemonic.charAt(0), i);
+				processDataWord(t, mnemonic.charAt(0), lineNum);
 			else  // Invalid mnemonic
-				errorMessages.put(i, String.format("Invalid mnemonic \"%s\"", mnemonic));
+				errorMessages.put(lineNum, String.format("Invalid mnemonic \"%s\"", mnemonic));
 			
 			// Ignore rest of line, which is treated as comments
 		}
