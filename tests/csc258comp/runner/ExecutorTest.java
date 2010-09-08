@@ -121,6 +121,71 @@ public final class ExecutorTest {
 	}
 	
 	
+	@Test
+	public void testDiv() {
+		m.setAccumulator(15);
+		m.setMemoryAt(1, 5);  // Data
+		m.setMemoryAt(0, 0x05000001);  // Instruction
+		Executor.step(m);
+		assertEquals(1, m.getProgramCounter());
+		assertEquals(3, m.getAccumulator());
+		assertFalse(m.getConditionCode());
+		assertFalse(m.isHalted());
+	}
+	
+	
+	@Test
+	public void testDivByZero() {
+		m.setAccumulator(4);
+		m.setMemoryAt(1, 0);  // Data
+		m.setMemoryAt(0, 0x05000001);  // Instruction
+		Executor.step(m);
+		assertEquals(1, m.getProgramCounter());
+		assertEquals(4, m.getAccumulator());
+		assertTrue(m.getConditionCode());
+		assertFalse(m.isHalted());
+	}
+	
+	
+	@Test
+	public void testDivOverflow() {
+		m.setAccumulator(0x80000000);
+		m.setMemoryAt(1, -1);  // Data
+		m.setMemoryAt(0, 0x05000001);  // Instruction
+		Executor.step(m);
+		assertEquals(1, m.getProgramCounter());
+		assertEquals(0x80000000, m.getAccumulator());
+		assertFalse(m.getConditionCode());
+		assertFalse(m.isHalted());
+	}
+	
+	
+	@Test
+	public void testMod() {
+		m.setAccumulator(8);
+		m.setMemoryAt(1, 3);  // Data
+		m.setMemoryAt(0, 0x06000001);  // Instruction
+		Executor.step(m);
+		assertEquals(1, m.getProgramCounter());
+		assertEquals(2, m.getAccumulator());
+		assertFalse(m.getConditionCode());
+		assertFalse(m.isHalted());
+	}
+	
+	
+	@Test
+	public void testModByZero() {
+		m.setAccumulator(2);
+		m.setMemoryAt(1, 0);  // Data
+		m.setMemoryAt(0, 0x06000001);  // Instruction
+		Executor.step(m);
+		assertEquals(1, m.getProgramCounter());
+		assertEquals(2, m.getAccumulator());
+		assertTrue(m.getConditionCode());
+		assertFalse(m.isHalted());
+	}
+	
+	
 	
 	@After
 	public void tearDown() {
