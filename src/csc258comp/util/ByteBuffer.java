@@ -66,7 +66,7 @@ public final class ByteBuffer {
 	
 	@Override
 	public String toString() {
-		return String.format("%s (length=%d)", super.toString(), length); 
+		return String.format("%s (length=%d)", super.toString(), length);
 	}
 	
 	
