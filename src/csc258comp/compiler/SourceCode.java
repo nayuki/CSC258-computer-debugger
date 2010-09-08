@@ -12,11 +12,17 @@ import csc258comp.util.Utf8Reader;
 
 
 /**
- * Represents a list of string lines, possibly associated with a file. Immutable.
+ * Represents a list of string lines, associated with a file (possibly null). Immutable.
  * @see MyCompiler
  */
 public final class SourceCode implements Iterable<String> {
 	
+	/**
+	 * Returns a source code object constructed from the lines of the contents of the specified file. The file associated with the source code is set to the specified file.
+	 * @param file the file to read
+	 * @return a source code object containing the lines of the file
+	 * @throws IOException if an I/O exception occurs
+	 */
 	public static SourceCode readFile(File file) throws IOException {
 		if (file == null)
 			throw new NullPointerException();
@@ -44,11 +50,21 @@ public final class SourceCode implements Iterable<String> {
 	
 	
 	
+	/**
+	 * Constructs a source code from the specified list of lines. The file is set to {@code null}.
+	 * @param lines
+	 */
 	public SourceCode(List<String> lines) {
 		this(null, lines);
 	}
 	
 	
+	/**
+	 * Constructs a source code from the specified list of lines and the specified file. The file can be {@code null}.
+	 * @param file the file associated with the source code
+	 * @param lines the list of lines of source code
+	 * @throws NullPointerException if {@code lines} is {@code null}
+	 */
 	public SourceCode(File file, List<String> lines) {
 		if (lines == null)
 			throw new NullPointerException();
@@ -58,27 +74,48 @@ public final class SourceCode implements Iterable<String> {
 	
 	
 	
+	/**
+	 * Returns the file associated with this source code, possibly {@code null}.
+	 * @return the file associated with this source code
+	 */
 	public File getFile() {
 		return file;
 	}
 	
 	
+	/**
+	 * Returns the number of lines this source code has, a non-negative integer.
+	 * @return the number of lines this source code has
+	 */
 	public int getLineCount() {
 		return lines.size();
 	}
 	
 	
+	/**
+	 * Returns the specified line of source code (0-based indexing).
+	 * @param row the line to get (0-based)
+	 * @return the specified line of source code
+	 */
 	public String getLineAt(int row) {
 		return lines.get(row);
 	}
 	
 	
+	/**
+	 * Returns a new iterator over the lines of source code
+	 * @return a new iterator over the lines of source code
+	 */
 	@Override
 	public Iterator<String> iterator() {
 		return lines.iterator();
 	}
 	
 	
+	/**
+	 * Returns a string representation of this source code object. The format is subject to change.
+	 * @return a string representation of this source code object
+	 */
 	@Override
 	public String toString() {
 		if (file != null)
