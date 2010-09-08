@@ -36,13 +36,14 @@ public final class Fragment {
 		this.labels = Collections.unmodifiableMap(labels);
 		this.references = Collections.unmodifiableMap(references);
 		
-		if (source != null) {
+		if (source != null) {  // Debugging information supplied
 			if (srcLineToAddr == null || addrToSrcLine == null)
 				throw new NullPointerException();
 			sourceCode = source;
 			sourceLineToAddress = Collections.unmodifiableMap(srcLineToAddr);
 			addressToSourceLine = Collections.unmodifiableMap(addrToSrcLine);
-		} else {
+			
+		} else {  // No debugging information supplied
 			if (srcLineToAddr != null || addrToSrcLine != null)
 				throw new IllegalArgumentException();
 			sourceCode = null;
