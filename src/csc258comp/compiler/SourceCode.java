@@ -51,8 +51,21 @@ public final class SourceCode implements Iterable<String> {
 	
 	
 	/**
+	 * Constructs a source code from the specified string, which is split into a list of lines. The file is set to {@code null}.
+	 * @param str the string representing the source code
+	 */
+	public SourceCode(String str) {
+		String[] temp = str.split("(\r\n|\r|\n)");
+		lines = new ArrayList<String>();
+		Collections.addAll(lines, temp);
+		file = null;
+	}
+	
+	
+	/**
 	 * Constructs a source code from the specified list of lines. The file is set to {@code null}.
-	 * @param lines
+	 * @param lines the list of lines of source code
+	 * @throws NullPointerException if {@code lines} is {@code null}
 	 */
 	public SourceCode(List<String> lines) {
 		this(null, lines);
