@@ -40,6 +40,11 @@ Developer features:
 Run javac on every .java file. Or better yet, import the project into an IDE
 like Eclipse or NetBeans.
 
+On Unix, you can also perform these commands in a shell:
+  cd /...your path to.../csc258
+  mkdir bin
+  javac -d bin $(find src -name "*.java" -print)
+
 
 == Running ==
 
