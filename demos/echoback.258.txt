@@ -2,7 +2,6 @@ W 0  # Copies the input to the output, effectively echoing it back.
 W 0  # This is a very simple I/O program.
 
 
-main:
-inp: INP inp
+main: inp: INP inp
 out: OUT out
 	BUN main

@@ -8,7 +8,7 @@ W 0  #   strAddr: A str
 W 0  #   str:
 W 0  #     C 'H'
 W 0  #     C 'W'
-W 0  #     C '\0'
+W 0  #     H 00
 W 0  #   LDA strAddr
 W 0  #   STA printStr_str
 W 0  #   BSA printStr
@@ -27,5 +27,4 @@ printStr_out: OUT printStr_out
 	ADD one
 	STA printStr_load
 	BUN printStr_load
-printStr_ret:
-	BIN printStr
+printStr_ret: BIN printStr

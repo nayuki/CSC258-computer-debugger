@@ -50,38 +50,29 @@ public final class MyCompiler {
 	
 	
 	private MyCompiler(SourceCode source) {
-		Map<String,Integer> savedLabels = new HashMap<String,Integer>();
-		
 		// Loop over source code lines
 		for (int lineNum = 0; lineNum < source.getLineCount(); lineNum++) {
 			LineTokenizer t = new LineTokenizer(source.getLineAt(lineNum));
-			
-			// Consume labels
-			Set<String> linelabels = processLabels(t);
-			for (String label : linelabels)
-				savedLabels.put(label, lineNum);
 			
 			// Skip if remainder of line is empty
 			if (t.isEmpty())
 				continue;
 			
-			// Process saved labels
-			for (String label : savedLabels.keySet()) {
+			// Process labels
+			Set<String> linelabels = processLabels(t);
+			for (String label : linelabels) {
 				if (!labels.containsKey(label))
 					labels.put(label, image.length());
 				else
-					errorMessages.put(savedLabels.get(label), String.format("Duplicate label \"%s\"", label));
+					errorMessages.put(lineNum, String.format("Duplicate label \"%s\"", label));
 			}
-			savedLabels.clear();
 			
 			// Get mnemonic
 			String mnemonic = t.nextMnemonic();
 			if (mnemonic == null) {
-				errorMessages.put(lineNum, "Invalid character");
+				errorMessages.put(lineNum, "Mnemonic expected");
 				continue;
 			}
-			if (mnemonic.equals(mnemonic.toLowerCase()))  // If mnemonic is all-lowercase, then change it to uppercase
-				mnemonic = mnemonic.toUpperCase();
 			
 			if (InstructionSet.getOpcode(mnemonic) != -1)  // Instruction word
 				processInstructionWord(t, mnemonic, lineNum);
@@ -91,12 +82,6 @@ public final class MyCompiler {
 				errorMessages.put(lineNum, String.format("Invalid mnemonic \"%s\"", mnemonic));
 			
 			// Ignore rest of line, which is treated as comments
-		}
-		
-		// Check for dangling labels
-		if (savedLabels.size() > 0) {
-			for (String label : savedLabels.keySet())
-				errorMessages.put(savedLabels.get(label), String.format("Dangling label \"%s\"", label));
 		}
 		
 		// If there are error messages, then throw an exception and don't return a fragment
@@ -263,23 +248,6 @@ public final class MyCompiler {
 			char c = str.charAt(i);
 			if (c >= 0x80)
 				throw new IllegalArgumentException(String.format("Non-ASCII character U+%X", c));
-			if (c == '\\') {
-				i++;
-				if (i == str.length())
-					throw new IllegalArgumentException("Invalid escape");
-				c = str.charAt(i);
-				switch (c) {
-					case '0':  c = '\0';  break;
-					case 'b':  c = '\b';  break;
-					case 'n':  c = '\n';  break;
-					case 'r':  c = '\r';  break;
-					case 't':  c = '\t';  break;
-					case '\\':  break;
-					case '\'':  break;
-					default:
-						throw new IllegalArgumentException(String.format("Invalid escape '\\%c'", c));
-				}
-			}
 			if (count == 4)
 				throw new IllegalArgumentException(String.format("String '%s' too long", str));
 			result |= c << (count * 8);
@@ -293,11 +261,11 @@ public final class MyCompiler {
 	private static class LineTokenizer {
 		
 		private static Pattern WHITESPACE = Pattern.compile("^[ \t]*");
-		private static Pattern LABEL = Pattern.compile("^([A-Za-z0-9_]+):[ \t]*");
+		private static Pattern LABEL = Pattern.compile("^([A-Za-z0-9_]+)[ \t]*:[ \t]*");
 		private static Pattern MNEMONIC = Pattern.compile("^([A-Za-z0-9]+)[ \t]*");
 		private static Pattern REFERENCE = Pattern.compile("^([A-Za-z0-9_]+)");
 		private static Pattern TOKEN = Pattern.compile("^([^ \t]+)[ \t]*");
-		private static Pattern STRING = Pattern.compile("^'(([^'\\\\]|\\\\.)*)'");
+		private static Pattern STRING = Pattern.compile("^'([^']*)'");
 		
 		
 		private String line;

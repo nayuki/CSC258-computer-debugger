@@ -4,8 +4,7 @@ W 0  # This demonstrates how the machine implementation behaves in this situatio
 
 one: I 1
 
-main:
-	LDA one
+main: LDA one
 	ADD one
 	H BF000123  # Illegal opcode
 	ADD one

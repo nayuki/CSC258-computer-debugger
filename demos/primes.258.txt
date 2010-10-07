@@ -5,16 +5,14 @@ W 0  # Uses: const, printInt
 
 
 main_i: I 2
-main:
-	LDA main_i
+main: LDA main_i
 	STA isPrime_val
 	BSA isPrime
 	BZE main_next
 	LDA main_i
 	STA printInt_val
 	BSA printInt
-main_next:
-	LDA main_i
+main_next: LDA main_i
 	ADD one
 	STA main_i
 	AND signBit
@@ -27,15 +25,13 @@ isPrime_i: W 1
 isPrime: W 1
 	LDA two
 	STA isPrime_i
-isPrime_loop:
-	LDA isPrime_val
+isPrime_loop: LDA isPrime_val
 	DIV isPrime_i
 	SUB isPrime_i
 	AND signBit
 	BZE isPrime_continue
 	BUN isPrime_isPrime
-isPrime_continue:
-	LDA isPrime_val
+isPrime_continue: LDA isPrime_val
 	MOD isPrime_i
 	IOR zero
 	BZE isPrime_ret
@@ -43,8 +39,6 @@ isPrime_continue:
 	ADD one
 	STA isPrime_i
 	BUN isPrime_loop
-isPrime_isPrime:
-	LDA one
+isPrime_isPrime: LDA one
 	IOR one
-isPrime_ret:
-	BIN isPrime
+isPrime_ret: BIN isPrime
