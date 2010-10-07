@@ -70,8 +70,7 @@ headerAddr: A header
 footerAddr: A footer
 
 
-main:
-	LDA headerAddr
+main: LDA headerAddr
 	STA print_str
 	BSA print
 	BUN main_continue
@@ -1269,8 +1268,7 @@ header: W 0
 	H 69
 	H 6E
 	H 3A
-	H 0A
-	H 09
+	H 20
 	H 4C
 	H 44
 	H 41
@@ -1352,8 +1350,7 @@ footer: W 0
 	H 75
 	H 65
 	H 3A
-	H 0A
-	H 09
+	H 20
 	H 4C
 	H 44
 	H 41
@@ -2535,8 +2532,7 @@ footer: W 0
 	H 00
 
 
-main_continue:
-	LDA strHeaderAddr
+main_continue: LDA strHeaderAddr
 	STA pAD_name
 	LDA headerAddr
 	STA pAD_str
