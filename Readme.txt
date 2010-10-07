@@ -6,10 +6,11 @@ The CSC258 computer is a hypothetical machine created by Eric Hehner at the
 University of Toronto. Officially, its behavior and assembly language syntax are
 specified.
 
-This package contains a rich set of software tools and sample programs for the
-CSC258 computer. It was developed from scratch by Nayuki Minase in 2010, and is
-licensed under the MIT License (see below) (open source). The tools are written
-in Java (version 1.6 or above).
+This package is an independent, unofficial implementation of the CSC258
+computer, containing a rich set of software tools and sample programs. It was
+developed from scratch by Nayuki Minase in 2010, and is licensed under the MIT
+License (open source) (see below). The tools are written in Java, requiring
+version 1.6 or above.
 
 
 == Features ==
@@ -18,9 +19,11 @@ User features:
  * Command-line runner (csc258comp.runner.Runner)
  * Graphical debugger (Swing UI) (csc258comp.debugger.Debugger)
    * State of registers
-   * Execution step, run
+   * Execution step, backward-step, run, suspend
    * Breakpoints
    * Source code
+   * Current instruction
+   * Memory contents
  * Meaningful error messages from the compiler
  * Sample programs (in the "demos" directory)
 
@@ -29,7 +32,7 @@ Developer features:
  * Code guards against null pointers, out-of-bounds, illegal input parameters,
    and other misuses of the API in a fail-fast way
  * Some functionality is covered by JUnit tests
- * Compilation is separated from linking
+ * Compilation of CSC258 programs is separated from linking
 
 
 == Building ==
@@ -42,7 +45,7 @@ like Eclipse or NetBeans.
 
 You must set the working directory or the class path to the appropriate root for
 Java class files. For example, if the runner is located at /the/package/
-csc258comp/runner/Csc258Runner.class, then you must do one of these:
+csc258comp/runner/Csc258Runner.class, then you must do one of these (just one):
  * cd /the/package
    java csc258comp.runner.Runner [CSC258 files]
  * java -cp /the/package csc258comp.runner.Runner [CSC258 files]
@@ -51,7 +54,7 @@ csc258comp/runner/Csc258Runner.class, then you must do one of these:
 
 Examples:
  * java csc258comp.runner.Runner demos/helloworld.258.txt
- * java csc258comp.runner.Runner demos/primes.258.txt
+ * java csc258comp.debugger.Debugger demos/primes.258.txt
        demos/lib/const.258.txt demos/lib/printInt.258.txt
 
 
