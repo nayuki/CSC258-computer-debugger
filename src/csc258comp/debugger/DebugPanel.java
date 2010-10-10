@@ -1,6 +1,7 @@
 package csc258comp.debugger;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -37,8 +38,10 @@ final class DebugPanel extends JPanel {
 		
 		setLayout(new GridBagLayout());
 		GridBagConstraints g = new GridBagConstraints();
-		g.anchor = GridBagConstraints.CENTER;
+		g.anchor = GridBagConstraints.WEST;
 		g.insets = new Insets(4, 4, 4, 4);
+		g.gridwidth = 1;
+		g.gridheight = 1;
 		
 		g.gridx = 0;
 		g.gridy = 0;
@@ -48,23 +51,15 @@ final class DebugPanel extends JPanel {
 		registerPanel = new RegisterPanel(this);
 		add(registerPanel, g);
 		
-		g.gridx = 1;
-		g.gridy = 0;
+		g.gridx = 0;
+		g.gridy = 1;
 		g.weightx = 0;
 		g.weighty = 0;
 		g.fill = GridBagConstraints.NONE;
 		add(new ControlPanel(this), g);
 		
-		g.gridx = 2;
-		g.gridy = 0;
-		g.weightx = 1;
-		g.weighty = 0;
-		g.fill = GridBagConstraints.HORIZONTAL;
-		add(new JPanel(), g);
-		
 		g.gridx = 0;
-		g.gridy = 1;
-		g.gridwidth = 3;
+		g.gridy = 2;
 		g.weightx = 1;
 		g.weighty = 1;
 		g.fill = GridBagConstraints.BOTH;
@@ -77,6 +72,7 @@ final class DebugPanel extends JPanel {
 			table.getColumnModel().getColumn(i).setPreferredWidth(columnWidths[i]);
 		table.setColumnSelectionAllowed(true);
 		JScrollPane scrollpane = new JScrollPane(table);
+		scrollpane.setPreferredSize(new Dimension(650, 500));
 		add(scrollpane, g);
 	}
 	
