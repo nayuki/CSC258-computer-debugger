@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<title>CSC258 Computer Debugger Guide</title>
+		
+		<style type="text/css">
+			html, body, h1, h2, p, ul, li {
+				margin: 0em;
+				padding: 0em;
+			}
+			
+			html {
+				max-width: 50em;
+				margin-left: auto;
+				margin-right: auto;
+				padding-top: 1.5em;
+				padding-bottom: 3em;
+				font-family: sans-serif;
+			}
+			
+			h1 {
+				margin-top: 0em;
+				margin-bottom: 1em;
+				text-align: center;
+			}
+			
+			h2 {
+				margin-top: 1.5em;
+				margin-bottom: 0.5em;
+			}
+			
+			p {
+				margin-top: 0.5em;
+				margin-bottom: 0.5em;
+				line-height: 150%;
+			}
+			
+			ul {
+				margin-top: 1em;
+				margin-bottom: 1em;
+				margin-left: 2em;
+			}
+			
+			li {
+				margin-top: 0.5em;
+				margin-bottom: 0.5em;
+			}
+			
+			div.imgblock {
+				padding-top: 20px;
+				padding-bottom: 20px;
+				border: 1px solid rgb(70%, 70%, 70%);
+				background: rgb(95%, 95%, 95%);
+			}
+			
+			div.imgblock img {
+				display: block;
+				margin-left: auto;
+				margin-right: auto;
+			}
+		</style>
+	</head>
+	
+	<body>
+		<h1>CSC258 Computer Debugger Guide</h1>
+		
+		<div class="imgblock">
+			<img src="Debugger screenshot.png" alt="Debugger screenshot"/>
+		</div>
+		
+		<h2>Registers view</h2>
+		<p>At the top, there is a row of text boxes showing the states of all the machine registers, plus some other information.</p>
+		<ul>
+			<li><p>Step count: The number of instructions executed at the current state. When the machine has just started, the value is 0.</p></li>
+			<li><p>Program counter: The program counter, a 24-bit value, displayed in hexadecimal.</p></li>
+			<li><p>Accumulator: The accumulator register, a 32-bit value, displayed in unsigned hexadecimal.</p></li>
+			<li><p>Condition code: The condition code, a Boolean value.</p></li>
+			<li><p>Next instruction: The value of the memory at the program counter location, interpreted as an instruction. The top 8 bits are used to look up the opcode's mnemonic, and the bottom 24 bits are a memory reference, displayed in hexadecimal. If the opcode is illegal, this is indicated. If the machine has halted, this is also shown here.</p></li>
+		</ul>
+		<p>When stepping or back-stepping, the background color of the register text boxes may be highlighted in yellow. For the accumulator and condition code, they are highlighted if their values change. For the program counter, it is highlighted if it changes to any value other than the next higher number; this is useful for detecting branches.</p>
+		<p>When resuming, running, and suspending, the background color of the register text boxes revert to being unhighlighted.</p>
+		<p>The values of registers cannot be changed using this view.</p>
+		
+		<h2>Memory view</h2>
+		<p>The big table on the lower part of the window is the memory view. Each row of the table shows information about a word of memory:</p>
+		<ul>
+			<li><p>Whether a breakpoint is enabled or not.</p></li>
+			<li><p>The memory address, a 24-bit value, displayed in hexadecimal.</p></li>
+			<li><p>The contents of the memory word, a 32-bit value, displayed in unsigned hexadecimal.</p></li>
+			<li><p>The source code line associated with the memory address, if any.</p></li>
+		</ul>
+		<p>The memory view only shows memory addresses in the program's compiled image's range. If the program causes the machine to jump or write to a memory location outside of this region, the effect will happen normally, but the view cannot show it.</p>
+		<p>The contents of the memory cannot be changed using this view.</p>
+		
+		<h2>Execution actions</h2>
+		<p>When the machine has just started, it has not executed any instructions, and it is currently suspended.</p>
+		<ul>
+			<li><p>Step: Executes one instruction.<br/>
+				The machine remains suspended. Breakpoints have no effect. This action has no effect if the machine is running or if the machine has halted.</p></li>
+			<li><p>Back: Restores the machine state from one instruction ago.<br/>
+				The machine remains suspended. Input is memoized, so re-executing an <code>INP</code> will result in the same data being given to the machine. Output data is also memoized, so re-executing an <code>OUT</code> will have its output suppressed. Breakpoints have no effect. This action has no effect if the machine is running.</p></li>
+			<li><p>Resume: Resumes execution of the machine until a breakpoint is hit or the suspend button is pressed.<br/>
+				It is allowed to add and remove breakpoints when the machine is running. This action has no effect if the machine has halted.</p></li>
+			<li><p>Suspend: Suspends execution of the machine.<br/>
+				This has no effect if the machine is already suspended.</p></li>
+		</ul>
+		<p>When stepping, the registers view and the memory view update fully after each step action. When running, these views update many times a second.</p>
+		<p>When stepping over an I/O instruction (i.e. <code>INP</code>, <code>OUT</code>), the debugger GUI may freeze until the instruction has completed.</p>
+		
+		<h2>Breakpoints</h2>
+		<p>In the first column of the memory view table, there is a column of checkboxes. To set a breakpoint at a memory address, click on the checkbox. To remove a breakpoint, click the checkbox.</p>
+		<p>Breakpoints are used only when the machine is running. The machine is run by pressing the <q>Resume</q> button.</p>
+	</body>
+	
+</html>
