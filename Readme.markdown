@@ -1,5 +1,5 @@
-CSC258 Computer
-===============
+CSC258 computer debugger
+========================
 
 Introduction
 ------------
@@ -9,10 +9,10 @@ University of Toronto. Officially, its behavior and assembly language syntax are
 specified.
 
 This package is an independent, unofficial implementation of the CSC258
-computer, containing a rich set of software tools and sample programs. It was
-developed from scratch by Nayuki Minase in 2010, and is licensed under the MIT
-License (open source) (see below). The tools are written in Java, requiring
-version 1.6 or above.
+computer, containing a rich set of software tools and sample programs.
+It was developed from scratch by Nayuki in 2010, and is licensed under the
+MIT License (open source) (see below). The tools are written in Java,
+requiring version 1.6 or above.
 
 
 Features
@@ -61,8 +61,8 @@ Java class files. For example, if the runner is located at
 `/the/package/csc258comp/runner/Csc258Runner.class`, then you must do one of
 these (just one):
 
-* `cd /the/package  
-  java csc258comp.runner.Runner` *[CSC258 files]*
+* `cd /the/package`  
+  `java csc258comp.runner.Runner` *[CSC258 files]*
 * `java -cp /the/package csc258comp.runner.Runner` *[CSC258 files]*
 * `export CLASSPATH=/the/package`  
   `java csc258comp.runner.Runner` *[CSC258 files]*
@@ -78,8 +78,8 @@ License
 
 (MIT License)
 
-Copyright © 2010 Project Nayuki  
-[https://www.nayuki.io/](https://www.nayuki.io/)
+Copyright © 2016 Project Nayuki  
+https://www.nayuki.io/page/csc258-computer-debugger
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
