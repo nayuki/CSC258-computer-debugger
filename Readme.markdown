@@ -10,9 +10,10 @@ specified.
 
 This package is an independent, unofficial implementation of the CSC258
 computer, containing a rich set of software tools and sample programs.
-It was developed from scratch by Nayuki in 2010, and is licensed under the
-MIT License (open source) (see below). The tools are written in Java,
-requiring version 1.6 or above.
+It was developed from scratch by Nayuki in 2010, and is open source (see license below).
+The tools are written in Java, requiring version 1.6 or above.
+
+Home page: https://www.nayuki.io/page/csc258-computer-debugger
 
 
 Features
@@ -76,25 +77,7 @@ Examples:
 License
 -------
 
-(MIT License)
-
 Copyright © 2016 Project Nayuki  
 https://www.nayuki.io/page/csc258-computer-debugger
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-the Software, and to permit persons to whom the Software is furnished to do so,
-subject to the following conditions:
-
-* The above copyright notice and this permission notice shall be included in
-  all copies or substantial portions of the Software.
-
-* The Software is provided "as is", without warranty of any kind, express or
-  implied, including but not limited to the warranties of merchantability,
-  fitness for a particular purpose and noninfringement. In no event shall the
-  authors or copyright holders be liable for any claim, damages or other
-  liability, whether in an action of contract, tort or otherwise, arising from,
-  out of or in connection with the Software or the use or other dealings in the
-  Software.
+Licensed under the GNU Public License v3.0+ (see COPYING.txt)
