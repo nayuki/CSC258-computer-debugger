@@ -1,3 +1,11 @@
+W 0  # 
+W 0  # CSC258 computer
+W 0  # 
+W 0  # Copyright (c) Project Nayuki
+W 0  # https://www.nayuki.io/page/csc258-computer-debugger
+W 0  # 
+
+
 W 0  # Function printInt
 W 0  # Input: printInt_val, the signed 32-bit number to be printed.
 W 0  # Side-effects: Prints the specified number string to the output in base 10. AC, E, and printInt_val are undefined on return.

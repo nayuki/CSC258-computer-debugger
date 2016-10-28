@@ -1,3 +1,11 @@
+W 0  # 
+W 0  # CSC258 computer
+W 0  # 
+W 0  # Copyright (c) Project Nayuki
+W 0  # https://www.nayuki.io/page/csc258-computer-debugger
+W 0  # 
+
+
 W 0  # Prints "Hello, world!\n". Standalone program with no dependencies.
 W 0  # This is a simple, short-running, output-only program.
 

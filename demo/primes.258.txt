@@ -1,3 +1,11 @@
+W 0  # 
+W 0  # CSC258 computer
+W 0  # 
+W 0  # Copyright (c) Project Nayuki
+W 0  # https://www.nayuki.io/page/csc258-computer-debugger
+W 0  # 
+
+
 W 0  # Prints the list of primes (up to 2^31), i.e.: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, ..., 2147483647.
 W 0  # This is a CPU-intensive, output-only program.
 W 0  # 

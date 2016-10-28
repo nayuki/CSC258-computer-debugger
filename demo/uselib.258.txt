@@ -1,3 +1,11 @@
+W 0  # 
+W 0  # CSC258 computer
+W 0  # 
+W 0  # Copyright (c) Project Nayuki
+W 0  # https://www.nayuki.io/page/csc258-computer-debugger
+W 0  # 
+
+
 W 0  # A simple program that references data and instructions stored else, in a library file.
 W 0  # To run this program, you must include the necessary library files.
 W 0  # 

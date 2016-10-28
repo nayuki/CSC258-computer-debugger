@@ -1,3 +1,11 @@
+W 0  # 
+W 0  # CSC258 computer
+W 0  # 
+W 0  # Copyright (c) Project Nayuki
+W 0  # https://www.nayuki.io/page/csc258-computer-debugger
+W 0  # 
+
+
 W 0  # Function printStr
 W 0  # Input: printStr_str, the address of the leading character of the string to be printed. The string is null-terminated.
 W 0  # Side-effects: Prints the specified string to the output. AC, E, and printStr_str are undefined on return.
