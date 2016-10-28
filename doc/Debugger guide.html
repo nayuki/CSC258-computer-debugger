@@ -1,8 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<meta charset="UTF-8">
 		<title>CSC258 Computer Debugger Guide</title>
 		<style type="text/css">
 			html, body, h1, h2, p, ul, li {
@@ -88,13 +87,13 @@
 		<h2>Execution actions</h2>
 		<p>When the machine has just started, it has not executed any instructions, and it is currently suspended.</p>
 		<ul>
-			<li><p>Step: Executes one instruction.<br/>
+			<li><p>Step: Executes one instruction.<br>
 				The machine remains suspended. Breakpoints have no effect. This action has no effect if the machine is running or if the machine has halted.</p></li>
-			<li><p>Back: Restores the machine state from one instruction ago.<br/>
+			<li><p>Back: Restores the machine state from one instruction ago.<br>
 				The machine remains suspended. Input is memoized, so re-executing an <code>INP</code> will result in the same data being given to the machine. Output data is also memoized, so re-executing an <code>OUT</code> will have its output suppressed. Breakpoints have no effect. This action has no effect if the machine is running.</p></li>
-			<li><p>Resume: Resumes execution of the machine until a breakpoint is hit or the suspend button is pressed.<br/>
+			<li><p>Resume: Resumes execution of the machine until a breakpoint is hit or the suspend button is pressed.<br>
 				It is allowed to add and remove breakpoints when the machine is running. This action has no effect if the machine has halted.</p></li>
-			<li><p>Suspend: Suspends execution of the machine.<br/>
+			<li><p>Suspend: Suspends execution of the machine.<br>
 				This has no effect if the machine is already suspended.</p></li>
 		</ul>
 		<p>When stepping, the registers view and the memory view update fully after each step action. When running, these views update many times a second.</p>
