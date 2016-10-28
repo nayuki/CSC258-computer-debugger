@@ -1,31 +1,70 @@
 <!DOCTYPE html>
-<!-- Source: http://www.cs.toronto.edu/~hehner/csc258/comp.html -->
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>The CSC 258 Computer</title>
+		<title>CSC258 computer assembly language</title>
 		<style type="text/css">
+			html, body, h1, h2, p, ul, li, table {
+				margin: 0;
+				padding: 0;
+			}
+			html {
+				max-width: 60em;
+				margin-left: auto;
+				margin-right: auto;
+				padding-top: 1.0em;
+				padding-bottom: 1.0em;
+				font-family: sans-serif;
+			}
 			h1 {
+				margin-top: 0em;
+				margin-bottom: 1.0em;
 				text-align: center;
+			}
+			h2 {
+				margin-top: 1.5em;
+				margin-bottom: 0.5em;
+			}
+			p {
+				margin-top: 0.5em;
+				margin-bottom: 0.5em;
+				line-height: 1.4;
+			}
+			ul {
+				margin-top: 1.0em;
+				margin-bottom: 1.0em;
+				margin-left: 2.0em;
+			}
+			li {
+				margin-top: 0.5em;
+				margin-bottom: 0.5em;
+			}
+			hr {
+				margin: 1.5em 0em;
+				border: none;
+				border-top: 1px solid #808080;
 			}
 			table {
 				border-collapse: collapse;
 			}
 			td, th {
 				padding: 0.2em 0.6em;
-				border: 1px solid rgb(208,208,208);
+				border: 1px solid #D0D0D0;
 				vertical-align: top;
+				line-height: 1.4;
 			}
 		</style>
 	</head>
 	
 	<body>
-		<h1>The CSC 258 Computer</h1>
+		<h1>CSC258 computer assembly language</h1>
+		
+		<h2>Architecture</h2>
 		<ul>
-			<li>Memory is word addressable, 4 bytes per word, 24-bit addresses (64 MiB)</li>
-			<li>32-bit arithmetic (two's complement integers, IEEE single-precision floating-point)</li>
-			<li>Accumulator, 32 bits (AC)</li>
-			<li>Condition code, 1 bit (E)</li>
+			<li>Memory is word-addressable, 4 bytes per word, 24-bit addresses, total 64 MiB</li>
+			<li>32-bit arithmetic (two’s complement integers, IEEE single-precision floating-point)</li>
+			<li>Accumulator register, 32 bits (AC)</li>
+			<li>Condition code register, 1 bit (E)</li>
 			<li>Input port, 8-bit parallel</li>
 			<li>Output port, 8-bit parallel</li>
 		</ul>
@@ -85,7 +124,7 @@
 			</tbody>
 		</table>
 		
-		<p>An assembly language program consists of a sequence of lines; each line says what's in one word of memory (except for the <code>W</code> data format). A line begins with zero or more labels; each label is an identifier followed by a colon. After that, the line is either in instruction format or in data format. Instruction format is an op-code followed by an address. The op-code is three letters, and the address is either a number or an identifier. Data format is one of <code>I</code> (for two's complement integer), <code>F</code> (for IEEE floating point number), <code>C</code> (for ASCII character), <code>B</code> (for binary), <code>H</code> (for hexadecimal), <code>A</code> (for address), or <code>W</code> (for word) followed by the indicated data. The <code>W</code> format reserves the indicated number of words of memory. The remainder of any line can be used for comments. <code>W 0</code> can be used just for a label, or just for a comment. Here is a sequence of example lines (this is not a sensible program).</p>
+		<p>An assembly language program consists of a sequence of lines; each line says what’s in one word of memory (except for the <code>W</code> data format). A line begins with zero or more labels; each label is an identifier followed by a colon. After that, the line is either in instruction format or in data format. Instruction format is an op-code followed by an address. The op-code is three letters, and the address is either a number or an identifier. Data format is one of <code>I</code> (for two’s complement integer), <code>F</code> (for IEEE floating point number), <code>C</code> (for ASCII character), <code>B</code> (for binary), <code>H</code> (for hexadecimal), <code>A</code> (for address), or <code>W</code> (for word) followed by the indicated data. The <code>W</code> format reserves the indicated number of words of memory. The remainder of any line can be used for comments. <code>W 0</code> can be used just for a label, or just for a comment. Here is a sequence of example lines (this is not a sensible program).</p>
 		
 		<pre> main: LDA x
        ADD c3
@@ -97,6 +136,9 @@
 there: BUN opsys</pre>
 		
 		<p>Execution starts at label <code>main</code>. Execution of your program ends with a branch to the operating system at address <code>opsys</code>. All identifiers used as addresses, except <code>opsys</code>, should be defined as labels. An identifier cannot be defined more than once as a label.</p>
-		<p>© Copyright 2010 Eric Hehner</p>
+		
+		<hr>
+		<p>Copyright © 2010 Eric Hehner (original text), updated by Project Nayuki<br>
+		Home page: <a href="https://www.nayuki.io/page/csc258-computer-debugger">https://www.nayuki.io/page/csc258-computer-debugger</a></p>
 	</body>
 </html>

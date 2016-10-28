@@ -2,23 +2,23 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>CSC258 Computer Debugger Guide</title>
+		<title>CSC258 computer debugger guide</title>
 		<style type="text/css">
 			html, body, h1, h2, p, ul, li {
-				margin: 0em;
-				padding: 0em;
+				margin: 0;
+				padding: 0;
 			}
 			html {
-				max-width: 50em;
+				max-width: 60em;
 				margin-left: auto;
 				margin-right: auto;
-				padding-top: 1.5em;
-				padding-bottom: 3em;
+				padding-top: 1.0em;
+				padding-bottom: 1.0em;
 				font-family: sans-serif;
 			}
 			h1 {
 				margin-top: 0em;
-				margin-bottom: 1em;
+				margin-bottom: 1.0em;
 				text-align: center;
 			}
 			h2 {
@@ -28,22 +28,27 @@
 			p {
 				margin-top: 0.5em;
 				margin-bottom: 0.5em;
-				line-height: 150%;
+				line-height: 1.4;
 			}
 			ul {
-				margin-top: 1em;
-				margin-bottom: 1em;
-				margin-left: 2em;
+				margin-top: 1.0em;
+				margin-bottom: 1.0em;
+				margin-left: 2.0em;
 			}
 			li {
 				margin-top: 0.5em;
 				margin-bottom: 0.5em;
 			}
+			hr {
+				margin: 1.5em 0em;
+				border: none;
+				border-top: 1px solid #808080;
+			}
 			div.imgblock {
-				padding-top: 20px;
-				padding-bottom: 20px;
-				border: 1px solid rgb(70%, 70%, 70%);
-				background: rgb(95%, 95%, 95%);
+				padding-top: 10px;
+				padding-bottom: 10px;
+				border: 1px solid #C0C0C0;
+				background: #F8F8F8;
 			}
 			div.imgblock img {
 				display: block;
@@ -54,7 +59,7 @@
 	</head>
 	
 	<body>
-		<h1>CSC258 Computer Debugger Guide</h1>
+		<h1>CSC258 computer debugger guide</h1>
 		
 		<div class="imgblock">
 			<img src="Debugger screenshot.png" alt="Debugger screenshot"/>
@@ -67,7 +72,7 @@
 			<li><p>Program counter: The program counter, a 24-bit value, displayed in hexadecimal.</p></li>
 			<li><p>Accumulator: The accumulator register, a 32-bit value, displayed in unsigned hexadecimal.</p></li>
 			<li><p>Condition code: The condition code, a Boolean value.</p></li>
-			<li><p>Next instruction: The value of the memory at the program counter location, interpreted as an instruction. The top 8 bits are used to look up the opcode's mnemonic, and the bottom 24 bits are a memory reference, displayed in hexadecimal. If the opcode is illegal, this is indicated. If the machine has halted, this is also shown here.</p></li>
+			<li><p>Next instruction: The value of the memory at the program counter location, interpreted as an instruction. The top 8 bits are used to look up the opcode’s mnemonic, and the bottom 24 bits are a memory reference, displayed in hexadecimal. If the opcode is illegal, this is indicated. If the machine has halted, this is also shown here.</p></li>
 		</ul>
 		<p>When stepping or back-stepping, the background color of the register text boxes may be highlighted in yellow. For the accumulator and condition code, they are highlighted if their values change. For the program counter, it is highlighted if it changes to any value other than the next higher number; this is useful for detecting branches.</p>
 		<p>When resuming, running, and suspending, the background color of the register text boxes revert to being unhighlighted.</p>
@@ -81,7 +86,7 @@
 			<li><p>The contents of the memory word, a 32-bit value, displayed in unsigned hexadecimal.</p></li>
 			<li><p>The source code line associated with the memory address, if any.</p></li>
 		</ul>
-		<p>The memory view only shows memory addresses in the program's compiled image's range. If the program causes the machine to jump or write to a memory location outside of this region, the effect will happen normally, but the view cannot show it.</p>
+		<p>The memory view only shows memory addresses in the program’s compiled image’s range. If the program causes the machine to jump or write to a memory location outside of this region, the effect will happen normally, but the view cannot show it.</p>
 		<p>The contents of the memory cannot be changed using this view.</p>
 		
 		<h2>Execution actions</h2>
@@ -101,6 +106,10 @@
 		
 		<h2>Breakpoints</h2>
 		<p>In the first column of the memory view table, there is a column of checkboxes. To set a breakpoint at a memory address, click on the checkbox. To remove a breakpoint, click the checkbox.</p>
-		<p>Breakpoints are used only when the machine is running. The machine is run by pressing the <q>Resume</q> button.</p>
+		<p>Breakpoints are used only when the machine is running. The machine is run by pressing the “Resume” button.</p>
+		
+		<hr>
+		<p>Copyright © Project Nayuki<br>
+		Home page: <a href="https://www.nayuki.io/page/csc258-computer-debugger">https://www.nayuki.io/page/csc258-computer-debugger</a></p>
 	</body>
 </html>
