@@ -7,6 +7,8 @@
 
 package csc258comp.runner;
 
+import java.util.Objects;
+
 
 /**
  * Loads a {@link Program} into a {@link Machine}. This class contains just a static method, and is not instantiable.
@@ -20,8 +22,8 @@ public final class Loader {
 	 * @throws NullPointerException if {@code m} or {@code p} are {@code null}
 	 */
 	public static void load(Machine m, Program p) {
-		if (m == null || p == null)
-			throw new NullPointerException();
+		Objects.requireNonNull(m);
+		Objects.requireNonNull(p);
 		
 		// Set registers and haltedness
 		m.setHalted(false);

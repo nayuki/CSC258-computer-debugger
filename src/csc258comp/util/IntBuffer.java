@@ -8,6 +8,7 @@
 package csc258comp.util;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 
 public final class IntBuffer {
@@ -58,8 +59,7 @@ public final class IntBuffer {
 	
 	
 	public void append(int[] vals) {
-		if (vals == null)
-			throw new NullPointerException();
+		Objects.requireNonNull(vals);
 		ensureCapacity(length + vals.length);
 		System.arraycopy(vals, 0, values, length, vals.length);
 		length += vals.length;

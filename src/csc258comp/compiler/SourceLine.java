@@ -7,6 +7,8 @@
 
 package csc258comp.compiler;
 
+import java.util.Objects;
+
 
 /**
  * Represents a line of source code. Immutable.
@@ -25,8 +27,7 @@ public final class SourceLine {
 	 * @param line the line number (0-based)
 	 */
 	public SourceLine(SourceCode source, int line) {
-		if (source == null)
-			throw new NullPointerException();
+		Objects.requireNonNull(source);
 		if (line < 0 || line >= source.getLineCount())
 			throw new IndexOutOfBoundsException();
 		sourceCode = source;

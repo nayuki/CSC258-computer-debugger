@@ -7,6 +7,7 @@
 
 package csc258comp.compiler;
 
+import java.util.Objects;
 import java.util.SortedMap;
 
 
@@ -29,8 +30,7 @@ public final class CompilerException extends RuntimeException {
 	 */
 	public CompilerException(String msg) {
 		super(msg);
-		if (msg == null)
-			throw new NullPointerException();
+		Objects.requireNonNull(msg);
 	}
 	
 	
@@ -43,8 +43,9 @@ public final class CompilerException extends RuntimeException {
 	 */
 	public CompilerException(String msg, SortedMap<Integer,String> errorMessages, SourceCode sourceCode) {
 		super(msg);
-		if (msg == null || errorMessages == null || sourceCode == null)
-			throw new NullPointerException();
+		Objects.requireNonNull(msg);
+		Objects.requireNonNull(errorMessages);
+		Objects.requireNonNull(sourceCode);
 		this.errorMessages = errorMessages;
 		this.sourceCode = sourceCode;
 	}

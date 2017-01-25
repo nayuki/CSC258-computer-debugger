@@ -8,6 +8,7 @@
 package csc258comp.compiler;
 
 import java.util.Map;
+import java.util.Objects;
 
 
 /**
@@ -27,8 +28,7 @@ public final class LinkerException extends RuntimeException {
 	 */
 	public LinkerException(String msg) {
 		super(msg);
-		if (msg == null)
-			throw new NullPointerException();
+		Objects.requireNonNull(msg);
 	}
 	
 	
@@ -40,8 +40,8 @@ public final class LinkerException extends RuntimeException {
 	 */
 	public LinkerException(String msg, Map<SourceLine,String> errorMessages) {
 		super(msg);
-		if (msg == null || errorMessages == null)
-			throw new NullPointerException();
+		Objects.requireNonNull(msg);
+		Objects.requireNonNull(errorMessages);
 		this.errorMessages = errorMessages;
 	}
 	

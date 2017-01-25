@@ -10,7 +10,7 @@ package csc258comp.debugger;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
+import java.util.Objects;
 import csc258comp.runner.Loader;
 import csc258comp.runner.Machine;
 import csc258comp.runner.Program;
@@ -35,8 +35,8 @@ final class DebugMachine implements Machine, Cloneable {
 	
 	
 	public DebugMachine(InputStream in, OutputStream out) {
-		if (in == null || out == null)
-			throw new NullPointerException();
+		Objects.requireNonNull(in);
+		Objects.requireNonNull(out);
 		isHalted = false;
 		programCounter = 0;
 		accumulator = 0;
@@ -127,8 +127,7 @@ final class DebugMachine implements Machine, Cloneable {
 	
 	
 	public void loadProgram(Program prog) {
-		if (prog == null)
-			throw new NullPointerException();
+		Objects.requireNonNull(prog);
 		Loader.load(this, prog);
 	}
 	

@@ -12,6 +12,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Objects;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
@@ -48,8 +49,7 @@ final class RegisterPanel extends JPanel {
 	
 	public RegisterPanel(DebugPanel parent) {
 		super(new GridBagLayout());
-		if (parent == null)
-			throw new NullPointerException();
+		Objects.requireNonNull(parent);
 		controller = parent.controller;
 		
 		GridBagConstraints g = new GridBagConstraints();

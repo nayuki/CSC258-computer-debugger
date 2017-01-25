@@ -8,6 +8,7 @@
 package csc258comp.runner;
 
 import java.io.IOException;
+import java.util.Objects;
 
 
 /**
@@ -30,8 +31,7 @@ public final class Executor {
 	 * @throws NullPointerException if {@code m} is {@code null}
 	 */
 	public static void step(Machine m) {
-		if (m == null)
-			throw new NullPointerException();
+		Objects.requireNonNull(m);
 		
 		// Do nothing if halted
 		if (m.isHalted())

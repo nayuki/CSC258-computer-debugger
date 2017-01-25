@@ -10,6 +10,7 @@ package csc258comp.compiler;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -35,8 +36,7 @@ public final class MyCompiler {
 	 * @throws CompilerException if the compilation cannot be completed
 	 */
 	public static Fragment compile(SourceCode source) {
-		if (source == null)
-			throw new NullPointerException();
+		Objects.requireNonNull(source);
 		return new MyCompiler(source).result;
 	}
 	

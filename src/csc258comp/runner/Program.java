@@ -8,7 +8,7 @@
 package csc258comp.runner;
 
 import java.util.Map;
-
+import java.util.Objects;
 import csc258comp.compiler.Fragment;
 import csc258comp.compiler.Linker;
 import csc258comp.compiler.SourceLine;
@@ -32,8 +32,7 @@ public final class Program {
 	
 	
 	public Program(int[] image, int mainAddress, Map<SourceLine,Integer> srcLineToAddr, Map<Integer,SourceLine> addrToSrcLine) {
-		if (image == null)
-			throw new NullPointerException();
+		Objects.requireNonNull(image);
 		if (image.length > Machine.ADDRESS_SPACE_SIZE)
 			throw new IllegalArgumentException("Invalid image, exceeds size of address space");
 		if (mainAddress < 0 || mainAddress >= Machine.ADDRESS_SPACE_SIZE)

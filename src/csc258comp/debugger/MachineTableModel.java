@@ -8,6 +8,7 @@
 package csc258comp.debugger;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
@@ -40,8 +41,8 @@ final class MachineTableModel extends AbstractTableModel {
 	
 	
 	public MachineTableModel(DebugPanel parent, Program p) {
-		if (parent == null || p == null)
-			throw new NullPointerException();
+		Objects.requireNonNull(parent);
+		Objects.requireNonNull(p);
 		controller = parent.controller;
 		program = p;
 		threadStopRequest = new Semaphore(0);

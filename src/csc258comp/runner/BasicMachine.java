@@ -10,6 +10,7 @@ package csc258comp.runner;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Objects;
 
 
 public final class BasicMachine implements Machine {
@@ -40,8 +41,8 @@ public final class BasicMachine implements Machine {
 	
 	
 	public BasicMachine(InputStream in, OutputStream out) {
-		if (in == null || out == null)
-			throw new NullPointerException();
+		Objects.requireNonNull(in);
+		Objects.requireNonNull(out);
 		isHalted = false;
 		programCounter = 0;
 		accumulator = 0;

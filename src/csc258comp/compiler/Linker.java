@@ -9,7 +9,7 @@ package csc258comp.compiler;
 
 import java.util.HashMap;
 import java.util.Map;
-
+import java.util.Objects;
 import csc258comp.runner.Executor;
 import csc258comp.runner.Loader;
 import csc258comp.runner.Machine;
@@ -31,8 +31,7 @@ public final class Linker {
 	 * @throws LinkerException if the linkage cannot be completed
 	 */
 	public static Program link(Iterable<Fragment> frags) {
-		if (frags == null)
-			throw new NullPointerException();
+		Objects.requireNonNull(frags);
 		return new Linker(frags).result;
 	}
 	

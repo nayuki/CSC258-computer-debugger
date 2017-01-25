@@ -9,7 +9,7 @@ package csc258comp.compiler;
 
 import java.util.Collections;
 import java.util.Map;
-
+import java.util.Objects;
 import csc258comp.runner.Machine;
 import csc258comp.runner.Program;
 
@@ -34,8 +34,9 @@ public final class Fragment {
 	
 	
 	public Fragment(int[] image, Map<String,Integer> labels, Map<Integer,String> references, SourceCode source, Map<Integer,Integer> srcLineToAddr, Map<Integer,Integer> addrToSrcLine) {
-		if (image == null || labels == null || references == null)
-			throw new NullPointerException();
+		Objects.requireNonNull(image);
+		Objects.requireNonNull(labels);
+		Objects.requireNonNull(references);
 		if (image.length > Machine.ADDRESS_SPACE_SIZE)
 			throw new IllegalArgumentException("Invalid image, exceeds size of address space");
 		
@@ -44,8 +45,8 @@ public final class Fragment {
 		this.references = Collections.unmodifiableMap(references);
 		
 		if (source != null) {  // Debugging information supplied
-			if (srcLineToAddr == null || addrToSrcLine == null)
-				throw new NullPointerException();
+			Objects.requireNonNull(srcLineToAddr);
+			Objects.requireNonNull(addrToSrcLine);
 			sourceCode = source;
 			sourceLineToAddress = Collections.unmodifiableMap(srcLineToAddr);
 			addressToSourceLine = Collections.unmodifiableMap(addrToSrcLine);

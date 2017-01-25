@@ -11,7 +11,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.InvocationTargetException;
-
+import java.util.Objects;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -24,8 +24,7 @@ final class ControlPanel extends JPanel {
 	
 	public ControlPanel(final DebugPanel parent) {
 		super(new FlowLayout(FlowLayout.LEFT));
-		if (parent == null)
-			throw new NullPointerException();
+		Objects.requireNonNull(parent);
 		final Controller controller = parent.controller;
 		
 		JButton back = new JButton("Back");

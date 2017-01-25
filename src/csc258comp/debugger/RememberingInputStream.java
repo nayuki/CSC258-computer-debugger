@@ -9,7 +9,7 @@ package csc258comp.debugger;
 
 import java.io.IOException;
 import java.io.InputStream;
-
+import java.util.Objects;
 import csc258comp.util.ByteBuffer;
 
 
@@ -24,8 +24,7 @@ final class RememberingInputStream extends InputStream implements Cloneable {
 	
 	
 	public RememberingInputStream(InputStream in) {
-		if (in == null)
-			throw new NullPointerException();
+		Objects.requireNonNull(in);
 		input = in;
 		memory = new ByteBuffer();
 		position = 0;

@@ -7,14 +7,15 @@
 
 package csc258comp.runner;
 
+import java.util.Objects;
+
 
 @SuppressWarnings("serial")
 public final class IllegalOpcodeException extends MachineException {
 	
 	public IllegalOpcodeException(String msg) {
 		super(msg);
-		if (msg == null)
-			throw new NullPointerException();
+		Objects.requireNonNull(msg);
 	}
 	
 }

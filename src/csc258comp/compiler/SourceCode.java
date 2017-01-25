@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-
+import java.util.Objects;
 import csc258comp.util.Utf8Reader;
 
 
@@ -31,8 +31,7 @@ public final class SourceCode implements Iterable<String> {
 	 * @throws IOException if an I/O exception occurs
 	 */
 	public static SourceCode readFile(File file) throws IOException {
-		if (file == null)
-			throw new NullPointerException();
+		Objects.requireNonNull(file);
 		
 		List<String> lines = new ArrayList<String>();
 		BufferedReader in = new Utf8Reader(file);
@@ -86,8 +85,7 @@ public final class SourceCode implements Iterable<String> {
 	 * @throws NullPointerException if {@code lines} is {@code null}
 	 */
 	public SourceCode(File file, List<String> lines) {
-		if (lines == null)
-			throw new NullPointerException();
+		Objects.requireNonNull(lines);
 		this.file = file;
 		this.lines = Collections.unmodifiableList(new ArrayList<String>(lines));
 	}

@@ -7,21 +7,22 @@
 
 package csc258comp.runner;
 
+import java.util.Objects;
+
 
 @SuppressWarnings("serial")
 public class MachineException extends RuntimeException {
 	
 	public MachineException(String msg) {
 		super(msg);
-		if (msg == null)
-			throw new NullPointerException();
+		Objects.requireNonNull(msg);
 	}
 	
 	
 	public MachineException(String msg, Throwable cause) {
 		super(msg, cause);
-		if (msg == null || cause == null)
-			throw new NullPointerException();
+		Objects.requireNonNull(msg);
+		Objects.requireNonNull(cause);
 	}
 	
 }

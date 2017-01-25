@@ -13,7 +13,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-
+import java.util.Objects;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -39,8 +39,7 @@ final class DebugPanel extends JPanel {
 	
 	
 	public DebugPanel(DebugMachine m, Program p) {
-		if (m == null)
-			throw new NullPointerException();
+		Objects.requireNonNull(m);
 		controller = new Controller(m);
 		
 		setLayout(new GridBagLayout());

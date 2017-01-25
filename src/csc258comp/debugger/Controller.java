@@ -9,6 +9,7 @@ package csc258comp.debugger;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import csc258comp.runner.Executor;
@@ -34,8 +35,7 @@ final class Controller {
 	
 	
 	public Controller(DebugMachine m) {
-		if (m == null)
-			throw new NullPointerException();
+		Objects.requireNonNull(m);
 		initialSnapshot = new MachineSnapshot(m, 0);
 		recentSnapshot = null;
 		machine = m;
