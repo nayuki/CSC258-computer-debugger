@@ -16,7 +16,6 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import csc258comp.runner.InstructionSet;
 import csc258comp.runner.Machine;
 import csc258comp.util.IntBuffer;

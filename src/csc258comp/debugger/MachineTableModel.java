@@ -12,10 +12,8 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
-
 import javax.swing.SwingUtilities;
 import javax.swing.table.AbstractTableModel;
-
 import csc258comp.runner.Machine;
 import csc258comp.runner.Program;
 

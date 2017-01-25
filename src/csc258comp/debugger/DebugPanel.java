@@ -17,7 +17,6 @@ import java.util.Objects;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-
 import csc258comp.runner.Program;
 
 

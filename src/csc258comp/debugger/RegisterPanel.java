@@ -15,13 +15,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Objects;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
-
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
-
 import csc258comp.runner.Executor;
 import csc258comp.runner.InstructionSet;
 import csc258comp.runner.Machine;

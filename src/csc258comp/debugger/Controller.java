@@ -11,7 +11,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-
 import csc258comp.runner.Executor;
 import csc258comp.runner.Machine;
 

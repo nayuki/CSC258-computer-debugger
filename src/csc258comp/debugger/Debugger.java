@@ -16,9 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
-
 import javax.swing.JFrame;
-
 import csc258comp.compiler.CompilerException;
 import csc258comp.compiler.Fragment;
 import csc258comp.compiler.Linker;

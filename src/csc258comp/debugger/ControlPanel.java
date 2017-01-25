@@ -15,7 +15,6 @@ import java.util.Objects;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-
 import csc258comp.runner.IllegalOpcodeException;
 
 
