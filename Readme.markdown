@@ -77,7 +77,7 @@ Examples:
 License
 -------
 
-Copyright © 2016 Project Nayuki  
+Copyright © 2017 Project Nayuki  
 https://www.nayuki.io/page/csc258-computer-debugger
 
-Licensed under the GNU Public License v3.0+ (see COPYING.txt)
+Licensed under the GNU General Public License v3.0+ (see COPYING.txt)
