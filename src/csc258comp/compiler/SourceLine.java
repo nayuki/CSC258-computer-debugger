@@ -47,7 +47,7 @@ public final class SourceLine {
 	
 	/**
 	 * Tests whether this source line is equal to the specified object. It is equal if and only if both objects are have equal source codes and equal line numbers.
-	 * @return whether this source line is equal to the object 
+	 * @return whether this source line is equal to the object
 	 */
 	@Override
 	public boolean equals(Object obj) {

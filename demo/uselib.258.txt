@@ -12,7 +12,7 @@ W 0  #
 W 0  # Uses: const, printInt, printStr
 
 
-main_strAddr: A main_str 
+main_strAddr: A main_str
 main_str: C 'T'
 	C 'e'
 	C 's'
